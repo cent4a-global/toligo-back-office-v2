@@ -1,0 +1,41 @@
+.form-select {
+    width: 100%;
+    height: var(--height-input);
+
+    padding: 0 var(--space-4);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+
+    background: var(--color-bg-surface);
+    color: var(--color-text-primary);
+
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-md);
+
+    outline: none;
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.form-select:hover:not(:disabled) {
+    border-color: var(--color-text-secondary);
+}
+
+.form-select:focus {
+    border-color: var(--color-brand);
+
+    box-shadow: 0 0 0 3px rgba(18, 18, 18, 0.08);
+}
+
+.form-select:disabled {
+    background: var(--color-bg-hover);
+    cursor: not-allowed;
+}
+
+.form-select-error {
+    border-color: var(--color-danger);
+}

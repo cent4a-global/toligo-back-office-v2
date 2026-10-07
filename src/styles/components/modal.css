@@ -1,0 +1,111 @@
+/* ========================================
+   OVERLAY
+======================================== */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: var(--space-6);
+
+    background: rgba(18, 18, 18, 0.45);
+}
+
+/* ========================================
+   MODAL
+======================================== */
+
+.modal {
+    width: 100%;
+    max-height: calc(100vh - 48px);
+
+    overflow: auto;
+
+    background: var(--color-bg-surface);
+    border-radius: var(--radius-xl);
+
+    box-shadow: var(--shadow-lg);
+}
+
+/* ========================================
+   SIZES
+======================================== */
+
+.modal-sm {
+    max-width: 400px;
+}
+
+.modal-md {
+    max-width: 600px;
+}
+
+.modal-lg {
+    max-width: 900px;
+}
+
+.modal-xl {
+    max-width: 1200px;
+}
+
+/* ========================================
+   HEADER
+======================================== */
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: var(--space-6);
+
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+.modal-title {
+    color: var(--color-text-primary);
+
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+}
+
+/* ========================================
+   CLOSE
+======================================== */
+
+.modal-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 36px;
+    height: 36px;
+
+    border: none;
+    border-radius: var(--radius-md);
+
+    background: transparent;
+    color: var(--color-text-secondary);
+
+    font-size: 24px;
+    line-height: 1;
+
+    cursor: pointer;
+}
+
+.modal-close:hover {
+    background: var(--color-bg-hover);
+    color: var(--color-text-primary);
+}
+
+/* ========================================
+   CONTENT
+======================================== */
+
+.modal-content {
+    padding: var(--space-6);
+}

@@ -1,0 +1,282 @@
+/* ========================================
+   BASE
+======================================== */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+
+    min-width: fit-content;
+
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    line-height: 1;
+
+    white-space: nowrap;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        box-shadow 0.2s ease,
+        opacity 0.2s ease;
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ========================================
+   SIZES
+======================================== */
+
+.btn-sm {
+    min-height: var(--height-button-sm);
+    padding: 0 var(--space-4);
+
+    font-size: var(--font-size-xs);
+}
+
+.btn-md {
+    min-height: var(--height-button);
+    padding: 0 var(--space-5);
+}
+
+.btn-lg {
+    min-height: 56px;
+    padding: 0 var(--space-6);
+
+    font-size: var(--font-size-md);
+}
+
+/* ========================================
+   PRIMARY
+   Action principale
+======================================== */
+
+.btn-primary {
+    background: var(--color-brand);
+    color: var(--color-text-inverse);
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: var(--color-brand-hover);
+}
+
+.btn-primary:active:not(:disabled) {
+    transform: translateY(1px);
+}
+
+/* ========================================
+   SECONDARY
+   Action secondaire
+======================================== */
+
+.btn-secondary {
+    background: var(--color-bg-surface);
+    border-color: var(--color-border);
+    color: var(--color-text-primary);
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background: var(--color-bg-hover);
+    border-color: var(--color-text-secondary);
+}
+
+.btn-secondary:active:not(:disabled) {
+    background: var(--color-bg-hover);
+}
+
+/* ========================================
+   OUTLINE
+   Contour uniquement
+======================================== */
+
+.btn-outline {
+    background: transparent;
+    border-color: var(--color-brand);
+    color: var(--color-brand);
+}
+
+.btn-outline:hover:not(:disabled) {
+    background: var(--color-brand);
+    color: var(--color-text-inverse);
+}
+
+/* ========================================
+   GHOST
+   Action discrète
+======================================== */
+
+.btn-ghost {
+    background: transparent;
+    border-color: transparent;
+    color: var(--color-text-primary);
+}
+
+.btn-ghost:hover:not(:disabled) {
+    background: var(--color-bg-hover);
+}
+
+.btn-ghost:active:not(:disabled) {
+    background: var(--color-border-light);
+}
+
+/* ========================================
+   SUCCESS
+   Validation / confirmation
+======================================== */
+
+.btn-success {
+    background: var(--color-success);
+    color: var(--color-text-inverse);
+}
+
+.btn-success:hover:not(:disabled) {
+    filter: brightness(0.92);
+}
+
+/* ========================================
+   SOFT SUCCESS
+   Version légère
+======================================== */
+
+.btn-soft-success {
+    background: var(--color-success-bg);
+    color: var(--color-success);
+}
+
+.btn-soft-success:hover:not(:disabled) {
+    background: #d3ede1;
+}
+
+/* ========================================
+   DANGER
+   Suppression / action destructive
+======================================== */
+
+.btn-danger {
+    background: var(--color-danger);
+    color: var(--color-text-inverse);
+}
+
+.btn-danger:hover:not(:disabled) {
+    filter: brightness(0.92);
+}
+
+/* ========================================
+   SOFT DANGER
+   Version légère
+======================================== */
+
+.btn-soft-danger {
+    background: var(--color-danger-bg);
+    color: var(--color-danger);
+}
+
+.btn-soft-danger:hover:not(:disabled) {
+    background: #ffede1;
+}
+
+/* ========================================
+   WARNING
+   Action nécessitant attention
+======================================== */
+
+.btn-warning {
+    background: var(--color-warning);
+    color: var(--color-text-inverse);
+}
+
+.btn-warning:hover:not(:disabled) {
+    filter: brightness(0.92);
+}
+
+/* ========================================
+   SOFT WARNING
+   Version légère
+======================================== */
+
+.btn-soft-warning {
+    background: var(--color-warning-bg);
+    color: var(--color-warning);
+}
+
+.btn-soft-warning:hover:not(:disabled) {
+    background: #ffefd9;
+}
+
+/* ========================================
+   DARK
+   Action forte secondaire
+======================================== */
+
+.btn-dark {
+    background: #2f2f2f;
+    color: var(--color-text-inverse);
+}
+
+.btn-dark:hover:not(:disabled) {
+    background: #1f1f1f;
+}
+
+/* ========================================
+   LINK
+   Apparence d'un lien
+======================================== */
+
+.btn-link {
+    min-height: auto;
+    padding: 0;
+
+    background: transparent;
+    border: none;
+
+    color: var(--color-text-primary);
+
+    border-radius: 0;
+}
+
+.btn-link:hover:not(:disabled) {
+    text-decoration: underline;
+}
+
+/* ========================================
+   ICON
+   Bouton carré
+======================================== */
+
+.btn-icon {
+    width: var(--height-button);
+    height: var(--height-button);
+
+    min-width: var(--height-button);
+    padding: 0;
+
+    border-radius: var(--radius-md);
+}
+
+.btn-icon.btn-sm {
+    width: var(--height-button-sm);
+    height: var(--height-button-sm);
+
+    min-width: var(--height-button-sm);
+}
+
+/* ========================================
+   LOADING
+======================================== */
+
+.btn-loading {
+    cursor: wait;
+    pointer-events: none;
+}

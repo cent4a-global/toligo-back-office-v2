@@ -1,0 +1,15 @@
+.confirm-dialog-description {
+    color: var(--color-text-secondary);
+
+    font-size: var(--font-size-sm);
+    line-height: 1.6;
+}
+
+.confirm-dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+
+    gap: var(--space-3);
+
+    margin-top: var(--space-6);
+}
