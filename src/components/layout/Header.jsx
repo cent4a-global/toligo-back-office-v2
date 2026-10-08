@@ -1,4 +1,4 @@
-import { LogOut, Settings } from 'lucide-react'
+import Icon from '../ui/Icon'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth, useLogout } from '../../features/auth/hooks/useAuth'
@@ -24,12 +24,12 @@ function Header({
         {
             label: 'Paramètres',
             superadminOnly: true,
-            icon: <Settings size={18} aria-hidden="true" />,
+            icon: <Icon name="settings" size={18} />,
             onClick: () => navigate('/settings'),
         },
         {
             label: 'Déconnexion',
-            icon: <LogOut size={18} aria-hidden="true" />,
+            icon: <Icon name="sign-out-alt" size={18} />,
             danger: true,
             onClick: () => setConfirmLogoutOpen(true),
         },

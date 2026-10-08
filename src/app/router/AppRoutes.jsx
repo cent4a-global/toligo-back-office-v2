@@ -24,6 +24,9 @@ const Stations = lazy(() => import('../../pages/Stations'))
 const Supervision = lazy(() => import('../../pages/Supervision'))
 const Users = lazy(() => import('../../pages/Users'))
 const Warehouses = lazy(() => import('../../pages/Warehouses'))
+const NotFound = lazy(() => import('../../pages/NotFound'))
+const Unauthorized = lazy(() => import('../../pages/Unauthorized'))
+const Profile = lazy(() => import('../../pages/Profile'))
 
 function AppRoutes() {
     return (
@@ -47,11 +50,13 @@ function AppRoutes() {
                     <Route element={<DashboardLayout />}>
                         <Route path="/" element={<Navigate to="/dashboard" replace />} />
                         <Route path="/dashboard" element={<Dashboard />} />
+                        <Route path="/profile" element={<Profile />} />
                         <Route path="/supervision" element={<Supervision />} />
                         <Route path="/orders" element={<Orders />} />
                         <Route path="/incidents" element={<Incidents />} />
                         <Route path="/payments" element={<Payments />} />
                         <Route path="/missions" element={<Missions />} />
+                        <Route path="/unauthorized" element={<Unauthorized />} />
 
                         <Route element={<RoleRoute allowedRoles={['superadmin']} />}>
                             <Route path="/stations" element={<Stations />} />
@@ -61,9 +66,10 @@ function AppRoutes() {
                             <Route path="/audit-log" element={<AuditLog />} />
                         </Route>
 
-                        <Route path="*" element={<Navigate to="/dashboard" replace />} />
                     </Route>
                 </Route>
+                <Route path="/404" element={<NotFound />} />
+                <Route path="*" element={<NotFound />} />
             </Routes>
         </Suspense>
     )

@@ -21,9 +21,10 @@ function VerifyResetOtpPage() {
         setNotice('')
         const code = new FormData(event.currentTarget).get('code')
         try {
-        const response = await verifyResetOtp({ email, code })
-        if (!response.success) throw new Error(response.message || 'Le code est invalide ou expiré.')
-        navigate('/reset-password')
+            const response = await verifyResetOtp({ email, code })
+            if (!response.success)
+                throw new Error(response.message || 'Le code est invalide ou expiré.')
+            navigate('/reset-password')
         } catch (failure) {
             setError(failure.message || 'Le code est invalide ou expiré.')
         }
@@ -34,7 +35,8 @@ function VerifyResetOtpPage() {
         setNotice('')
         try {
             const response = await resendResetOtp(email)
-            if (!response.success) throw new Error(response.message || 'Impossible de renvoyer le code.')
+            if (!response.success)
+                throw new Error(response.message || 'Impossible de renvoyer le code.')
             setNotice('Un nouveau code vous a été envoyé.')
         } catch (failure) {
             setError(failure.message || 'Impossible de renvoyer le code.')
@@ -46,11 +48,30 @@ function VerifyResetOtpPage() {
             <h1>Vérifiez votre code</h1>
             <p>Saisissez le code envoyé à {email}.</p>
             <form onSubmit={handleVerify}>
-                <Input name="code" label="Code de vérification" autoComplete="one-time-code" inputMode="numeric" required disabled={isVerifying || isResending} />
-                {error && <p className="auth-error" role="alert">{error}</p>}
+                <Input
+                    name="code"
+                    label="Code de vérification"
+                    autoComplete="one-time-code"
+                    inputMode="numeric"
+                    required
+                    disabled={isVerifying || isResending}
+                />
+                {error && (
+                    <p className="auth-error" role="alert">
+                        {error}
+                    </p>
+                )}
                 {notice && <p role="status">{notice}</p>}
-                <Button type="submit" loading={isVerifying} disabled={isResending}>Vérifier le code</Button>
-                <Button onClick={handleResend} variant="ghost" loading={isResending} disabled={isVerifying}>Renvoyer le code</Button>
+                <Button type="submit" loading={isVerifying} disabled={isResending}>
+                    Vérifier le code
+                </Button>
+                <Button
+                    onClick={handleResend}
+                    variant="ghost"
+                    loading={isResending}
+                    disabled={isVerifying}>
+                    Renvoyer le code
+                </Button>
             </form>
             <Link to="/login">Retour à la connexion</Link>
         </section>

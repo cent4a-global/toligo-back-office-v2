@@ -19,4 +19,16 @@
 @import "./layouts/header.css";
 @import "./layouts/auth-layout.css";
 @import "./layouts/dashboard-layout.css";
-@import '../App.css'
+@import '../App.css';
+
+.flaticon-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+header .flaticon-icon {
+    margin-top: 0;
+}

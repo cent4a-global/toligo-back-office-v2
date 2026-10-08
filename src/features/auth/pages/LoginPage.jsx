@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Eye, EyeOff } from 'lucide-react'
+import Icon from '../../../components/ui/Icon'
 import { Link, useNavigate } from 'react-router-dom'
 
 import { useLogin } from '../hooks/useAuth'
@@ -82,7 +82,7 @@ function LoginPage() {
                         aria-label={showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'}
                         aria-controls="password"
                         title={showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'}>
-                        {showPassword ? <EyeOff size={20} aria-hidden="true" /> : <Eye size={20} aria-hidden="true" />}
+                        {showPassword ? <Icon name="eye-crossed" size={20} /> : <Icon name="eye" size={20} />}
                     </button>
                 </div>
 

@@ -190,6 +190,7 @@
 }
 
 .sidebar-footer-user {
+    cursor: pointer;
     display: flex;
     align-items: center;
     gap: var(--space-3);
@@ -199,6 +200,16 @@
     border-radius: var(--radius-xl);
 
     background: var(--color-brand-hover);
+}
+
+.sidebar-footer-user:hover,
+.sidebar-footer-user.active {
+    background: var(--color-bg-active);
+}
+
+.sidebar-footer-user:focus-visible {
+    outline: 2px solid var(--color-text-inverse);
+    outline-offset: 2px;
 }
 
 /* ========================================
@@ -289,14 +300,22 @@
     }
 }
 
-
-
-.sidebar-close, .sidebar-backdrop { display: none; }
+.sidebar-close,
+.sidebar-backdrop {
+    display: none;
+}
 
 @media (min-width: 701px) {
-    .sidebar { overflow-x: clip; }
-    .sidebar-brand { height: 96px; flex-shrink: 0; }
-    .sidebar-brand-name { flex-shrink: 0; }
+    .sidebar {
+        overflow-x: clip;
+    }
+    .sidebar-brand {
+        height: 96px;
+        flex-shrink: 0;
+    }
+    .sidebar-brand-name {
+        flex-shrink: 0;
+    }
     .sidebar-role {
         width: var(--sidebar-width);
         height: 96px;
@@ -309,18 +328,25 @@
         flex-shrink: 0;
         overflow: hidden;
     }
-    .sidebar-link-icon { margin-right: var(--space-3); }
+    .sidebar-link-icon {
+        margin-right: var(--space-3);
+    }
     .sidebar-footer-user {
         justify-content: flex-start;
         padding: var(--space-3) var(--space-2);
         overflow: hidden;
         height: 64px;
     }
-    .sidebar-collapsed { width: var(--sidebar-collapsed-width); }
+    .sidebar-collapsed {
+        width: var(--sidebar-collapsed-width);
+    }
     .sidebar-collapsed .sidebar-brand-name,
     .sidebar-collapsed .sidebar-role,
     .sidebar-collapsed .sidebar-link-label,
-    .sidebar-collapsed .sidebar-user-info { visibility: hidden; pointer-events: none; }
+    .sidebar-collapsed .sidebar-user-info {
+        visibility: hidden;
+        pointer-events: none;
+    }
 }
 
 @media (max-width: 700px) {
@@ -334,8 +360,13 @@
         /* Hide immediately at the mobile breakpoint; do not animate visibility. */
         transition: none;
     }
-    .sidebar-open { visibility: visible; transform: translateX(0); }
-    .sidebar-brand { padding-right: 48px; }
+    .sidebar-open {
+        visibility: visible;
+        transform: translateX(0);
+    }
+    .sidebar-brand {
+        padding-right: 48px;
+    }
     .sidebar-close {
         display: flex;
         position: absolute;
@@ -351,8 +382,12 @@
         color: var(--color-text-inverse);
         cursor: pointer;
     }
-    .sidebar-close:hover { background: var(--color-brand-hover); }
-    .sidebar-close:focus-visible { outline: 2px solid var(--color-text-inverse); }
+    .sidebar-close:hover {
+        background: var(--color-brand-hover);
+    }
+    .sidebar-close:focus-visible {
+        outline: 2px solid var(--color-text-inverse);
+    }
     .sidebar-backdrop {
         display: block;
         position: fixed;
@@ -365,7 +400,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .sidebar { transition: none; }
+    .sidebar {
+        transition: none;
+    }
 }
 
 .sidebar-collapse-button {
@@ -408,28 +445,45 @@
     gap: var(--space-1);
     overflow: hidden;
 }
-.sidebar-brand-name { white-space: nowrap; }
-.sidebar-collapse-button { margin-left: 0; }
+.sidebar-brand-name {
+    white-space: nowrap;
+}
+.sidebar-collapse-button {
+    margin-left: 0;
+}
 @media (min-width: 701px) {
     .sidebar-collapsed .sidebar-brand {
         grid-template-columns: 32px;
         justify-content: center;
         padding-inline: 0;
     }
-    .sidebar-collapsed .sidebar-brand-identity { display: none; }
+    .sidebar-collapsed .sidebar-brand-identity {
+        display: none;
+    }
 }
 @media (max-width: 700px) {
-    .sidebar-brand { grid-template-columns: minmax(0, 1fr); padding-right: 48px; }
-    .sidebar-collapse-button { display: none; }
+    .sidebar-brand {
+        grid-template-columns: minmax(0, 1fr);
+        padding-right: 48px;
+    }
+    .sidebar-collapse-button {
+        display: none;
+    }
 }
 
 /* Animate explicit toggles only, never a responsive layout change. */
 @media (min-width: 701px) {
-    .sidebar.sidebar-animating { transition: width 180ms ease; }
+    .sidebar.sidebar-animating {
+        transition: width 180ms ease;
+    }
 }
 @media (max-width: 700px) {
-    .sidebar.sidebar-animating { transition: transform 180ms ease; }
+    .sidebar.sidebar-animating {
+        transition: transform 180ms ease;
+    }
 }
 @media (prefers-reduced-motion: reduce) {
-    .sidebar.sidebar-animating { transition: none; }
+    .sidebar.sidebar-animating {
+        transition: none;
+    }
 }

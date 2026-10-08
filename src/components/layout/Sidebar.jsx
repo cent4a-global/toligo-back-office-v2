@@ -1,4 +1,4 @@
-import { PanelLeftClose, PanelLeftOpen } from 'lucide-react'
+import Icon from '../ui/Icon'
 import { NavLink } from 'react-router-dom'
 import { useAuth } from '../../features/auth/hooks/useAuth'
 
@@ -10,8 +10,18 @@ const navigationItems = [
     { label: 'Incidents', to: '/incidents', icon: 'fi-rr-triangle-warning' },
     { label: 'Paiements', to: '/payments', icon: 'fi-rr-credit-card' },
     { label: 'Stations et drones', to: '/stations', icon: 'fi-rr-drone', superadminOnly: true },
-    { label: 'Entrepôts et box', to: '/warehouses', icon: 'fi-rr-warehouse-alt', superadminOnly: true },
-    { label: 'Formats et paramètres', to: '/settings', icon: 'fi-rr-settings', superadminOnly: true },
+    {
+        label: 'Entrepôts et box',
+        to: '/warehouses',
+        icon: 'fi-rr-warehouse-alt',
+        superadminOnly: true,
+    },
+    {
+        label: 'Options et paramètres',
+        to: '/settings',
+        icon: 'fi-rr-settings',
+        superadminOnly: true,
+    },
     { label: 'Utilisateurs et rôles', to: '/users', icon: 'fi-rr-users', superadminOnly: true },
     { label: "Journal d'audit", to: '/audit-log', icon: 'fi-rr-document', superadminOnly: true },
 ]
@@ -38,14 +48,22 @@ function Sidebar({
     const { admin } = useAuth()
     const currentUser = user ?? admin ?? {}
     const userName = currentUser.name || currentUser.email || 'Mon compte'
-    const items = navigationItems.filter(item => !item.superadminOnly || currentUser.role === 'superadmin')
+    const items = navigationItems.filter(
+        item => !item.superadminOnly || currentUser.role === 'superadmin',
+    )
 
     const roleLabel = currentUser.role === 'superadmin' ? 'Superadmin' : currentUser.role
 
     return (
-        <aside id="main-sidebar" className={`sidebar${animating ? ' sidebar-animating' : ''}${collapsed ? ' sidebar-collapsed' : ''}${mobileOpen ? ' sidebar-open' : ''}`}>
+        <aside
+            id="main-sidebar"
+            className={`sidebar${animating ? ' sidebar-animating' : ''}${collapsed ? ' sidebar-collapsed' : ''}${mobileOpen ? ' sidebar-open' : ''}`}>
             {/* BRAND */}
-            <button type="button" className="sidebar-close" onClick={onClose} aria-label="Fermer le menu">
+            <button
+                type="button"
+                className="sidebar-close"
+                onClick={onClose}
+                aria-label="Fermer le menu">
                 <i className="fi fi-rr-cross" aria-hidden="true" />
             </button>
             <div className="sidebar-brand">
@@ -60,7 +78,11 @@ function Sidebar({
                     aria-expanded={!collapsed}
                     aria-label={collapsed ? 'Développer la sidebar' : 'Réduire la sidebar'}
                     title={collapsed ? 'Développer la sidebar' : 'Réduire la sidebar'}>
-                    {collapsed ? <PanelLeftOpen size={18} aria-hidden="true" /> : <PanelLeftClose size={18} aria-hidden="true" />}
+                    {collapsed ? (
+                        <Icon name="angle-square-right" size={15} />
+                    ) : (
+                        <Icon name="angle-square-left" size={15} />
+                    )}
                 </button>
             </div>
             {/* NAVIGATION */}
@@ -93,15 +115,22 @@ function Sidebar({
 
             {/* USER */}
             <div className="sidebar-footer">
-                <div className="sidebar-footer-user">
-                    <div className="sidebar-user-avatar" title={userName}>{getInitials(userName)}</div>
+                <NavLink
+                    to="/profile"
+                    className="sidebar-footer-user"
+                    onClick={onClose}
+                    aria-label="Consulter mon profil"
+                    title="Mon profil">
+                    <div className="sidebar-user-avatar" title={userName}>
+                        {getInitials(userName)}
+                    </div>
 
                     <div className="sidebar-user-info">
                         <span className="sidebar-user-name">{userName}</span>
 
                         <span className="sidebar-user-role">{roleLabel}</span>
                     </div>
-                </div>
+                </NavLink>
             </div>
         </aside>
     )

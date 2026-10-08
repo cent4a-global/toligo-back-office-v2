@@ -60,6 +60,7 @@ export function useConfirmResetPassword() {
         onSuccess: response => {
             if (response.success) {
                 removeResetEmail()
+                
             }
         },
     })
