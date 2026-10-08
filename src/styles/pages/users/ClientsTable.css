@@ -1,0 +1,9 @@
+.clients-table { width: 100%; }
+.client-identity { display: flex; flex-direction: column; gap: var(--space-1); }
+.client-identity strong { color: var(--color-text-primary); font-weight: var(--font-weight-semibold); }
+.client-identity span { color: var(--color-text-secondary); font-size: var(--font-size-xs); }
+.client-status { font-weight: var(--font-weight-semibold); white-space: nowrap; }
+.client-status-active { color: var(--color-success); }
+.client-status-inactive { color: var(--color-danger); }
+.client-count { display: inline-flex; justify-content: center; min-width: 30px; padding: var(--space-1) var(--space-2); border-radius: var(--radius-md); background: var(--color-bg-hover); font-weight: var(--font-weight-semibold); }
+.client-createdAt { color: var(--color-text-secondary); white-space: nowrap; }
