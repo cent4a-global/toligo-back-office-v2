@@ -1,93 +1,20 @@
 import { PanelLeftClose, PanelLeftOpen } from 'lucide-react'
 import { NavLink } from 'react-router-dom'
+import { useAuth } from '../../features/auth/hooks/useAuth'
 
-const navigationByRole = {
-    superadmin: [
-        {
-            label: 'Tableau de bord',
-            to: '/dashboard',
-            icon: 'fi-rr-apps',
-        },
-        {
-            label: 'Supervision',
-            to: '/supervision',
-            icon: 'fi-rr-eye',
-        },
-        {
-            label: 'Commandes',
-            to: '/orders',
-            icon: 'fi-rr-shopping-cart',
-        },
-        {
-            label: 'Incidents',
-            to: '/incidents',
-            icon: 'fi-rr-triangle-warning',
-        },
-        {
-            label: 'Paiements',
-            to: '/payments',
-            icon: 'fi-rr-credit-card',
-        },
-        {
-            label: 'Stations et drones',
-            to: '/stations',
-            icon: 'fi-rr-drone',
-        },
-        {
-            label: 'Entrepôts et box',
-            to: '/warehouses',
-            icon: 'fi-rr-warehouse-alt',
-        },
-        {
-            label: 'Formats et paramètres',
-            to: '/settings',
-            icon: 'fi-rr-settings',
-        },
-        {
-            label: 'Utilisateurs et rôles',
-            to: '/users',
-            icon: 'fi-rr-users',
-        },
-        {
-            label: "Journal d'audit",
-            to: '/audit-log',
-            icon: 'fi-rr-document',
-        },
-    ],
-
-    operator: [
-        {
-            label: 'Supervision',
-            to: '/supervision',
-            icon: 'fi-rr-eye',
-        },
-        {
-            label: 'Commandes',
-            to: '/orders',
-            icon: 'fi-rr-shopping-cart',
-        },
-        {
-            label: 'Missions et livreurs',
-            to: '/missions',
-            icon: 'fi-rr-motorcycle',
-        },
-        {
-            label: 'Incidents',
-            to: '/incidents',
-            icon: 'fi-rr-triangle-warning',
-        },
-        {
-            label: 'Paiements',
-            to: '/payments',
-            icon: 'fi-rr-credit-card',
-        },
-    ],
-}
-
-const roleLabels = {
-    superadmin: 'Superadmin',
-    operator: 'Opérateur',
-}
+const navigationItems = [
+    { label: 'Tableau de bord', to: '/dashboard', icon: 'fi-rr-apps' },
+    { label: 'Supervision', to: '/supervision', icon: 'fi-rr-eye' },
+    { label: 'Commandes', to: '/orders', icon: 'fi-rr-shopping-cart' },
+    { label: 'Missions et livreurs', to: '/missions', icon: 'fi-rr-motorcycle' },
+    { label: 'Incidents', to: '/incidents', icon: 'fi-rr-triangle-warning' },
+    { label: 'Paiements', to: '/payments', icon: 'fi-rr-credit-card' },
+    { label: 'Stations et drones', to: '/stations', icon: 'fi-rr-drone', superadminOnly: true },
+    { label: 'Entrepôts et box', to: '/warehouses', icon: 'fi-rr-warehouse-alt', superadminOnly: true },
+    { label: 'Formats et paramètres', to: '/settings', icon: 'fi-rr-settings', superadminOnly: true },
+    { label: 'Utilisateurs et rôles', to: '/users', icon: 'fi-rr-users', superadminOnly: true },
+    { label: "Journal d'audit", to: '/audit-log', icon: 'fi-rr-document', superadminOnly: true },
+]
 
 function getInitials(name = '') {
     return name
@@ -99,10 +26,7 @@ function getInitials(name = '') {
 }
 
 function Sidebar({
-    user = {
-        name: 'Kouamé Diallo',
-        role: 'superadmin',
-    },
+    user,
 
     currentPath = window.location.pathname,
     collapsed = false,
@@ -111,9 +35,12 @@ function Sidebar({
     onClose,
     onToggleCollapse,
 }) {
-    const items = navigationByRole[user.role] ?? []
+    const { admin } = useAuth()
+    const currentUser = user ?? admin ?? {}
+    const userName = currentUser.name || currentUser.email || 'Mon compte'
+    const items = navigationItems.filter(item => !item.superadminOnly || currentUser.role === 'superadmin')
 
-    const roleLabel = roleLabels[user.role] ?? user.role
+    const roleLabel = currentUser.role === 'superadmin' ? 'Superadmin' : currentUser.role
 
     return (
         <aside id="main-sidebar" className={`sidebar${animating ? ' sidebar-animating' : ''}${collapsed ? ' sidebar-collapsed' : ''}${mobileOpen ? ' sidebar-open' : ''}`}>
@@ -136,14 +63,6 @@ function Sidebar({
                     {collapsed ? <PanelLeftOpen size={18} aria-hidden="true" /> : <PanelLeftClose size={18} aria-hidden="true" />}
                 </button>
             </div>
-
-            {/* ROLE */}
-            <div className="sidebar-role">
-                <span className="sidebar-role-label">Connecté en tant que</span>
-
-                <div className="sidebar-role-value">{roleLabel}</div>
-            </div>
-
             {/* NAVIGATION */}
             <nav className="sidebar-navigation" aria-label="Navigation principale">
                 <div className="sidebar-links">
@@ -175,10 +94,10 @@ function Sidebar({
             {/* USER */}
             <div className="sidebar-footer">
                 <div className="sidebar-footer-user">
-                    <div className="sidebar-user-avatar">{getInitials(user.name)}</div>
+                    <div className="sidebar-user-avatar" title={userName}>{getInitials(userName)}</div>
 
                     <div className="sidebar-user-info">
-                        <span className="sidebar-user-name">{user.name}</span>
+                        <span className="sidebar-user-name">{userName}</span>
 
                         <span className="sidebar-user-role">{roleLabel}</span>
                     </div>

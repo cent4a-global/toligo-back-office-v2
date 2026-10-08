@@ -73,3 +73,37 @@
 .login-submit {
     width: 100%;
 }
+
+.login-password-field {
+    position: relative;
+}
+
+.login-password-field .form-input {
+    padding-right: calc(var(--height-input) + var(--space-2));
+}
+
+.login-password-toggle {
+    position: absolute;
+    right: var(--space-1);
+    bottom: var(--space-1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(var(--height-input) - var(--space-2));
+    height: calc(var(--height-input) - var(--space-2));
+    border: 0;
+    border-radius: var(--radius-md);
+    background: transparent;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+}
+
+.login-password-toggle:hover {
+    background: var(--color-bg-hover);
+    color: var(--color-text-primary);
+}
+
+.login-password-toggle:focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: -2px;
+}

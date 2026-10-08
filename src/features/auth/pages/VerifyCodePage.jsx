@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 
 import { useAuth, useResendCode, useVerifyCode } from '../hooks/useAuth'
 
@@ -10,13 +10,17 @@ import Button from '../../../components/ui/Button'
 function VerifyCodePage() {
     const navigate = useNavigate()
 
-    const { tempEmail } = useAuth()
+    const { tempEmail, isAuthenticated } = useAuth()
 
     const { verifyCode, isVerifying, verifyError } = useVerifyCode()
 
-    const { resendCode, isResending } = useResendCode()
+    const { resendCode, isResending, resendError } = useResendCode()
 
     const [code, setCode] = useState('')
+    const [notice, setNotice] = useState('')
+
+    if (isAuthenticated) return <Navigate to="/dashboard" replace />
+    if (!tempEmail) return <Navigate to="/login" replace />
 
     const handleSubmit = async event => {
         event.preventDefault()
@@ -33,7 +37,7 @@ function VerifyCodePage() {
             })
 
             if (response.success) {
-                navigate('/dashboard')
+                navigate('/dashboard', { replace: true })
             }
         } catch {
             // erreur disponible dans verifyError
@@ -48,6 +52,7 @@ function VerifyCodePage() {
 
         try {
             await resendCode(tempEmail)
+            setNotice('Un nouveau code vous a été envoyé.')
         } catch {
             // gérer plus tard avec toast
         }
@@ -65,6 +70,8 @@ function VerifyCodePage() {
 
             <form className="verify-code-form" onSubmit={handleSubmit}>
                 {verifyError && <div className="verify-code-error">{verifyError.message}</div>}
+                {resendError && <div className="verify-code-error" role="alert">{resendError.message}</div>}
+                {notice && <p role="status">{notice}</p>}
 
                 <Input
                     label="Code de vérification"
@@ -72,6 +79,8 @@ function VerifyCodePage() {
                     value={code}
                     onChange={event => setCode(event.target.value)}
                     placeholder="000000"
+                    autoComplete="one-time-code"
+                    inputMode="numeric"
                     required
                 />
 

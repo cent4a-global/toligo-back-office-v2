@@ -1,18 +1,39 @@
+import { LogOut, Settings } from 'lucide-react'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useAuth, useLogout } from '../../features/auth/hooks/useAuth'
+import ConfirmDialog from '../ui/ConfirmDialog'
+
 function Header({
-    user = {
-        name: 'Kouamé Diallo',
-        role: 'superadmin',
-    },
     onMenuClick,
     mobileOpen = false,
     menuButtonRef,
 }) {
-    const roleLabels = {
-        superadmin: 'Superadmin',
-        operator: 'Opérateur',
+    const navigate = useNavigate()
+    const { role } = useAuth()
+    const { logout } = useLogout()
+    const [confirmLogoutOpen, setConfirmLogoutOpen] = useState(false)
+
+    const handleConfirmLogout = () => {
+        setConfirmLogoutOpen(false)
+        logout()
+        navigate('/login', { replace: true })
     }
 
-    const roleLabel = roleLabels[user.role] ?? user.role
+    const userActions = [
+        {
+            label: 'Paramètres',
+            superadminOnly: true,
+            icon: <Settings size={18} aria-hidden="true" />,
+            onClick: () => navigate('/settings'),
+        },
+        {
+            label: 'Déconnexion',
+            icon: <LogOut size={18} aria-hidden="true" />,
+            danger: true,
+            onClick: () => setConfirmLogoutOpen(true),
+        },
+    ].filter(action => !action.superadminOnly || role === 'superadmin')
 
     return (
         <header className="header">
@@ -37,21 +58,29 @@ function Header({
 
                 <div className="header-divider" />
 
-                <div className="header-user">
-                    <div className="header-user-info">
-                        <span className="header-user-name">{user.name}</span>
-
-                        <span className="header-user-role">{roleLabel}</span>
-                    </div>
-
-                    <button
-                        type="button"
-                        className="header-user-button"
-                        aria-label="Menu utilisateur">
-                        <i className="fi fi-rr-angle-small-down" aria-hidden="true" />
-                    </button>
+                <div className="header-desktop-actions">
+                    {userActions.map(action => (
+                        <button
+                            key={action.label}
+                            type="button"
+                            className={`header-text-button${action.danger ? ' header-text-button-danger' : ''}`}
+                            aria-label={action.label}
+                            title={action.label}
+                            onClick={action.onClick}>
+                            {action.icon}
+                        </button>
+                    ))}
                 </div>
             </div>
+            <ConfirmDialog
+                open={confirmLogoutOpen}
+                onClose={() => setConfirmLogoutOpen(false)}
+                onConfirm={handleConfirmLogout}
+                title="Confirmer la déconnexion"
+                description="Voulez-vous vous déconnecter de votre compte ?"
+                confirmLabel="Se déconnecter"
+                cancelLabel="Annuler"
+            />
         </header>
     )
 }

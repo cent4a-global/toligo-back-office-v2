@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-
 import { login, verifyCode, resendCode } from '../api/auth.api'
 
 import {
@@ -17,9 +16,9 @@ export function useLogin() {
     const mutation = useMutation({
         mutationFn: login,
 
-        onSuccess: response => {
-            if (response.success && response.data?.email) {
-                saveTempEmail(response.data.email)
+        onSuccess: (response, credentials) => {
+            if (response.success) {
+                saveTempEmail(response.data?.email || credentials.email)
             }
         },
     })
@@ -36,7 +35,13 @@ export function useVerifyCode() {
     const queryClient = useQueryClient()
 
     const mutation = useMutation({
-        mutationFn: verifyCode,
+        mutationFn: async credentials => {
+            const response = await verifyCode(credentials)
+            if (response.success && !response.data?.token) {
+                throw new Error('Le serveur n’a pas fourni de jeton de connexion.')
+            }
+            return response
+        },
 
         onSuccess: response => {
             if (!response.success || !response.data?.token) {

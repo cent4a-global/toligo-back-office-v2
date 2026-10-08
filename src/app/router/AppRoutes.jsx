@@ -4,6 +4,9 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import Spinner from '../../components/ui/Spinner'
 import AuthLayout from '../../layouts/AuthLayout'
 import DashboardLayout from '../../layouts/DashboardLayout'
+import ProtectedRoute from './ProtectedRoute'
+import PublicRoute from './PublicRoute'
+import RoleRoute from './RoleRoute'
 
 const AuditLog = lazy(() => import('../../pages/AuditLog'))
 const Dashboard = lazy(() => import('../../pages/Dashboard'))
@@ -31,27 +34,35 @@ function AppRoutes() {
                 </div>
             }>
             <Routes>
-                <Route element={<AuthLayout />}>
-                    <Route path="/login" element={<LoginPage />} />
-                    <Route path="/verify-code" element={<VerifyCodePage />} />
-                    <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-                    <Route path="/verify-reset-otp" element={<VerifyResetOtpPage />} />
-                    <Route path="/reset-password" element={<ResetPasswordPage />} />
+                <Route element={<PublicRoute />}>
+                    <Route element={<AuthLayout />}>
+                        <Route path="/login" element={<LoginPage />} />
+                        <Route path="/verify-code" element={<VerifyCodePage />} />
+                        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+                        <Route path="/verify-reset-otp" element={<VerifyResetOtpPage />} />
+                        <Route path="/reset-password" element={<ResetPasswordPage />} />
+                    </Route>
                 </Route>
-                <Route element={<DashboardLayout />}>
-                    <Route path="/" element={<Navigate to="/dashboard" replace />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="/supervision" element={<Supervision />} />
-                    <Route path="/orders" element={<Orders />} />
-                    <Route path="/incidents" element={<Incidents />} />
-                    <Route path="/payments" element={<Payments />} />
-                    <Route path="/stations" element={<Stations />} />
-                    <Route path="/warehouses" element={<Warehouses />} />
-                    <Route path="/settings" element={<Settings />} />
-                    <Route path="/users" element={<Users />} />
-                    <Route path="/audit-log" element={<AuditLog />} />
-                    <Route path="/missions" element={<Missions />} />
-                    <Route path="*" element={<Navigate to="/dashboard" replace />} />
+                <Route element={<ProtectedRoute />}>
+                    <Route element={<DashboardLayout />}>
+                        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+                        <Route path="/dashboard" element={<Dashboard />} />
+                        <Route path="/supervision" element={<Supervision />} />
+                        <Route path="/orders" element={<Orders />} />
+                        <Route path="/incidents" element={<Incidents />} />
+                        <Route path="/payments" element={<Payments />} />
+                        <Route path="/missions" element={<Missions />} />
+
+                        <Route element={<RoleRoute allowedRoles={['superadmin']} />}>
+                            <Route path="/stations" element={<Stations />} />
+                            <Route path="/warehouses" element={<Warehouses />} />
+                            <Route path="/settings" element={<Settings />} />
+                            <Route path="/users" element={<Users />} />
+                            <Route path="/audit-log" element={<AuditLog />} />
+                        </Route>
+
+                        <Route path="*" element={<Navigate to="/dashboard" replace />} />
+                    </Route>
                 </Route>
             </Routes>
         </Suspense>

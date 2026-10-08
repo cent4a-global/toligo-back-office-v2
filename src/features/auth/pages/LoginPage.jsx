@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Eye, EyeOff } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import { useLogin } from '../hooks/useAuth'
@@ -10,6 +11,7 @@ function LoginPage() {
     const navigate = useNavigate()
 
     const { login, isLoggingIn, loginError } = useLogin()
+    const [showPassword, setShowPassword] = useState(false)
 
     const [form, setForm] = useState({
         email: '',
@@ -62,15 +64,27 @@ function LoginPage() {
                     required
                 />
 
-                <Input
-                    label="Mot de passe"
-                    name="password"
-                    type="password"
-                    value={form.password}
-                    onChange={handleChange}
-                    placeholder="Votre mot de passe"
-                    required
-                />
+                <div className="login-password-field">
+                    <Input
+                        label="Mot de passe"
+                        name="password"
+                        type={showPassword ? 'text' : 'password'}
+                        value={form.password}
+                        onChange={handleChange}
+                        placeholder="Votre mot de passe"
+                        autoComplete="current-password"
+                        required
+                    />
+                    <button
+                        type="button"
+                        className="login-password-toggle"
+                        onClick={() => setShowPassword(previous => !previous)}
+                        aria-label={showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'}
+                        aria-controls="password"
+                        title={showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'}>
+                        {showPassword ? <EyeOff size={20} aria-hidden="true" /> : <Eye size={20} aria-hidden="true" />}
+                    </button>
+                </div>
 
                 <div className="login-options">
                     <Link to="/forgot-password" className="login-forgot-link">
