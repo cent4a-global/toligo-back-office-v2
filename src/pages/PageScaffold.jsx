@@ -1,5 +1,4 @@
 import PageHeader from '../components/ui/PageHeader'
-import './pages.css'
 
 function PageScaffold({ title, description }) {
     return (

@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router-dom'
+import { ChartNoAxesCombined, ShieldCheck } from 'lucide-react'
 
 function AuthLayout() {
     return (
@@ -27,9 +28,7 @@ function AuthLayout() {
 
                     <div className="auth-preview" aria-hidden="true">
                         <div className="auth-preview-top">
-                            <span className="auth-preview-dot" />
-                            <span className="auth-preview-dot" />
-                            <span className="auth-preview-dot" />
+                            <ChartNoAxesCombined size={16} />
                             <span className="auth-preview-title">Vue d’ensemble</span>
                         </div>
                         <div className="auth-preview-body">
@@ -51,7 +50,10 @@ function AuthLayout() {
                     </div>
                 </div>
 
-                <p className="auth-aside-footer">La simplicité au service de votre réseau.</p>
+                <p className="auth-aside-footer">
+                    <ShieldCheck size={16} aria-hidden="true" />
+                    La simplicité au service de votre réseau.
+                </p>
             </aside>
 
             <main className="auth-main">

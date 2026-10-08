@@ -1,0 +1,53 @@
+/* Styles de la page de verification du code. */
+.verify-code-page {
+    width: 100%;
+}
+
+.verify-code-header {
+    margin-bottom: var(--space-8);
+}
+
+.verify-code-header h1 {
+    margin-bottom: var(--space-2);
+
+    color: var(--color-text-primary);
+
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+}
+
+.verify-code-header p {
+    color: var(--color-text-secondary);
+
+    font-size: var(--font-size-sm);
+}
+
+.verify-code-email {
+    display: block;
+
+    margin-top: var(--space-2);
+
+    color: var(--color-text-primary);
+
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+}
+
+.verify-code-form {
+    display: flex;
+    flex-direction: column;
+
+    gap: var(--space-5);
+}
+
+.verify-code-error {
+    padding: var(--space-3) var(--space-4);
+
+    border: 1px solid var(--color-danger);
+    border-radius: var(--radius-md);
+
+    background: var(--color-danger-bg);
+    color: var(--color-danger);
+
+    font-size: var(--font-size-sm);
+}

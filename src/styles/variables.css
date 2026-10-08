@@ -1,3 +1,10 @@
+@import './pages/pages.css';
+@import './pages/auth/LoginPage.css';
+@import './pages/auth/VerifyCodePage.css';
+@import './pages/auth/ForgotPasswordPage.css';
+@import './pages/auth/VerifyResetOtpPage.css';
+@import './pages/auth/ResetPasswordPage.css';
+
 :root {
     /* ========================================
        BRAND
@@ -97,7 +104,7 @@
        TYPOGRAPHY
     ======================================== */
 
-    --font-family-base: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-family-base: 'Sora', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
     /* Font sizes */
 

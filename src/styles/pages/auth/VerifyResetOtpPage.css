@@ -1,0 +1,7 @@
+.verify-reset-otp-page { width: 100%; }
+.verify-reset-otp-page h1 { margin-bottom: var(--space-2); color: var(--color-text-primary); font-size: var(--font-size-2xl); }
+.verify-reset-otp-page > p { margin-bottom: var(--space-8); color: var(--color-text-secondary); line-height: 1.6; overflow-wrap: anywhere; }
+.verify-reset-otp-page form { display: flex; flex-direction: column; gap: var(--space-5); }
+.verify-reset-otp-page .auth-error { padding: var(--space-3); border: 1px solid var(--color-danger); border-radius: var(--radius-md); background: var(--color-danger-bg); color: var(--color-danger); }
+.verify-reset-otp-page > a { display: inline-block; margin-top: var(--space-6); color: var(--color-text-secondary); }
+.verify-reset-otp-page > a:hover { color: var(--color-text-primary); text-decoration: underline; }
