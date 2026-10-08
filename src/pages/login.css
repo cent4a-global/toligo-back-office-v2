@@ -1,0 +1,132 @@
+.login-page {
+    width: 100%;
+}
+
+.login-heading {
+    margin-bottom: 36px;
+}
+
+.login-heading h2 {
+    margin-top: 12px;
+    color: var(--color-text-primary);
+    font-family: 'Sora', sans-serif;
+    font-size: clamp(28px, 4vw, 34px);
+    font-weight: 650;
+    letter-spacing: -1.3px;
+    line-height: 1.2;
+}
+
+.login-heading p {
+    margin-top: 10px;
+    color: var(--color-text-secondary);
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.login-input-wrap {
+    position: relative;
+}
+
+.login-input-wrap > svg {
+    position: absolute;
+    z-index: 1;
+    top: 43px;
+    left: 15px;
+    color: var(--color-text-muted);
+    pointer-events: none;
+}
+
+.login-input-wrap .form-input {
+    height: 54px;
+    padding-right: 46px;
+    padding-left: 44px;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+.login-input-wrap .form-label {
+    margin-bottom: 1px;
+    font-size: 13px;
+}
+
+.login-password-toggle {
+    position: absolute;
+    top: 39px;
+    right: 10px;
+    display: grid;
+    width: 34px;
+    height: 34px;
+    place-items: center;
+    border: 0;
+    border-radius: 7px;
+    background: transparent;
+    color: var(--color-text-muted);
+    cursor: pointer;
+}
+
+.login-password-toggle:hover {
+    background: var(--color-bg-hover);
+    color: var(--color-text-primary);
+}
+
+.login-password-toggle:focus-visible,
+.login-remember input:focus-visible {
+    outline: 3px solid rgba(124, 174, 57, 0.3);
+    outline-offset: 2px;
+}
+
+.login-remember {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    gap: 10px;
+    margin-top: -5px;
+    color: var(--color-text-secondary);
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.login-remember input {
+    width: 16px;
+    height: 16px;
+    accent-color: #557f20;
+    cursor: pointer;
+}
+
+.login-submit {
+    width: 100%;
+    min-height: 52px;
+    margin-top: 2px;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+.login-notice {
+    margin-top: -6px;
+    color: var(--color-danger);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.login-help {
+    margin-top: 32px;
+    color: var(--color-text-muted);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.login-help span {
+    color: var(--color-text-secondary);
+}
+
+@media (max-width: 700px) {
+    .login-heading {
+        margin-bottom: 30px;
+    }
+}

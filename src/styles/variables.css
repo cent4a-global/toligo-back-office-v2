@@ -128,7 +128,8 @@
        LAYOUT
     ======================================== */
 
-    --sidebar-width: 352px;
+    --sidebar-width: 280px;
+    --sidebar-collapsed-width: 80px;
 
     --header-height: 72px;
 

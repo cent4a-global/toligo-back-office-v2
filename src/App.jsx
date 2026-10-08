@@ -16,6 +16,8 @@ import Tabs from './components/ui/Tabs'
 import Dropdown from './components/ui/Dropdown'
 import Pagination from './components/ui/Pagination'
 import ConfirmDialog from './components/ui/ConfirmDialog'
+import Sidebar from './components/layout/Sidebar'
+import Header from './components/layout/Header'
 
 const App = () => {
     const [modalOpen, setModalOpen] = useState(false)
@@ -129,6 +131,8 @@ const App = () => {
 
     return (
         <main className="ui-demo">
+            <Sidebar />
+            <Header />
             {/* ========================================
                 PAGE HEADER
             ======================================== */}
@@ -195,12 +199,6 @@ const App = () => {
                         <Button variant="secondary">Secondary</Button>
 
                         <Button variant="outline">Outline</Button>
-
-                        <Button variant="ghost">Ghost</Button>
-
-                        <Button variant="success">Success</Button>
-
-                        <Button variant="danger">Danger</Button>
 
                         <Button variant="warning">Warning</Button>
 

@@ -1,0 +1,3 @@
+Créer les composants ui et le layout du dashboard 
+
+il reste celui de auth 
