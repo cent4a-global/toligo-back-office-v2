@@ -41,6 +41,9 @@
 @import './pages/warehouses/WarehousesPage.css';
 @import './pages/profile.css';
 @import './components/scrollbar.css';
+@import './pages/zones/ZonesTable.css';
+@import './pages/zones/ZoneFormModal.css';
+@import './pages/zones/ZonesPage.css';
 @import './motion.css';
 
 .flaticon-icon {

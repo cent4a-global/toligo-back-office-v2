@@ -1,0 +1,65 @@
+.zone-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+}
+
+.zone-error {
+    display: block;
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+    background: var(--color-danger-bg);
+    color: var(--color-danger);
+    font-size: var(--font-size-sm);
+}
+
+.zone-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: var(--space-4);
+}
+
+.zone-form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: var(--space-3);
+
+    padding-top: var(--space-2);
+}
+
+@media (max-width: 600px) {
+    .zone-form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .zone-form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .zone-form-actions .btn {
+        width: 100%;
+    }
+}
+.zone-polygon { border: 0; padding: 0; min-width: 0; }
+.zone-polygon-modes { display: flex; gap: 4px; background: var(--color-bg-hover); padding: 4px; border-radius: var(--radius-lg); margin-top: var(--space-3); }
+.zone-polygon-modes button { flex: 1; padding: 10px; border: 0; border-radius: var(--radius-md); background: transparent; color: var(--color-text-secondary); font-size: 13px; font-weight: 600; cursor: pointer; }
+.zone-polygon-modes button[aria-pressed="true"] { background: var(--color-bg-surface); color: var(--color-text-primary); box-shadow: var(--shadow-sm); }
+.zone-polygon-modes button:focus-visible { outline: 2px solid var(--color-brand); outline-offset: 2px; }
+.zone-polygon-modes button:disabled { opacity: 0.5; cursor: not-allowed; }
+.zone-polygon-map { height: 320px; width: 100%; border: 1px solid var(--color-border); border-radius: var(--radius-lg); z-index: 0; cursor: crosshair; }
+.zone-map-actions { display: flex; align-items: center; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-2); }
+.zone-map-actions .zone-polygon-help { margin-right: auto; }
+.zone-polygon-help { font-size: 13px; color: var(--color-text-secondary); margin: var(--space-2) 0 var(--space-3); }
+.zone-polygon-point { display: grid; grid-template-columns: 20px minmax(0, 1fr) minmax(0, 1fr) 36px; align-items: end; gap: var(--space-2); margin-bottom: var(--space-3); }
+.zone-point-number { align-self: center; font-size: 12px; color: var(--color-text-secondary); }
+
+.zone-communes { border: 0; padding: 0; min-width: 0; }
+.zone-communes legend { margin-bottom: var(--space-3); }
+.zone-communes-options { max-height: 190px; overflow-y: auto; margin-top: var(--space-2); }
+.zone-commune-option { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); border-radius: var(--radius-md); font-size: 14px; cursor: pointer; }
+.zone-commune-option:hover { background: var(--color-bg-hover); }
+.zone-commune-option input { width: 16px; height: 16px; accent-color: var(--color-brand); flex-shrink: 0; }
+.zone-commune-option small { display: block; font-size: 11px; color: var(--color-text-secondary); }

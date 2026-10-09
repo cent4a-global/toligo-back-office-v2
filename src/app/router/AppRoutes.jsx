@@ -24,6 +24,7 @@ const Stations = lazy(() => import('../../pages/Stations'))
 const Supervision = lazy(() => import('../../pages/Supervision'))
 const Users = lazy(() => import('../../features/users/pages/UsersRolesPage'))
 const Warehouses = lazy(() => import('../../features/warehouses/pages/WarehousesPage'))
+const Zones = lazy(() => import('../../features/zones/pages/ZonesPage'))
 const WarehouseDetails = lazy(() => import('../../features/warehouses/pages/WarehouseDetailsPage'))
 const NotFound = lazy(() => import('../../pages/NotFound'))
 const Unauthorized = lazy(() => import('../../pages/Unauthorized'))
@@ -64,6 +65,7 @@ function AppRoutes() {
 
                         <Route element={<RoleRoute allowedRoles={['superadmin']} />}>
                             <Route path="/stations" element={<Stations />} />
+                            <Route path="/zones" element={<Zones />} />
                             <Route path="/warehouses" element={<Warehouses />} />
                             <Route path="/warehouses/:id" element={<WarehouseDetails />} />
                             <Route path="/settings" element={<Settings />} />

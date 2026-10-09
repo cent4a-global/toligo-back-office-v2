@@ -2,9 +2,10 @@
 import axios from 'axios'
 import { clearAuthStorage, getToken } from '../../features/auth/storage/auth.storage'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+const API_URL = 'http://192.168.1.94:8000'
 
-const isAuthRequest = config => config.url?.startsWith('/api/admin/login') ||
+const isAuthRequest = config =>
+    config.url?.startsWith('/api/admin/login') ||
     config.url === '/api/admin/resend-otp' ||
     config.url?.startsWith('/api/admin/forgot-password') ||
     config.url?.startsWith('/api/admin/reset-password')
