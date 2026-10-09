@@ -1,9 +1,3 @@
-@import './pages/pages.css';
-@import './pages/auth/LoginPage.css';
-@import './pages/auth/VerifyCodePage.css';
-@import './pages/auth/ForgotPasswordPage.css';
-@import './pages/auth/VerifyResetOtpPage.css';
-@import './pages/auth/ResetPasswordPage.css';
 
 :root {
     /* ========================================

@@ -1,7 +1,6 @@
 import Icon from './Icon'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../../features/auth/hooks/useAuth'
-import '../../styles/pages/route-error.css'
 
 function RouteError({ code, title, description, icon, standalone = false }) {
     const { isAuthenticated } = useAuth()

@@ -1,6 +1,5 @@
 import Table from '../../../components/ui/Table'
 import Button from '../../../components/ui/Button'
-import '../../../styles/pages/users/CompaniesTable.css'
 
 
 function CompaniesTable({ companies = [], loading = false, onView }) {

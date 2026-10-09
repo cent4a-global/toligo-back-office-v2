@@ -67,6 +67,10 @@
     background: var(--color-brand);
     color: var(--color-text-inverse);
 }
+.btn-danger {
+    background: var(--color-danger);
+    color: var(--color-text-inverse);
+}
 
 .btn-primary:hover:not(:disabled) {
     background: var(--color-brand-hover);
@@ -279,4 +283,8 @@
 .btn-loading {
     cursor: wait;
     pointer-events: none;
+}
+
+.add-icon {
+    margin-top: 2px;
 }

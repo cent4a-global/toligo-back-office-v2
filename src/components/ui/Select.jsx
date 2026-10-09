@@ -27,7 +27,7 @@ const Select = ({
                 onChange={onChange}
                 disabled={disabled}
                 required={required}
-                className={`form-select ${error ? 'form-select-error' : ''}`}>
+                className={`form-select ${value === '' ? 'form-select-placeholder' : ''} ${error ? 'form-select-error' : ''}`}>
                 <option value="">{placeholder}</option>
 
                 {options.map(option => (

@@ -5,12 +5,18 @@ import Header from '../components/layout/Header'
 import Sidebar from '../components/layout/Sidebar'
 
 function DashboardLayout() {
-    const [collapsed, setCollapsed] = useState(false)
+    const [collapsed, setCollapsed] = useState(
+        () => localStorage.getItem('sidebar_collapsed') === 'true',
+    )
     const [mobileOpen, setMobileOpen] = useState(false)
     const [animating, setAnimating] = useState(false)
     const animationTimer = useRef(null)
     const menuButtonRef = useRef(null)
     const { pathname } = useLocation()
+
+    useEffect(() => {
+        localStorage.setItem('sidebar_collapsed', String(collapsed))
+    }, [collapsed])
 
     const animateToggle = () => {
         clearTimeout(animationTimer.current)
@@ -84,7 +90,7 @@ function DashboardLayout() {
                     mobileOpen={mobileOpen}
                     menuButtonRef={menuButtonRef}
                 />
-                <main className="dashboard-main">
+                <main key={pathname} className="dashboard-main">
                     <Outlet />
                 </main>
             </div>

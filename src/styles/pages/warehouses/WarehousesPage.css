@@ -1,0 +1,27 @@
+.warehouses-page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+}
+
+.warehouses-table-card {
+    border: 1px solid var(--color-border-light);
+}
+
+.warehouses-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-4);
+}
+
+@media (max-width: 1200px) {
+    .warehouses-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 650px) {
+    .warehouses-stats {
+        grid-template-columns: 1fr;
+    }
+}

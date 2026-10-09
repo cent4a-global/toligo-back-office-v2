@@ -1,0 +1,115 @@
+:root {
+    --motion-fast: 150ms;
+    --motion-normal: 220ms;
+    --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes surface-appear {
+    from { opacity: 0; transform: translateY(8px) scale(0.99); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes fade-appear {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Opacity keeps fixed overlays and map positioning independent of the page. */
+.dashboard-main {
+    animation: fade-appear var(--motion-normal) ease-out;
+}
+
+.modal-overlay,
+.sidebar-backdrop {
+    animation: fade-appear var(--motion-fast) ease-out;
+}
+
+.modal {
+    animation: surface-appear 260ms var(--motion-ease);
+}
+
+.dropdown-menu {
+    transform-origin: top;
+    animation: surface-appear 180ms var(--motion-ease);
+}
+
+.warehouse-location-picker,
+.warehouse-location-results,
+.warehouse-form-error,
+.form-error {
+    animation: fade-appear var(--motion-normal) ease-out;
+}
+
+.warehouses-stats > * {
+    animation: surface-appear 320ms var(--motion-ease) backwards;
+}
+.warehouses-stats > :nth-child(2) { animation-delay: 35ms; }
+.warehouses-stats > :nth-child(3) { animation-delay: 70ms; }
+.warehouses-stats > :nth-child(4) { animation-delay: 105ms; }
+
+.btn {
+    transition:
+        background-color var(--motion-fast) ease,
+        border-color var(--motion-fast) ease,
+        color var(--motion-fast) ease,
+        box-shadow var(--motion-normal) ease,
+        opacity var(--motion-fast) ease,
+        transform var(--motion-fast) var(--motion-ease);
+}
+
+.btn:active:not(:disabled) {
+    transform: translateY(1px) scale(0.98);
+}
+
+.sidebar-link,
+.sidebar-footer-user,
+.sidebar-collapse-button,
+.modal-close,
+.dropdown-item,
+.tab,
+.users-tab,
+.warehouse-coordinate-modes button,
+.warehouse-location-results button {
+    transition:
+        background-color var(--motion-fast) ease,
+        border-color var(--motion-fast) ease,
+        color var(--motion-fast) ease,
+        box-shadow var(--motion-fast) ease;
+}
+
+.sidebar-link-icon {
+    transition: transform var(--motion-normal) var(--motion-ease);
+}
+
+.tab-active::after {
+    animation: fade-appear var(--motion-normal) ease-out;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .btn:hover:not(:disabled):not(.btn-link) {
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-sm);
+    }
+    .btn:active:not(:disabled) {
+        transform: translateY(1px) scale(0.98);
+    }
+    .sidebar-link:hover .sidebar-link-icon {
+        transform: translateY(-1px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-delay: 0ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        transition-delay: 0ms !important;
+        scroll-behavior: auto !important;
+    }
+    .btn:hover:not(:disabled),
+    .btn:active:not(:disabled),
+    .sidebar-link:hover .sidebar-link-icon {
+        transform: none;
+    }
+}

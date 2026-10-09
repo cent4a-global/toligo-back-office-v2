@@ -1,4 +1,3 @@
-import '../../../styles/pages/users/UsersTabs.css'
 
 const tabs = [
     {

@@ -1,0 +1,169 @@
+.warehouse-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+}
+
+.warehouse-form-error {
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+    background: var(--color-danger-bg);
+    color: var(--color-danger);
+}
+
+.warehouse-form-description {
+    min-height: 90px;
+    padding: var(--space-3) var(--space-4);
+    resize: vertical;
+}
+
+.warehouse-coordinate-modes {
+    display: flex;
+    gap: 4px;
+    padding: 4px;
+    margin-bottom: var(--space-4);
+    background: var(--color-bg-hover);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg);
+}
+
+.warehouse-coordinate-modes button {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: 10px;
+    border: 0;
+    border-radius: var(--radius-md);
+    background: transparent;
+    color: var(--color-text-secondary);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.warehouse-coordinate-modes button[aria-pressed='true'] {
+    background: var(--color-bg-surface);
+    color: var(--color-text-primary);
+    box-shadow: var(--shadow-sm);
+}
+
+.warehouse-coordinate-modes button:focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 2px;
+}
+
+.warehouse-coordinate-modes button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.warehouse-location-picker {
+    margin-bottom: var(--space-4);
+}
+
+.warehouse-location-search {
+    display: flex;
+    align-items: flex-end;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+}
+
+.warehouse-location-results {
+    list-style: none;
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-3);
+}
+
+.warehouse-location-results button {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2);
+    width: 100%;
+    padding: var(--space-3);
+    border: 0;
+    background: var(--color-bg-surface);
+    color: var(--color-text-primary);
+    font-size: 13px;
+    line-height: 1.5;
+    text-align: left;
+    cursor: pointer;
+}
+
+.warehouse-location-results button:hover,
+.warehouse-location-results button:focus-visible {
+    background: var(--color-bg-hover);
+}
+
+.warehouse-location-status {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-2);
+}
+
+@media (max-width: 480px) {
+    .warehouse-location-search {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+.warehouse-location-picker p {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-3);
+}
+
+.warehouse-location-map {
+    height: 260px;
+    width: 100%;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    z-index: 0;
+}
+
+.warehouse-form-coordinates {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    min-width: 0;
+}
+
+.warehouse-form-coordinates legend {
+    margin-bottom: var(--space-3);
+}
+
+.warehouse-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+}
+
+.warehouse-form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: var(--space-3);
+
+    padding-top: var(--space-2);
+}
+
+@media (max-width: 600px) {
+    .warehouse-form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .warehouse-form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .warehouse-form-actions .btn {
+        width: 100%;
+    }
+}

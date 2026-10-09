@@ -1,0 +1,118 @@
+.warehouse-table-wrapper {
+    width: 100%;
+}
+
+.warehouse-identity,
+.warehouse-admin {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.warehouse-identity strong,
+.warehouse-admin strong {
+    color: var(--color-text-primary);
+
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+}
+
+.warehouse-identity span,
+.warehouse-admin span {
+    color: var(--color-text-secondary);
+
+    font-size: var(--font-size-xs);
+}
+
+.warehouse-empty {
+    color: var(--color-text-muted);
+
+    font-size: var(--font-size-sm);
+}
+
+.warehouse-boxes {
+    min-width: 34px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: var(--space-1) var(--space-2);
+
+    border-radius: var(--radius-md);
+
+    background: var(--color-bg-hover);
+
+    color: var(--color-text-primary);
+
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+}
+
+/* OCCUPATION */
+
+.warehouse-occupation {
+    min-width: 140px;
+
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.warehouse-occupation-track {
+    width: 90px;
+    height: 6px;
+
+    overflow: hidden;
+
+    border-radius: var(--radius-full);
+
+    background: var(--color-border-light);
+}
+
+.warehouse-occupation-value {
+    height: 100%;
+
+    border-radius: var(--radius-full);
+
+    background: var(--color-brand);
+}
+
+.warehouse-occupation span {
+    min-width: 40px;
+
+    color: var(--color-text-secondary);
+
+    font-size: var(--font-size-xs);
+}
+
+/* ACTIONS */
+
+.warehouse-actions-trigger {
+    width: 36px;
+    height: 36px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 0;
+    border-radius: var(--radius-md);
+
+    background: transparent;
+    color: var(--color-text-secondary);
+
+    font-size: var(--font-size-lg);
+
+    cursor: pointer;
+}
+
+.warehouse-actions-trigger:hover {
+    background: var(--color-bg-hover);
+    color: var(--color-text-primary);
+}
+
+.warehouse-actions-trigger:focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 2px;
+}

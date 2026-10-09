@@ -1,3 +1,9 @@
+@import './pages/pages.css';
+@import './pages/auth/LoginPage.css';
+@import './pages/auth/VerifyCodePage.css';
+@import './pages/auth/ForgotPasswordPage.css';
+@import './pages/auth/VerifyResetOtpPage.css';
+@import './pages/auth/ResetPasswordPage.css';
 @import './variables.css';
 @import './components/button.css';
 @import './components/input.css';
@@ -20,6 +26,22 @@
 @import './layouts/auth-layout.css';
 @import './layouts/dashboard-layout.css';
 @import '../App.css';
+@import './pages/route-error.css';
+@import './pages/users/ClientsTable.css';
+@import './pages/users/CompaniesTable.css';
+@import './pages/users/DriversTable.css';
+@import './pages/users/InternalUsersTable.css';
+@import './pages/users/RolePermissionsTable.css';
+@import './pages/users/UsersTabs.css';
+@import './pages/warehouses/DeleteWarehouseDialog.css';
+@import './pages/warehouses/WarehouseFormModal.css';
+@import 'leaflet/dist/leaflet.css';
+@import './pages/warehouses/WarehouseTable.css';
+@import './pages/warehouses/WarehouseDetailsPage.css';
+@import './pages/warehouses/WarehousesPage.css';
+@import './pages/profile.css';
+@import './components/scrollbar.css';
+@import './motion.css';
 
 .flaticon-icon {
     display: inline-flex;

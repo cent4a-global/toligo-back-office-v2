@@ -1,6 +1,5 @@
 import Icon from '../components/ui/Icon'
 import { useAuth } from '../features/auth/hooks/useAuth'
-import '../styles/pages/profile.css'
 
 function Profile() {
     const { admin, role } = useAuth()

@@ -1,15 +1,17 @@
 import Icon from '../ui/Icon'
+import { Fragment } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useAuth } from '../../features/auth/hooks/useAuth'
 
 const navigationItems = [
-    { label: 'Tableau de bord', to: '/dashboard', icon: 'fi-rr-apps' },
-    { label: 'Supervision', to: '/supervision', icon: 'fi-rr-eye' },
-    { label: 'Commandes', to: '/orders', icon: 'fi-rr-shopping-cart' },
-    { label: 'Missions et livreurs', to: '/missions', icon: 'fi-rr-motorcycle' },
-    { label: 'Incidents', to: '/incidents', icon: 'fi-rr-triangle-warning' },
-    { label: 'Paiements', to: '/payments', icon: 'fi-rr-credit-card' },
-    { label: 'Stations et drones', to: '/stations', icon: 'fi-rr-drone', superadminOnly: true },
+    // { label: 'Tableau de bord', to: '/dashboard', icon: 'fi-rr-apps' },
+    // { label: 'Supervision', to: '/supervision', icon: 'fi-rr-eye' },
+    // { label: 'Commandes', to: '/orders', icon: 'fi-rr-shopping-cart' },
+    // { label: 'Missions et livreurs', to: '/missions', icon: 'fi-rr-motorcycle' },
+    // { label: 'Incidents', to: '/incidents', icon: 'fi-rr-triangle-warning' },
+    // { label: 'Paiements', to: '/payments', icon: 'fi-rr-credit-card' },
+    { label: 'Stations Hub', to: '/stations', icon: 'fi-rr-drone', superadminOnly: true },
+    { label: 'Zones', to: '/zones', icon: 'fi-rr-map-marker', superadminOnly: true },
     {
         label: 'Entrepôts et box',
         to: '/warehouses',
@@ -17,7 +19,7 @@ const navigationItems = [
         superadminOnly: true,
     },
     {
-        label: 'Options et paramètres',
+        label: 'Paramètres et formats',
         to: '/settings',
         icon: 'fi-rr-settings',
         superadminOnly: true,
@@ -69,6 +71,7 @@ function Sidebar({
             <div className="sidebar-brand">
                 <div className="sidebar-brand-identity">
                     <span className="sidebar-brand-name">Tôligo</span>
+                    <span className="sidebar-brand-caption">Espace de gestion</span>
                 </div>
                 <button
                     type="button"
@@ -88,26 +91,34 @@ function Sidebar({
             {/* NAVIGATION */}
             <nav className="sidebar-navigation" aria-label="Navigation principale">
                 <div className="sidebar-links">
-                    {items.map(item => {
+                    {items.map((item, index) => {
                         const isActive =
                             currentPath === item.to || currentPath.startsWith(`${item.to}/`)
 
                         return (
-                            <NavLink
-                                key={item.to}
-                                to={item.to}
-                                onClick={onClose}
-                                aria-label={item.label}
-                                title={item.label}
-                                className={`sidebar-link${isActive ? ' sidebar-link-active' : ''}`}
-                                aria-current={isActive ? 'page' : undefined}>
-                                <i
-                                    className={`fi ${item.icon} sidebar-link-icon`}
-                                    aria-hidden="true"
-                                />
+                            <Fragment key={item.to}>
+                                {(index === 0 ||
+                                    (item.superadminOnly && !items[index - 1]?.superadminOnly)) && (
+                                    <span className="sidebar-section-label">
+                                        {item.superadminOnly ? 'Administration' : 'Opérations'}
+                                    </span>
+                                )}
+                                <NavLink
+                                    key={item.to}
+                                    to={item.to}
+                                    onClick={onClose}
+                                    aria-label={item.label}
+                                    title={item.label}
+                                    className={`sidebar-link${isActive ? ' sidebar-link-active' : ''}`}
+                                    aria-current={isActive ? 'page' : undefined}>
+                                    <i
+                                        className={`fi ${item.icon} sidebar-link-icon`}
+                                        aria-hidden="true"
+                                    />
 
-                                <span className="sidebar-link-label">{item.label}</span>
-                            </NavLink>
+                                    <span className="sidebar-link-label">{item.label}</span>
+                                </NavLink>
+                            </Fragment>
                         )
                     })}
                 </div>

@@ -23,10 +23,12 @@ const Settings = lazy(() => import('../../pages/Settings'))
 const Stations = lazy(() => import('../../pages/Stations'))
 const Supervision = lazy(() => import('../../pages/Supervision'))
 const Users = lazy(() => import('../../features/users/pages/UsersRolesPage'))
-const Warehouses = lazy(() => import('../../pages/Warehouses'))
+const Warehouses = lazy(() => import('../../features/warehouses/pages/WarehousesPage'))
+const WarehouseDetails = lazy(() => import('../../features/warehouses/pages/WarehouseDetailsPage'))
 const NotFound = lazy(() => import('../../pages/NotFound'))
 const Unauthorized = lazy(() => import('../../pages/Unauthorized'))
 const Profile = lazy(() => import('../../pages/Profile'))
+const Map = lazy(() => import('../../pages/Map'))
 
 function AppRoutes() {
     return (
@@ -48,6 +50,8 @@ function AppRoutes() {
                 </Route>
                 <Route element={<ProtectedRoute />}>
                     <Route element={<DashboardLayout />}>
+                        <Route path="/map" element={<Map />} />
+
                         <Route path="/" element={<Navigate to="/dashboard" replace />} />
                         <Route path="/dashboard" element={<Dashboard />} />
                         <Route path="/profile" element={<Profile />} />
@@ -61,11 +65,11 @@ function AppRoutes() {
                         <Route element={<RoleRoute allowedRoles={['superadmin']} />}>
                             <Route path="/stations" element={<Stations />} />
                             <Route path="/warehouses" element={<Warehouses />} />
+                            <Route path="/warehouses/:id" element={<WarehouseDetails />} />
                             <Route path="/settings" element={<Settings />} />
                             <Route path="/users" element={<Users />} />
                             <Route path="/audit-log" element={<AuditLog />} />
                         </Route>
-
                     </Route>
                 </Route>
                 <Route path="/404" element={<NotFound />} />

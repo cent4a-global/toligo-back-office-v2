@@ -1,7 +1,6 @@
 import Table from '../../../components/ui/Table'
 import Button from '../../../components/ui/Button'
 import Badge from '../../../components/ui/Badge'
-import '../../../styles/pages/users/InternalUsersTable.css'
 
 const roleConfig = {
     superadmin: { label: 'Superadmin', variant: 'dark' },

@@ -1,4 +1,4 @@
-const Modal = ({ open, onClose, title, children, size = 'md', className = '' }) => {
+const Modal = ({ open, onClose, title, children, size = 'md', className = '', closeOnOverlayClick = true }) => {
     if (!open) {
         return null
     }
@@ -6,7 +6,7 @@ const Modal = ({ open, onClose, title, children, size = 'md', className = '' }) 
     const classes = ['modal', `modal-${size}`, className].filter(Boolean).join(' ')
 
     return (
-        <div className="modal-overlay" onClick={onClose}>
+        <div className="modal-overlay" onClick={closeOnOverlayClick ? onClose : undefined}>
             <div className={classes} onClick={event => event.stopPropagation()}>
                 <div className="modal-header">
                     <h2 className="modal-title">{title}</h2>

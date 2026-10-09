@@ -1,6 +1,5 @@
 import Table from '../../../components/ui/Table'
 import Button from '../../../components/ui/Button'
-import '../../../styles/pages/users/ClientsTable.css'
 
 function ClientsTable({ clients = [], loading = false, onView }) {
     const columns = [

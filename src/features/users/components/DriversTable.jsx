@@ -1,7 +1,6 @@
 import Table from '../../../components/ui/Table'
 import Button from '../../../components/ui/Button'
 import Badge from '../../../components/ui/Badge'
-import '../../../styles/pages/users/DriversTable.css'
 
 const availabilityConfig = { available: { label: 'Disponible', variant: 'success' }, mission: { label: 'En mission', variant: 'warning' }, offline: { label: 'Hors ligne', variant: 'default' } }
 
