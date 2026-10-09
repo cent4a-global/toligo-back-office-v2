@@ -11,7 +11,7 @@
     color: var(--color-text-primary);
 
     font-family: var(--font-family-base);
-    font-size: var(--font-size-md);
+    font-size: var(--font-size-sm);
 
     outline: none;
     cursor: pointer;

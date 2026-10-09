@@ -35,7 +35,9 @@ api.interceptors.request.use(
 api.interceptors.response.use(
     response => {
         if (response.data?.success === false) {
-            throw new Error(response.data.message || 'La demande a échoué.')
+            const failure = new Error(response.data.message || 'La demande a échoué.')
+            failure.response = response
+            throw failure
         }
         return response
     },

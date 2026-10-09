@@ -28,7 +28,7 @@ function SearchMapView({ target }) {
     return null
 }
 
-export default function WarehouseLocationPicker({ city, latitude, longitude, onSelect, disabled }) {
+export default function WarehouseLocationPicker({ city, latitude, longitude, onSelect, disabled, locationLabel = 'l’entrepôt' }) {
     const [query, setQuery] = useState('')
     const [results, setResults] = useState([])
     const [searching, setSearching] = useState(false)
@@ -104,7 +104,7 @@ export default function WarehouseLocationPicker({ city, latitude, longitude, onS
                 </ul>
             )}
             <div role="status" aria-live="polite" className="warehouse-location-status">{message}</div>
-            <p id="warehouse-map-help">Cliquez sur la carte pour placer le point GPS de l’entrepôt. Vous pouvez zoomer pour affiner la position.</p>
+            <p id="warehouse-map-help">Cliquez sur la carte pour placer le point GPS de {locationLabel}. Vous pouvez zoomer pour affiner la position.</p>
             <MapContainer
                 key={city}
                 center={center}

@@ -14,3 +14,27 @@
     min-width: 0;
     padding: var(--space-8);
 }
+
+.dashboard-main h1,
+.dashboard-main h1 * {
+    font-family: 'Sora', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.dashboard-menu-button { display: none; }
+
+@media (max-width: 700px) {
+    .dashboard-menu-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        margin: var(--space-4) 0 0 var(--space-4);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        background: var(--color-bg-surface);
+        color: var(--color-text-primary);
+        cursor: pointer;
+    }
+    .dashboard-menu-button:focus-visible { outline: 2px solid var(--color-brand); outline-offset: 3px; }
+}

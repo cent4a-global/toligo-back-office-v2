@@ -1,0 +1,69 @@
+.hubs-table {
+    width: 100%;
+}
+
+.hub-identity,
+.hub-station {
+    display: flex;
+    flex-direction: column;
+
+    gap: var(--space-1);
+}
+
+.hub-identity strong,
+.hub-station strong {
+    color: var(--color-text-primary);
+
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+}
+
+.hub-identity span,
+.hub-station span {
+    color: var(--color-text-secondary);
+
+    font-size: var(--font-size-xs);
+}
+
+.hub-description {
+    display: inline-block;
+
+    max-width: 320px;
+
+    overflow: hidden;
+
+    color: var(--color-text-secondary);
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.hub-date {
+    color: var(--color-text-secondary);
+
+    font-size: var(--font-size-sm);
+
+    white-space: nowrap;
+}
+
+.hub-actions-trigger {
+    width: 36px;
+    height: 36px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 0;
+    border-radius: var(--radius-md);
+
+    background: transparent;
+    color: var(--color-text-secondary);
+
+    cursor: pointer;
+}
+
+.hub-actions-trigger:hover {
+    background: var(--color-bg-hover);
+    color: var(--color-text-primary);
+}

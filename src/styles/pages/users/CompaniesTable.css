@@ -1,9 +1,39 @@
-.companies-table { width: 100%; }
-.company-identity { display: flex; flex-direction: column; gap: var(--space-1); }
-.company-identity strong { color: var(--color-text-primary); font-weight: var(--font-weight-semibold); }
-.company-identity span { color: var(--color-text-secondary); font-size: var(--font-size-xs); }
-.company-status { font-weight: var(--font-weight-semibold); white-space: nowrap; }
-.company-status-active { color: var(--color-success); }
-.company-status-inactive { color: var(--color-danger); }
-.company-count { display: inline-flex; justify-content: center; min-width: 30px; padding: var(--space-1) var(--space-2); border-radius: var(--radius-md); background: var(--color-bg-hover); font-weight: var(--font-weight-semibold); }
-.company-totalSpent { color: var(--color-text-secondary); white-space: nowrap; }
+.companies-table {
+    width: 100%;
+}
+.company-identity {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+.company-identity strong {
+    color: var(--color-text-primary);
+    font-weight: var(--font-weight-semibold);
+}
+.company-identity span {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-xs);
+}
+.company-status {
+    font-weight: var(--font-weight-semibold);
+    white-space: nowrap;
+}
+.company-status-active {
+    color: var(--color-success);
+}
+.company-status-inactive {
+    color: var(--color-danger);
+}
+.company-count {
+    display: inline-flex;
+    justify-content: center;
+    min-width: 30px;
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-hover);
+    font-weight: var(--font-weight-semibold);
+}
+.company-totalSpent {
+    color: var(--color-text-secondary);
+    white-space: nowrap;
+}

@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 
-import Header from '../components/layout/Header'
 import Sidebar from '../components/layout/Sidebar'
 
 function DashboardLayout() {
@@ -82,14 +81,19 @@ function DashboardLayout() {
                 }}
             />
             <div className="dashboard-content">
-                <Header
-                    onMenuClick={() => {
+                <button
+                    type="button"
+                    ref={menuButtonRef}
+                    className="dashboard-menu-button"
+                    aria-label="Ouvrir le menu"
+                    aria-controls="main-sidebar"
+                    aria-expanded={mobileOpen}
+                    onClick={() => {
                         animateToggle()
                         setMobileOpen(open => !open)
-                    }}
-                    mobileOpen={mobileOpen}
-                    menuButtonRef={menuButtonRef}
-                />
+                    }}>
+                    <i className="fi fi-rr-menu-burger" aria-hidden="true" />
+                </button>
                 <main key={pathname} className="dashboard-main">
                     <Outlet />
                 </main>

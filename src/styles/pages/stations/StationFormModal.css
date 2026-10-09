@@ -1,0 +1,57 @@
+.station-form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: var(--space-5);
+}
+
+.station-error { white-space: pre-line; }
+
+.station-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: var(--space-4);
+}
+
+.station-form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: var(--space-3);
+
+    padding-top: var(--space-2);
+}
+
+@media (max-width: 650px) {
+    .station-form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .station-form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .station-form-actions .btn {
+        width: 100%;
+    }
+}
+.station-error { display: block; padding: var(--space-3); border-radius: var(--radius-md); background: var(--color-danger-bg); color: var(--color-danger); font-size: 13px; }
+.station-fieldset { border: 0; padding: 0; min-width: 0; }
+.station-fieldset legend { margin-bottom: var(--space-3); }
+.station-description { min-height: 90px; padding: var(--space-3); resize: vertical; }
+.station-hours-row { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr) 36px; align-items: end; gap: var(--space-2); margin-bottom: var(--space-3); }
+.station-location-modes { display: flex; gap: 4px; padding: 4px; border-radius: var(--radius-lg); background: var(--color-bg-hover); margin-bottom: var(--space-3); }
+.station-location-modes button { flex: 1; padding: 10px; border: 0; border-radius: var(--radius-md); font-size: 13px; background: transparent; cursor: pointer; }
+.station-location-modes button[aria-pressed="true"] { background: var(--color-bg-surface); box-shadow: var(--shadow-sm); }
+
+/* Short fields share a row; maps, descriptions and actions span the form. */
+.station-form > * { grid-column: 1 / -1; min-width: 0; }
+.station-form > .form-field:not(:has(textarea)) { grid-column: auto; }
+.station-form-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+@media (max-width: 650px) {
+    .station-form,
+    .station-form-row { grid-template-columns: minmax(0, 1fr); }
+}

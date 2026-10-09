@@ -10,7 +10,8 @@ const navigationItems = [
     // { label: 'Missions et livreurs', to: '/missions', icon: 'fi-rr-motorcycle' },
     // { label: 'Incidents', to: '/incidents', icon: 'fi-rr-triangle-warning' },
     // { label: 'Paiements', to: '/payments', icon: 'fi-rr-credit-card' },
-    { label: 'Stations Hub', to: '/stations', icon: 'fi-rr-drone', superadminOnly: true },
+    { label: 'Stations', to: '/stations', icon: 'fi-rr-drone', superadminOnly: true },
+    { label: 'Hubs drone', to: '/hubs', icon: 'fi-rr-building', superadminOnly: true },
     { label: 'Zones', to: '/zones', icon: 'fi-rr-map-marker', superadminOnly: true },
     {
         label: 'Entrepôts et box',

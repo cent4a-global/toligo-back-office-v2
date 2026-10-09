@@ -5,7 +5,7 @@
 .stat-card {
     width: 100%;
 
-    padding: var(--space-6);
+    padding: var(--space-4);
 
     background: var(--color-bg-surface);
 

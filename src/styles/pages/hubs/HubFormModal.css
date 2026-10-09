@@ -1,0 +1,72 @@
+.hub-form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: var(--space-5);
+}
+
+.hub-form-group {
+    display: flex;
+    flex-direction: column;
+
+    gap: var(--space-2);
+}
+
+.hub-form-group label {
+    color: var(--color-text-primary);
+
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+}
+
+.hub-form-group textarea {
+    width: 100%;
+    min-height: 120px;
+
+    padding: var(--space-3) var(--space-4);
+
+    resize: vertical;
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+
+    outline: none;
+
+    background: var(--color-bg-surface);
+    color: var(--color-text-primary);
+
+    font-size: var(--font-size-sm);
+    font-family: var(--font-family-base);
+}
+
+.hub-form-group textarea::placeholder {
+    color: var(--color-text-muted);
+}
+
+.hub-form-group textarea:focus {
+    border-color: var(--color-text-primary);
+}
+
+.hub-form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: var(--space-3);
+}
+
+@media (max-width: 600px) {
+    .hub-form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .hub-form-actions .btn {
+        width: 100%;
+    }
+}
+
+.hub-form > * { grid-column: 1 / -1; min-width: 0; }
+.hub-form > .form-field { grid-column: auto; }
+.hub-error { display: block; padding: var(--space-3); background: var(--color-danger-bg); color: var(--color-danger); border-radius: var(--radius-md); font-size: 13px; white-space: pre-line; }
+.hub-form-group textarea::placeholder { font-size: 13px; }
+@media (max-width: 600px) { .hub-form { grid-template-columns: minmax(0, 1fr); } }

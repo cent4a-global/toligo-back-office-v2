@@ -1,7 +1,6 @@
 ﻿import { useState } from 'react'
 import Modal from '../../../components/ui/Modal'
 import Input from '../../../components/ui/Input'
-import Select from '../../../components/ui/Select'
 import Button from '../../../components/ui/Button'
 import { createZonePayload } from '../utils/zoneForm'
 import ZonePolygonMap from './ZonePolygonMap'
@@ -84,17 +83,23 @@ function ZoneFormModal({ open, zone, loading = false, onClose, onSubmit }) {
                         disabled={loading}
                     />
                 </div>
-                <Select
-                    label="Statut"
-                    name="est_active"
-                    value={form.est_active}
-                    onChange={handleChange}
-                    disabled={loading}
-                    options={[
-                        { value: 'true', label: 'Active' },
-                        { value: 'false', label: 'Inactive' },
-                    ]}
-                />
+                <label className="zone-status-toggle">
+                    <span className="zone-status-label">
+                        <span className="form-label">Zone active</span>
+                        <span className="zone-status-value">{form.est_active === 'true' ? 'Active' : 'Inactive'}</span>
+                    </span>
+                    <input
+                        className="zone-status-input"
+                        type="checkbox"
+                        role="switch"
+                        name="est_active"
+                        checked={form.est_active === 'true'}
+                        onChange={event => setForm(previous => ({ ...previous, est_active: String(event.target.checked) }))}
+                        disabled={loading}
+                        aria-label="Zone active"
+                    />
+                    <span className="zone-status-track" aria-hidden="true" />
+                </label>
                 <fieldset className="zone-polygon">
                     <legend className="form-label">Contour géographique</legend>
                     <div className="zone-polygon-modes" role="group" aria-label="Mode de saisie du contour">

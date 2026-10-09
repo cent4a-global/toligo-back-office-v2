@@ -20,7 +20,8 @@ const Missions = lazy(() => import('../../pages/Missions'))
 const Orders = lazy(() => import('../../pages/Orders'))
 const Payments = lazy(() => import('../../pages/Payments'))
 const Settings = lazy(() => import('../../pages/Settings'))
-const Stations = lazy(() => import('../../pages/Stations'))
+const Hubs = lazy(() => import('../../features/hubs/pages/HubsPage'))
+const Stations = lazy(() => import('../../features/stations/pages/StationsPage'))
 const Supervision = lazy(() => import('../../pages/Supervision'))
 const Users = lazy(() => import('../../features/users/pages/UsersRolesPage'))
 const Warehouses = lazy(() => import('../../features/warehouses/pages/WarehousesPage'))
@@ -65,6 +66,7 @@ function AppRoutes() {
 
                         <Route element={<RoleRoute allowedRoles={['superadmin']} />}>
                             <Route path="/stations" element={<Stations />} />
+                            <Route path="/hubs" element={<Hubs />} />
                             <Route path="/zones" element={<Zones />} />
                             <Route path="/warehouses" element={<Warehouses />} />
                             <Route path="/warehouses/:id" element={<WarehouseDetails />} />

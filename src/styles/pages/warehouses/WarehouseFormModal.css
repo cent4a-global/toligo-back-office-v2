@@ -1,6 +1,6 @@
 .warehouse-form {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-5);
 }
 
@@ -166,4 +166,14 @@
     .warehouse-form-actions .btn {
         width: 100%;
     }
+}
+
+/* Short fields share a row; maps, descriptions and actions span the form. */
+.warehouse-form > * { grid-column: 1 / -1; min-width: 0; }
+.warehouse-form > .form-field:not(:has(textarea)) { grid-column: auto; }
+.warehouse-form-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+@media (max-width: 600px) {
+    .warehouse-form,
+    .warehouse-form-row { grid-template-columns: minmax(0, 1fr); }
 }

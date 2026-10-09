@@ -44,6 +44,12 @@
 @import './pages/zones/ZonesTable.css';
 @import './pages/zones/ZoneFormModal.css';
 @import './pages/zones/ZonesPage.css';
+@import './pages/stations/StationsTable.css';
+@import './pages/stations/StationFormModal.css';
+@import './pages/stations/StationsPage.css';
+@import './pages/hubs/HubsTable.css';
+@import './pages/hubs/HubFormModal.css';
+@import './pages/hubs/HubsPage.css';
 @import './motion.css';
 
 .flaticon-icon {

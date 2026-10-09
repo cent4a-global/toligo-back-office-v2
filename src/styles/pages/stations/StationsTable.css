@@ -1,0 +1,84 @@
+.stations-table {
+    width: 100%;
+}
+
+.station-identity,
+.station-manager {
+    display: flex;
+    flex-direction: column;
+
+    gap: var(--space-1);
+}
+
+.station-identity strong,
+.station-manager strong {
+    color: var(--color-text-primary);
+
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+}
+
+.station-identity span,
+.station-manager span {
+    color: var(--color-text-secondary);
+
+    font-size: var(--font-size-xs);
+}
+
+.station-address {
+    display: inline-block;
+
+    max-width: 250px;
+
+    overflow: hidden;
+
+    color: var(--color-text-secondary);
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.station-empty {
+    color: var(--color-text-muted);
+
+    font-size: var(--font-size-sm);
+}
+
+.station-drone-count {
+    min-width: 32px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: var(--space-1) var(--space-2);
+
+    border-radius: var(--radius-md);
+
+    background: var(--color-bg-hover);
+    color: var(--color-text-primary);
+
+    font-weight: var(--font-weight-semibold);
+}
+
+.station-actions-trigger {
+    width: 36px;
+    height: 36px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 0;
+    border-radius: var(--radius-md);
+
+    background: transparent;
+    color: var(--color-text-secondary);
+
+    cursor: pointer;
+}
+
+.station-actions-trigger:hover {
+    background: var(--color-bg-hover);
+    color: var(--color-text-primary);
+}
