@@ -85,15 +85,6 @@ function WarehousesPage() {
         }
     }
 
-    if (isError) {
-        return (
-            <ErrorState
-                title="Impossible de charger les entrepôts"
-                description={error.message}
-                action={<Button onClick={() => refetch()}>Réessayer</Button>}
-            />
-        )
-    }
 
     return (
         <div className="warehouses-page">
@@ -111,7 +102,7 @@ function WarehousesPage() {
             <div className="warehouses-stats">
                 <StatCard
                     title="Entrepôts"
-                    value={data?.meta?.totalWarehouses ?? warehouses.length}
+                    value={isLoading || (isError && !data) ? '?' : data?.meta?.totalWarehouses ?? warehouses.length}
                 />
 
                 <StatCard title="Caisses" value={data?.meta?.totalBoxes ?? '—'} />
@@ -123,6 +114,13 @@ function WarehousesPage() {
 
             <Card className="warehouses-table-card">
                 <WarehouseTable
+                    errorContent={isError ? (
+                        <ErrorState
+                            title="Impossible de charger les entrepôts"
+                            description={error?.message}
+                            action={<Button onClick={() => refetch()}>Réessayer</Button>}
+                        />
+                    ) : null}
                     warehouses={warehouses}
                     loading={isLoading}
                     onEdit={openEditModal}

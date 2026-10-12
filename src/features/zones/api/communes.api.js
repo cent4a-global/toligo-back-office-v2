@@ -9,7 +9,9 @@ export async function getCommunes({ signal } = {}) {
         const communes = Array.isArray(body) ? body : body?.data
         if (!Array.isArray(communes))
             throw new Error('Le format de la liste des communes est invalide.')
-        return communes
+        return communes.filter(localite =>
+            typeof localite?.type === 'string' && localite.type.trim().toLowerCase() === 'commune',
+        )
     } catch (error) {
         throw new Error(
             error.response?.data?.message || error.message || 'Impossible de charger les communes.',

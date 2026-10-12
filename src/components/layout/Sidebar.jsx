@@ -11,7 +11,7 @@ const navigationItems = [
     // { label: 'Incidents', to: '/incidents', icon: 'fi-rr-triangle-warning' },
     // { label: 'Paiements', to: '/payments', icon: 'fi-rr-credit-card' },
     { label: 'Stations', to: '/stations', icon: 'fi-rr-drone', superadminOnly: true },
-    { label: 'Hubs drone', to: '/hubs', icon: 'fi-rr-building', superadminOnly: true },
+    { label: 'Hubs', to: '/hubs', icon: 'fi-rr-building', superadminOnly: true },
     { label: 'Zones', to: '/zones', icon: 'fi-rr-map-marker', superadminOnly: true },
     {
         label: 'Entrepôts et box',
@@ -19,14 +19,14 @@ const navigationItems = [
         icon: 'fi-rr-warehouse-alt',
         superadminOnly: true,
     },
+    { label: 'Utilisateurs et rôles', to: '/users', icon: 'fi-rr-users', superadminOnly: true },
+    { label: "Journal d'audit", to: '/audit-log', icon: 'fi-rr-document', superadminOnly: true },
     {
         label: 'Paramètres et formats',
         to: '/settings',
         icon: 'fi-rr-settings',
         superadminOnly: true,
     },
-    { label: 'Utilisateurs et rôles', to: '/users', icon: 'fi-rr-users', superadminOnly: true },
-    { label: "Journal d'audit", to: '/audit-log', icon: 'fi-rr-document', superadminOnly: true },
 ]
 
 function getInitials(name = '') {

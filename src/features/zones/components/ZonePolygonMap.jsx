@@ -35,7 +35,7 @@ export default function ZonePolygonMap({ points, onAdd, onUndo, onClear, disable
             <p className="zone-polygon-help">Cliquez sur la carte dans l’ordre des sommets. Le contour se ferme automatiquement à partir du troisième point.</p>
             <p className="zone-polygon-help">Cliquez sur une commune affichée pour la cocher ou la décocher. Les communes sélectionnées apparaissent en vert.</p>
             {communes.length > locatedCommunes.length && <p className="zone-polygon-help" role="status">{communes.length - locatedCommunes.length} commune(s) sans données géographiques ne peuvent pas être affichées sur la carte.</p>}
-            <MapContainer className="zone-polygon-map" center={positions[0] ?? [5.3364, -4.0267]} zoom={13} scrollWheelZoom={false} doubleClickZoom={false}>
+            <MapContainer className="zone-polygon-map" center={positions[0] ?? [5.3364, -4.0267]} zoom={13} scrollWheelZoom={true} doubleClickZoom={false}>
                 <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                 <MapControls points={positions} onAdd={onAdd} disabled={disabled} />
                 {locatedCommunes.map(({ commune, polygon, position }) => {

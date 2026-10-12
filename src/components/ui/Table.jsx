@@ -1,14 +1,17 @@
+import Skeleton from './Skeleton'
+
 const Table = ({
     columns = [],
     data = [],
     emptyMessage = 'Aucune donnée disponible',
     loading = false,
+    errorContent,
     className = '',
 }) => {
     const classes = ['table-container', className].filter(Boolean).join(' ')
 
     return (
-        <div className={classes}>
+        <div className={classes} aria-busy={loading}>
             <table className="table">
                 <thead>
                     <tr>
@@ -20,9 +23,17 @@ const Table = ({
 
                 <tbody>
                     {loading ? (
+                        Array.from({ length: 6 }, (_, rowIndex) => (
+                            <tr key={rowIndex}>
+                                {columns.map(column => (
+                                    <td key={column.key}><Skeleton height={18} /></td>
+                                ))}
+                            </tr>
+                        ))
+                    ) : errorContent ? (
                         <tr>
-                            <td colSpan={columns.length} className="table-message">
-                                Chargement...
+                            <td colSpan={Math.max(columns.length, 1)}>
+                                <div role="alert">{errorContent}</div>
                             </td>
                         </tr>
                     ) : data.length === 0 ? (

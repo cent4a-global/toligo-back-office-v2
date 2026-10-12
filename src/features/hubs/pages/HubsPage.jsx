@@ -88,15 +88,6 @@ function HubsPage() {
         }
     }
 
-    if (isError) {
-        return (
-            <ErrorState
-                title="Impossible de charger les hubs"
-                description={error.message}
-                actions={<Button onClick={() => refetch()}>Réessayer</Button>}
-            />
-        )
-    }
 
     const freeHubs = hubs.filter(hub => hub.statut === 'libre').length
 
@@ -122,11 +113,20 @@ function HubsPage() {
 
                 <StatCard title="En maintenance" value={isLoading ? '—' : maintenanceHubs} />
 
-                <StatCard title="Stations" value={stationsQuery.isPending || stationsQuery.isError ? '—' : stations.length} />
+                <StatCard title="Hubs occupés" value={isLoading ? '—' : hubs.filter(hub => hub.statut === 'occupe').length} />
+
+                <StatCard title="Indisponibles" value={isLoading ? '—' : hubs.filter(hub => hub.statut === 'indisponible').length} />
             </div>
 
             {stationsQuery.isError && <div className="hub-error" role="alert">{stationsQuery.error.message} <Button variant="secondary" size="sm" onClick={() => stationsQuery.refetch()}>Réessayer les stations</Button></div>}
             <HubsTable
+                errorContent={isError ? (
+                    <ErrorState
+                        title="Impossible de charger les hubs"
+                        description={error?.message}
+                        action={<Button onClick={() => refetch()}>Réessayer</Button>}
+                    />
+                ) : null}
                 hubs={hubs}
                 loading={isLoading}
                 onEdit={openEditModal}

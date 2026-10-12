@@ -80,15 +80,6 @@ function StationsPage() {
         }
     }
 
-    if (isError) {
-        return (
-            <ErrorState
-                title="Impossible de charger les stations"
-                description={error.message}
-                action={<Button onClick={() => refetch()}>Réessayer</Button>}
-            />
-        )
-    }
 
     return (
         <div className="stations-page">
@@ -112,6 +103,13 @@ function StationsPage() {
             </div>
             <StationsMap stations={stations} loading={isLoading} onEdit={openEditModal} />
             <StationsTable
+                errorContent={isError ? (
+                    <ErrorState
+                        title="Impossible de charger les stations"
+                        description={error?.message}
+                        action={<Button onClick={() => refetch()}>Réessayer</Button>}
+                    />
+                ) : null}
                 stations={stations}
                 loading={isLoading}
                 onEdit={openEditModal}

@@ -60,7 +60,7 @@ export default function StationsMap({ stations, loading = false, onEdit }) {
                         className="stations-overview-map"
                         center={[5.3364, -4.0267]}
                         zoom={11}
-                        scrollWheelZoom={false}>
+                        scrollWheelZoom={true}>
                         <TileLayer
                             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

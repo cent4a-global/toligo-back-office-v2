@@ -79,15 +79,6 @@ function ZonesPage() {
         }
     }
 
-    if (isError) {
-        return (
-            <ErrorState
-                title="Impossible de charger les zones"
-                description={error.message}
-                action={<Button onClick={() => refetch()}>Réessayer</Button>}
-            />
-        )
-    }
 
     return (
         <div className="zones-page">
@@ -105,6 +96,13 @@ function ZonesPage() {
             <ZonesMap zones={zones} loading={isLoading} onEdit={openEditModal} />
 
             <ZonesTable
+                errorContent={isError ? (
+                    <ErrorState
+                        title="Impossible de charger les zones"
+                        description={error?.message}
+                        action={<Button onClick={() => refetch()}>Réessayer</Button>}
+                    />
+                ) : null}
                 zones={zones}
                 loading={isLoading}
                 onEdit={openEditModal}

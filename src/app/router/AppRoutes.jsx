@@ -1,7 +1,7 @@
 ﻿import { lazy, Suspense } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 
-import Spinner from '../../components/ui/Spinner'
+import PageSkeleton from '../../components/ui/PageSkeleton'
 import AuthLayout from '../../layouts/AuthLayout'
 import DashboardLayout from '../../layouts/DashboardLayout'
 import ProtectedRoute from './ProtectedRoute'
@@ -19,7 +19,7 @@ const ResetPasswordPage = lazy(() => import('../../features/auth/pages/ResetPass
 const Missions = lazy(() => import('../../pages/Missions'))
 const Orders = lazy(() => import('../../pages/Orders'))
 const Payments = lazy(() => import('../../pages/Payments'))
-const Settings = lazy(() => import('../../pages/Settings'))
+const Settings = lazy(() => import('../../features/settings/pages/SettingsPage'))
 const Hubs = lazy(() => import('../../features/hubs/pages/HubsPage'))
 const Stations = lazy(() => import('../../features/stations/pages/StationsPage'))
 const Supervision = lazy(() => import('../../pages/Supervision'))
@@ -36,8 +36,8 @@ function AppRoutes() {
     return (
         <Suspense
             fallback={
-                <div className="route-loading">
-                    <Spinner size="lg" />
+                <div className="route-skeleton">
+                    <PageSkeleton />
                 </div>
             }>
             <Routes>

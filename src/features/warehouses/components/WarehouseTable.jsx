@@ -9,7 +9,7 @@ import Dropdown from '../../../components/ui/Dropdown'
 
 function WarehouseTable({
     warehouses = [],
-    loading = false,
+    loading = false, errorContent,
     onEdit,
     onDelete,
 }) {
@@ -193,6 +193,7 @@ function WarehouseTable({
                 columns={columns}
                 data={warehouses}
                 loading={loading}
+                errorContent={errorContent}
                 emptyMessage="Aucun entrepôt disponible"
             />
         </div>

@@ -1,3 +1,5 @@
+import { Suspense } from 'react'
+import PageSkeleton from '../components/ui/PageSkeleton'
 import { useEffect, useRef, useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 
@@ -95,7 +97,9 @@ function DashboardLayout() {
                     <i className="fi fi-rr-menu-burger" aria-hidden="true" />
                 </button>
                 <main key={pathname} className="dashboard-main">
-                    <Outlet />
+                    <Suspense fallback={<PageSkeleton variant="page" />}>
+                        <Outlet />
+                    </Suspense>
                 </main>
             </div>
         </div>

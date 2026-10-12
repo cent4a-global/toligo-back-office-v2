@@ -1,0 +1,18 @@
+.settings-page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+}
+
+.settings-page-loading {
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.settings-page-sections {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+}

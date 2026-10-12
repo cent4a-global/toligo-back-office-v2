@@ -1,12 +1,12 @@
 import { Navigate, Outlet } from 'react-router-dom'
 import { useAuth } from '../../features/auth/hooks/useAuth'
-import Spinner from '../../components/ui/Spinner'
+import PageSkeleton from '../../components/ui/PageSkeleton'
 
 function RoleRoute({ allowedRoles = [] }) {
     const { isAuthenticated, isLoading, role } = useAuth()
 
     if (isLoading) {
-        return <div className="route-loading"><Spinner size="lg" /></div>
+        return <div className="route-skeleton"><PageSkeleton /></div>
     }
 
     if (!isAuthenticated) return <Navigate to="/login" replace />

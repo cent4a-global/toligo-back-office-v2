@@ -8,7 +8,7 @@ import {
 import Button from '../../../components/ui/Button'
 import Badge from '../../../components/ui/Badge'
 import Card from '../../../components/ui/Card'
-import Spinner from '../../../components/ui/Spinner'
+import PageSkeleton from '../../../components/ui/PageSkeleton'
 import ErrorState from '../../../components/ui/ErrorState'
 
 import {
@@ -36,9 +36,7 @@ function WarehouseDetailsPage() {
 
     if (isLoading) {
         return (
-            <div className="warehouse-details-loading">
-                <Spinner />
-            </div>
+            <PageSkeleton />
         )
     }
 

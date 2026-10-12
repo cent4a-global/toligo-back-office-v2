@@ -13,6 +13,7 @@
 @import './components/modal.css';
 @import './components/table.css';
 @import './components/spinner.css';
+@import './components/skeleton.css';
 @import './components/empty-state.css';
 @import './components/error-state.css';
 @import './components/page-header.css';
@@ -50,6 +51,9 @@
 @import './pages/hubs/HubsTable.css';
 @import './pages/hubs/HubFormModal.css';
 @import './pages/hubs/HubsPage.css';
+@import './pages/settings/PackageFormatsSection.css';
+@import './pages/settings/BusinessSettingsSection.css';
+@import './pages/settings/SettingsPage.css';
 @import './motion.css';
 
 .flaticon-icon {

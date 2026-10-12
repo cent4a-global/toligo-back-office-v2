@@ -3,7 +3,7 @@ import Badge from '../../../components/ui/Badge'
 import Dropdown from '../../../components/ui/Dropdown'
 import Card from '../../../components/ui/Card'
 
-function ZonesTable({ zones = [], loading = false, onEdit, onDelete }) {
+function ZonesTable({ zones = [], loading = false, errorContent, onEdit, onDelete }) {
     const columns = [
         {
             key: 'nom',
@@ -77,6 +77,7 @@ function ZonesTable({ zones = [], loading = false, onEdit, onDelete }) {
                     columns={columns}
                     data={zones}
                     loading={loading}
+                errorContent={errorContent}
                     emptyMessage="Aucune zone disponible"
                 />
             </div>

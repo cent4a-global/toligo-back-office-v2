@@ -1,3 +1,5 @@
+import { Suspense } from 'react'
+import PageSkeleton from '../components/ui/PageSkeleton'
 import { Outlet } from 'react-router-dom'
 import Icon from '../components/ui/Icon'
 
@@ -58,7 +60,9 @@ function AuthLayout() {
 
             <main className="auth-main">
                 <div className="auth-main-content">
-                    <Outlet />
+                    <Suspense fallback={<PageSkeleton variant="auth" />}>
+                        <Outlet />
+                    </Suspense>
                 </div>
                 <footer className="auth-footer">
                     <span>© {new Date().getFullYear()} Toligo</span>

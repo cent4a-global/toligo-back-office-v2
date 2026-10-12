@@ -6,7 +6,6 @@ import Select from '../../../components/ui/Select'
 import Button from '../../../components/ui/Button'
 import WarehouseLocationPicker from './WarehouseLocationPicker'
 
-
 const initialForm = {
     name: '',
     address: '',
@@ -98,6 +97,15 @@ function WarehouseFormModal({ open, warehouse, loading = false, onClose, onSubmi
             title={warehouse ? "Modifier l'entrepôt" : 'Ajouter un entrepôt'}
             size="md">
             <form className="warehouse-form" onSubmit={handleSubmit}>
+                <Input
+                    label="Nom de l'entrepôt"
+                    name="name"
+                    value={form.name}
+                    onChange={handleChange}
+                    placeholder="Ex. Entrepôt Yopougon"
+                    disabled={loading}
+                    required
+                />
                 <Select
                     label="Ville"
                     name="city"
@@ -111,16 +119,6 @@ function WarehouseFormModal({ open, warehouse, loading = false, onClose, onSubmi
                     disabled={loading}
                     required
                 />
-                <Input
-                    label="Nom de l'entrepôt"
-                    name="name"
-                    value={form.name}
-                    onChange={handleChange}
-                    placeholder="Ex. Entrepôt Yopougon"
-                    disabled={loading}
-                    required
-                />
-
                 <Input
                     label="Adresse"
                     name="address"

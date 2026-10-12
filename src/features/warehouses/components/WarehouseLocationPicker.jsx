@@ -111,7 +111,7 @@ export default function WarehouseLocationPicker({ city, latitude, longitude, onS
                 zoom={13}
                 className="warehouse-location-map"
                 attributionControl
-                scrollWheelZoom={false}
+                scrollWheelZoom={true}
             >
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
