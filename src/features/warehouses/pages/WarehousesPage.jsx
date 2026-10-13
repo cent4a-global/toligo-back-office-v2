@@ -1,7 +1,8 @@
+import { Warehouse, Package, PackageCheck, KeyRound } from 'lucide-react'
+import { notifyError } from '../../../lib/notifications'
 import { useState } from 'react'
 
 import Button from '../../../components/ui/Button'
-import Card from '../../../components/ui/Card'
 import PageHeader from '../../../components/ui/PageHeader'
 import StatCard from '../../../components/ui/StatCard'
 import ErrorState from '../../../components/ui/ErrorState'
@@ -32,7 +33,6 @@ function WarehousesPage() {
     })
 
     const [warehouseToDelete, setWarehouseToDelete] = useState(null)
-    const [deleteError, setDeleteError] = useState('')
 
     const warehouses = data?.data ?? []
 
@@ -76,15 +76,25 @@ function WarehousesPage() {
             return
         }
 
-        setDeleteError('')
+
         try {
             await deleteMutation.mutateAsync(warehouseToDelete.id)
             setWarehouseToDelete(null)
         } catch (failure) {
-            setDeleteError(failure.message)
+            notifyError(failure)
         }
     }
 
+
+    if (isError) {
+        return (
+            <ErrorState
+                title="Impossible de charger les entrepôts"
+                description={error.message}
+                action={<Button onClick={() => refetch()}>Réessayer</Button>}
+            />
+        )
+    }
 
     return (
         <div className="warehouses-page">
@@ -101,32 +111,25 @@ function WarehousesPage() {
 
             <div className="warehouses-stats">
                 <StatCard
-                    title="Entrepôts"
-                    value={isLoading || (isError && !data) ? '?' : data?.meta?.totalWarehouses ?? warehouses.length}
+                    title="Entrepôts" icon={<Warehouse size={20} strokeWidth={1.8} />}
+                    value={data?.meta?.totalWarehouses ?? warehouses.length}
                 />
 
-                <StatCard title="Caisses" value={data?.meta?.totalBoxes ?? '—'} />
+                <StatCard title="Caisses" icon={<Package size={20} strokeWidth={1.8} />} value={data?.meta?.totalBoxes ?? '—'} />
 
-                <StatCard title="Caisses occupées" value={data?.meta?.occupiedBoxes ?? '—'} />
+                <StatCard title="Caisses occupées" icon={<PackageCheck size={20} strokeWidth={1.8} />} value={data?.meta?.occupiedBoxes ?? '—'} />
 
-                <StatCard title="Locations actives" value={data?.meta?.activeRentals ?? '—'} />
+                <StatCard title="Locations actives" icon={<KeyRound size={20} strokeWidth={1.8} />} value={data?.meta?.activeRentals ?? '—'} />
             </div>
 
-            <Card className="warehouses-table-card">
+            <div className="warehouses-table-section">
                 <WarehouseTable
-                    errorContent={isError ? (
-                        <ErrorState
-                            title="Impossible de charger les entrepôts"
-                            description={error?.message}
-                            action={<Button onClick={() => refetch()}>Réessayer</Button>}
-                        />
-                    ) : null}
                     warehouses={warehouses}
                     loading={isLoading}
                     onEdit={openEditModal}
                     onDelete={setWarehouseToDelete}
                 />
-            </Card>
+            </div>
 
             {formModal.open && (
                 <WarehouseFormModal
@@ -137,11 +140,7 @@ function WarehousesPage() {
                     onSubmit={handleSubmit}
                 />
             )}
-            {deleteError && (
-                <p className="warehouse-form-error" role="alert">
-                    {deleteError}
-                </p>
-            )}
+
             <DeleteWarehouseDialog
                 warehouse={warehouseToDelete}
                 loading={deleteMutation.isPending}

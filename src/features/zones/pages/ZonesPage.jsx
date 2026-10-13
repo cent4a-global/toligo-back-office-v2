@@ -1,3 +1,4 @@
+import { notifyError } from '../../../lib/notifications'
 import { useState } from 'react'
 
 import PageHeader from '../../../components/ui/PageHeader'
@@ -26,7 +27,6 @@ function ZonesPage() {
     })
 
     const [zoneToDelete, setZoneToDelete] = useState(null)
-    const [deleteError, setDeleteError] = useState('')
 
     const zones = data?.data ?? []
 
@@ -70,15 +70,25 @@ function ZonesPage() {
             return
         }
 
-        setDeleteError('')
+
         try {
             await deleteMutation.mutateAsync(zoneToDelete.id)
             setZoneToDelete(null)
         } catch (failure) {
-            setDeleteError(failure.message || 'Impossible de supprimer cette zone.')
+            notifyError(failure)
         }
     }
 
+
+    if (isError) {
+        return (
+            <ErrorState
+                title="Impossible de charger les zones"
+                description={error.message}
+                action={<Button onClick={() => refetch()}>Réessayer</Button>}
+            />
+        )
+    }
 
     return (
         <div className="zones-page">
@@ -96,18 +106,11 @@ function ZonesPage() {
             <ZonesMap zones={zones} loading={isLoading} onEdit={openEditModal} />
 
             <ZonesTable
-                errorContent={isError ? (
-                    <ErrorState
-                        title="Impossible de charger les zones"
-                        description={error?.message}
-                        action={<Button onClick={() => refetch()}>Réessayer</Button>}
-                    />
-                ) : null}
                 zones={zones}
                 loading={isLoading}
                 onEdit={openEditModal}
                 onDelete={zone => {
-                    setDeleteError('')
+
                     setZoneToDelete(zone)
                 }}
             />
@@ -125,7 +128,6 @@ function ZonesPage() {
             <DeleteZoneDialog
                 zone={zoneToDelete}
                 loading={deleteMutation.isPending}
-                error={deleteError}
                 onClose={() => {
                     if (!deleteMutation.isPending) setZoneToDelete(null)
                 }}

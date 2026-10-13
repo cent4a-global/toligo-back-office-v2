@@ -31,6 +31,7 @@ export function useCreateStation() {
     const queryClient = useQueryClient()
 
     return useMutation({
+        meta: { successMessage: 'Station créée.' },
         mutationFn: createStation,
 
         onSuccess: () => {
@@ -45,6 +46,7 @@ export function useUpdateStation() {
     const queryClient = useQueryClient()
 
     return useMutation({
+        meta: { successMessage: 'Station modifiée.' },
         mutationFn: ({ id, data }) => updateStation(id, data),
 
         onSuccess: (_response, variables) => {
@@ -63,6 +65,7 @@ export function useDeleteStation() {
     const queryClient = useQueryClient()
 
     return useMutation({
+        meta: { successMessage: 'Station supprimée.' },
         mutationFn: deleteStation,
 
         onSuccess: () => {

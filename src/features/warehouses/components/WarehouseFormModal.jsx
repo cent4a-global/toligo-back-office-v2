@@ -1,41 +1,47 @@
+import { notifyError } from '../../../lib/notifications'
 import { useState } from 'react'
 
 import Modal from '../../../components/ui/Modal'
 import Input from '../../../components/ui/Input'
 import Select from '../../../components/ui/Select'
+import { useCommunes } from '../../zones/hooks/useCommunes'
 import Button from '../../../components/ui/Button'
 import WarehouseLocationPicker from './WarehouseLocationPicker'
 
 const initialForm = {
-    name: '',
-    address: '',
-    city: '',
-    commune: '',
+    nom: '',
+    adresse: '',
+    commune_id: '',
     description: '',
     latitude: '',
     longitude: '',
 }
 
-const cities = ['Abidjan', 'Yamoussoukro', 'Bouaké', 'San Pedro']
-
 function WarehouseFormModal({ open, warehouse, loading = false, onClose, onSubmit }) {
+    const communesQuery = useCommunes()
     const [form, setForm] = useState(() =>
         warehouse
             ? {
-                  name: warehouse.name ?? '',
-                  address: warehouse.address ?? '',
-                  city:
-                      warehouse.city?.name ??
-                      (typeof warehouse.city === 'string' ? warehouse.city : ''),
-                  commune:
-                      warehouse.commune?.name ??
-                      (typeof warehouse.commune === 'string' ? warehouse.commune : ''),
+                  nom: warehouse.nom ?? warehouse.name ?? '',
+                  adresse: warehouse.adresse ?? warehouse.address ?? '',
+                  commune_id: warehouse.commune_id ?? warehouse.commune?.id ?? '',
                   description: warehouse.description ?? '',
                   latitude: warehouse.latitude ?? '',
                   longitude: warehouse.longitude ?? '',
               }
             : initialForm,
     )
+
+    const communeOptions = (communesQuery.data ?? []).map(commune => ({
+        value: commune.id,
+        label: commune.nom,
+    }))
+    if (form.commune_id && !communeOptions.some(option => String(option.value) === String(form.commune_id))) {
+        communeOptions.push({
+            value: form.commune_id,
+            label: warehouse?.commune?.nom ?? warehouse?.commune?.name ?? 'Commune associée',
+        })
+    }
 
     const handleChange = event => {
         const { name, value } = event.target
@@ -46,16 +52,15 @@ function WarehouseFormModal({ open, warehouse, loading = false, onClose, onSubmi
         }))
     }
 
-    const [error, setError] = useState('')
     const [coordinateMode, setCoordinateMode] = useState('manual')
 
     const handleSubmit = async event => {
         event.preventDefault()
 
         if (loading) return
-        setError('')
-        if (!form.name.trim() || !form.address.trim() || !form.city.trim()) {
-            setError('Veuillez renseigner la ville, le nom et l’adresse de l’entrepôt.')
+
+        if (!form.nom.trim() || !form.adresse.trim() || !String(form.commune_id).trim()) {
+            notifyError('Veuillez renseigner la commune, le nom et l’adresse de l’entrepôt.')
             return
         }
 
@@ -71,26 +76,26 @@ function WarehouseFormModal({ open, warehouse, loading = false, onClose, onSubmi
             longitude < -180 ||
             longitude > 180
         ) {
-            setError('Saisissez une latitude entre -90 et 90 et une longitude entre -180 et 180.')
+            notifyError('Saisissez une latitude entre -90 et 90 et une longitude entre -180 et 180.')
             return
         }
 
         try {
             await onSubmit?.({
-                ...form,
-                name: form.name.trim(),
-                address: form.address.trim(),
+                commune_id: form.commune_id,
+                nom: form.nom.trim(),
+                adresse: form.adresse.trim(),
                 description: form.description.trim(),
                 latitude,
                 longitude,
             })
         } catch (failure) {
-            setError(failure.message)
+            notifyError(failure)
         }
     }
 
     return (
-        <Modal
+        <Modal subtitle="Renseignez les informations du site et sa localisation."
             open={open}
             closeOnOverlayClick={false}
             onClose={loading ? undefined : onClose}
@@ -99,44 +104,41 @@ function WarehouseFormModal({ open, warehouse, loading = false, onClose, onSubmi
             <form className="warehouse-form" onSubmit={handleSubmit}>
                 <Input
                     label="Nom de l'entrepôt"
-                    name="name"
-                    value={form.name}
+                    name="nom"
+                    value={form.nom}
                     onChange={handleChange}
                     placeholder="Ex. Entrepôt Yopougon"
                     disabled={loading}
                     required
                 />
-                <Select
-                    label="Ville"
-                    name="city"
-                    value={form.city}
-                    onChange={handleChange}
-                    options={(form.city && !cities.includes(form.city)
-                        ? [...cities, form.city]
-                        : cities
-                    ).map(city => ({ value: city, label: city }))}
-                    placeholder="Sélectionner une ville"
-                    disabled={loading}
-                    required
-                />
                 <Input
                     label="Adresse"
-                    name="address"
-                    value={form.address}
+                    name="adresse"
+                    value={form.adresse}
                     onChange={handleChange}
                     placeholder="Ex. Boulevard de Yopougon"
                     disabled={loading}
                     required
                 />
 
-                <Input
+                <Select
                     label="Commune"
-                    name="commune"
-                    value={form.commune}
+                    name="commune_id"
+                    value={form.commune_id}
                     onChange={handleChange}
-                    placeholder="Cocody"
-                    disabled={loading}
+                    options={communeOptions}
+                    placeholder={communesQuery.isPending ? 'Chargement des communes...' : 'Sélectionner une commune'}
+                    disabled={loading || communesQuery.isPending}
+                    required
                 />
+                {communesQuery.isError && (
+                    <div role="alert">
+                        {communesQuery.error.message}{' '}
+                        <Button type="button" variant="secondary" onClick={() => communesQuery.refetch()}>
+                            Réessayer
+                        </Button>
+                    </div>
+                )}
 
                 <div className="form-field">
                     <label htmlFor="description" className="form-label">
@@ -177,7 +179,6 @@ function WarehouseFormModal({ open, warehouse, loading = false, onClose, onSubmi
                     </div>
                     {coordinateMode === 'map' && (
                         <WarehouseLocationPicker
-                            city={form.city}
                             latitude={form.latitude}
                             longitude={form.longitude}
                             disabled={loading}
@@ -222,17 +223,13 @@ function WarehouseFormModal({ open, warehouse, loading = false, onClose, onSubmi
                     </div>
                 </fieldset>
 
-                {error && (
-                    <p className="warehouse-form-error" role="alert">
-                        {error}
-                    </p>
-                )}
+
                 <div className="warehouse-form-actions">
                     <Button type="button" variant="secondary" onClick={onClose} disabled={loading}>
                         Annuler
                     </Button>
 
-                    <Button type="submit" loading={loading} variant="danger">
+                    <Button type="submit" loading={loading} variant="primary">
                         {warehouse ? 'Enregistrer' : 'Créer'}
                     </Button>
                 </div>

@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import {
+    assignWarehouseAdmins,
     createWarehouse,
     deleteWarehouse,
     getWarehouseById,
@@ -9,6 +10,19 @@ import {
 } from '../api/warehouses.api'
 
 import { warehouseKeys } from '../queries/warehouseKeys'
+
+export function useAssignWarehouseAdmins() {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: ({ id, adminIds }) => assignWarehouseAdmins(id, adminIds),
+        meta: { successMessage: 'Administrateurs enregistrés.' },
+        onSuccess: (_response, { id }) => Promise.all([
+            queryClient.invalidateQueries({ queryKey: warehouseKeys.detail(id) }),
+            queryClient.invalidateQueries({ queryKey: warehouseKeys.lists() }),
+            queryClient.invalidateQueries({ queryKey: ['internal-users'] }),
+        ]),
+    })
+}
 
 export function useWarehouses() {
     return useQuery({
@@ -29,6 +43,7 @@ export function useCreateWarehouse() {
     const queryClient = useQueryClient()
 
     return useMutation({
+        meta: { successMessage: 'Entrepôt créé.' },
         mutationFn: createWarehouse,
 
         onSuccess: () => {
@@ -43,6 +58,7 @@ export function useUpdateWarehouse() {
     const queryClient = useQueryClient()
 
     return useMutation({
+        meta: { successMessage: 'Entrepôt modifié.' },
         mutationFn: ({ id, data }) => updateWarehouse(id, data),
 
         onSuccess: (_response, variables) => {
@@ -61,6 +77,7 @@ export function useDeleteWarehouse() {
     const queryClient = useQueryClient()
 
     return useMutation({
+        meta: { successMessage: 'Entrepôt supprimé.' },
         mutationFn: deleteWarehouse,
 
         onSuccess: () => {

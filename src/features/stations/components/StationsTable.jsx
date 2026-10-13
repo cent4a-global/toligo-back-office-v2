@@ -1,9 +1,8 @@
 import Table from '../../../components/ui/Table'
 import Badge from '../../../components/ui/Badge'
 import Dropdown from '../../../components/ui/Dropdown'
-import Card from '../../../components/ui/Card'
 
-function StationsTable({ stations = [], loading = false, errorContent, onEdit, onDelete }) {
+function StationsTable({ stations = [], loading = false, onEdit, onDelete }) {
     const columns = [
         {
             key: 'nom',
@@ -96,17 +95,16 @@ function StationsTable({ stations = [], loading = false, errorContent, onEdit, o
     ]
 
     return (
-        <Card>
+        <div>
             <div className="stations-table">
                 <Table
                     columns={columns}
                     data={stations}
                     loading={loading}
-                errorContent={errorContent}
                     emptyMessage="Aucune station disponible"
                 />
             </div>
-        </Card>
+        </div>
     )
 }
 

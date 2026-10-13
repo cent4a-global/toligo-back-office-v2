@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import PageHeader from '../../../components/ui/PageHeader'
-import Card from '../../../components/ui/Card'
 import UsersTabs from '../components/UsersTabs'
 import InternalUsersTable from '../components/InternalUsersTable'
 import DriversTable from '../components/DriversTable'
@@ -59,7 +58,7 @@ function UsersRolesPage({
                 description="Consultez les utilisateurs et les droits de votre réseau."
             />
             <UsersTabs activeTab={activeTab} onChange={setActiveTab} counts={counts} />
-            <Card>
+            <div>
                 {unavailable ? (
                     <EmptyState
                         title="Données indisponibles"
@@ -108,7 +107,7 @@ function UsersRolesPage({
                         )}
                     </>
                 )}
-            </Card>
+            </div>
             <RolePermissionsTable permissions={permissions} onEdit={onEditPermissions} />
         </section>
     )

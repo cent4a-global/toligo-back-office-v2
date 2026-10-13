@@ -23,6 +23,7 @@ export function useCreateZone() {
     const queryClient = useQueryClient()
 
     return useMutation({
+        meta: { successMessage: 'Zone créée.' },
         mutationFn: createZone,
 
         onSuccess: () => {
@@ -37,6 +38,7 @@ export function useUpdateZone() {
     const queryClient = useQueryClient()
 
     return useMutation({
+        meta: { successMessage: 'Zone modifiée.' },
         mutationFn: ({ id, data }) => updateZone(id, data),
 
         onSuccess: (_response, variables) => {
@@ -55,6 +57,7 @@ export function useDeleteZone() {
     const queryClient = useQueryClient()
 
     return useMutation({
+        meta: { successMessage: 'Zone supprimée.' },
         mutationFn: deleteZone,
 
         onSuccess: () => {

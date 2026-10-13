@@ -32,6 +32,16 @@ function SettingsPage() {
     }
 
 
+    if (isError) {
+        return (
+            <ErrorState
+                title="Impossible de charger les paramètres"
+                description={error.message}
+                action={<Button onClick={() => refetch()}>Réessayer</Button>}
+            />
+        )
+    }
+
     return (
         <div className="settings-page">
             <PageHeader
@@ -42,17 +52,11 @@ function SettingsPage() {
             <div className="settings-page-sections">
                 <PackageFormatsSection />
 
-                {isError ? (
-                    <ErrorState
-                title="Impossible de charger les paramètres"
-                description={error.message}
-                action={<Button onClick={() => refetch()}>Réessayer</Button>}
-            />
-                ) : <BusinessSettingsSection
+                <BusinessSettingsSection
                     settings={settings}
                     loading={saveMutation.isPending}
                     onSave={handleSaveSettings}
-                />}
+                />
             </div>
         </div>
     )

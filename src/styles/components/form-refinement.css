@@ -1,0 +1,112 @@
+/* Shared form and dialog finish, following the feature layout rules. */
+.modal-overlay {
+    padding: 28px;
+    background: rgb(17 20 24 / 55%);
+    backdrop-filter: blur(5px);
+}
+
+.modal {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    max-height: calc(100dvh - 56px);
+    border: 1px solid rgb(255 255 255 / 65%);
+    border-radius: 20px;
+    box-shadow: 0 24px 80px rgb(0 0 0 / 22%), 0 4px 16px rgb(0 0 0 / 8%);
+}
+
+.modal-md { max-width: 680px; }
+.modal-sm { max-width: 440px; }
+
+.modal-header {
+    flex-shrink: 0;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 28px 32px 24px;
+    background: linear-gradient(135deg, #fff, #f7f7f8);
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+.modal-heading { min-width: 0; }
+.modal-title { font-size: 22px; font-weight: 650; letter-spacing: -0.6px; line-height: 1.3; }
+.modal-subtitle { margin-top: 8px; color: var(--color-text-secondary); font-size: 13px; line-height: 1.6; }
+.modal-close {
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    background: var(--color-bg-surface);
+    font-size: 22px;
+    box-shadow: var(--shadow-sm);
+}
+.modal-close i { display: inline-flex; }
+.modal-close:disabled { opacity: 0.4; cursor: not-allowed; }
+.modal-close:focus-visible { outline: 2px solid var(--color-brand); outline-offset: 3px; }
+.modal-content { padding: 28px 32px 0; overflow-y: auto; min-height: 0; overscroll-behavior: contain; }
+.modal-content > :last-child:not(form) { margin-bottom: 28px; }
+
+.form-field { gap: 9px; min-width: 0; }
+.form-label { font-size: 13px; font-weight: 600; line-height: 1.5; }
+.form-required { color: var(--color-text-secondary); }
+.form-input,
+.form-select {
+    height: 48px;
+    border-color: #dcdde1;
+    border-radius: 10px;
+    background-color: #fafafb;
+    font-size: 14px;
+    box-shadow: inset 0 1px 2px rgb(20 20 30 / 2%);
+    transition: background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+.form-input:hover:not(:disabled),
+.form-select:hover:not(:disabled) { background-color: #fff; border-color: #a3a3ab; }
+.form-input:focus,
+.form-select:focus { background-color: #fff; border-color: #34343a; box-shadow: 0 0 0 4px rgb(18 18 18 / 6%); }
+textarea.form-input { height: auto; min-height: 104px; padding: 13px 15px; line-height: 1.6; resize: vertical; }
+.form-input:disabled,
+.form-select:disabled { color: var(--color-text-secondary); background-color: #f0f0f2; }
+.form-input-error,
+.form-select-error { border-color: var(--color-danger); }
+.form-input-error:focus,
+.form-select-error:focus { border-color: var(--color-danger); box-shadow: 0 0 0 4px rgb(201 74 10 / 8%); }
+
+.modal form { row-gap: 24px; }
+.modal form fieldset {
+    padding: 20px;
+    border: 1px solid var(--color-border-light);
+    border-radius: 14px;
+    background: #fcfcfd;
+    min-width: 0;
+}
+.modal form fieldset legend { padding: 0 8px; margin-left: -8px; margin-bottom: 8px; font-size: 13px; font-weight: 600; }
+.modal form fieldset .form-input,
+.modal form fieldset .form-select { background-color: #fff; }
+.modal form [class$='form-actions'],
+.modal .confirm-dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    grid-column: 1 / -1;
+    margin: 4px -32px 0;
+    padding: 20px 32px;
+    border-top: 1px solid var(--color-border-light);
+    background: #f8f8f9;
+}
+.modal .btn { border-radius: 10px; min-height: 44px; }
+.modal .btn-primary { box-shadow: 0 2px 4px rgb(0 0 0 / 12%); }
+.modal .btn:focus-visible { outline: 2px solid var(--color-brand); outline-offset: 3px; }
+.modal .confirm-dialog-description { font-size: 14px; line-height: 1.7; }
+
+@media (max-width: 650px) {
+    .modal-overlay { padding: 12px; }
+    .modal { max-height: calc(100dvh - 24px); border-radius: 16px; }
+    .modal-header { padding: 22px 20px; gap: 12px; }
+    .modal-title { font-size: 20px; }
+    .modal-content { padding: 22px 20px 0; }
+    .modal form fieldset { padding: 16px; }
+    .modal form [class$='form-actions'],
+    .modal .confirm-dialog-actions { margin-left: -20px; margin-right: -20px; padding: 16px 20px; flex-direction: column-reverse; }
+    .modal form [class$='form-actions'] .btn,
+    .modal .confirm-dialog-actions .btn { width: 100%; }
+}

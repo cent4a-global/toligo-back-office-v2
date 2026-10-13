@@ -1,3 +1,5 @@
+import { MapPin, CircleCheck, Wrench, CircleOff } from 'lucide-react'
+import { notifyError } from '../../../lib/notifications'
 import { useState } from 'react'
 
 import PageHeader from '../../../components/ui/PageHeader'
@@ -27,7 +29,6 @@ function StationsPage() {
     })
 
     const [stationToDelete, setStationToDelete] = useState(null)
-    const [deleteError, setDeleteError] = useState('')
 
     const stations = data?.data ?? []
 
@@ -71,15 +72,25 @@ function StationsPage() {
             return
         }
 
-        setDeleteError('')
+
         try {
             await deleteMutation.mutateAsync(stationToDelete.id)
             setStationToDelete(null)
         } catch (failure) {
-            setDeleteError(failure.message || 'Impossible de supprimer cette station.')
+            notifyError(failure)
         }
     }
 
+
+    if (isError) {
+        return (
+            <ErrorState
+                title="Impossible de charger les stations"
+                description={error.message}
+                action={<Button onClick={() => refetch()}>Réessayer</Button>}
+            />
+        )
+    }
 
     return (
         <div className="stations-page">
@@ -96,25 +107,18 @@ function StationsPage() {
 
 
             <div className="stations-stats">
-                <StatCard title="Stations" value={isLoading ? '—' : stations.length} />
-                <StatCard title="Opérationnelles" value={isLoading ? '—' : stations.filter(station => station.statut === 'operationnelle').length} />
-                <StatCard title="Maintenance" value={isLoading ? '—' : stations.filter(station => station.statut === 'maintenance').length} />
-                <StatCard title="Indisponibles" value={isLoading ? '—' : stations.filter(station => station.statut === 'indisponible').length} />
+                <StatCard title="Stations" icon={<MapPin size={20} strokeWidth={1.8} />} value={isLoading ? '—' : stations.length} />
+                <StatCard title="Opérationnelles" icon={<CircleCheck size={20} strokeWidth={1.8} />} value={isLoading ? '—' : stations.filter(station => station.statut === 'operationnelle').length} />
+                <StatCard title="Maintenance" icon={<Wrench size={20} strokeWidth={1.8} />} value={isLoading ? '—' : stations.filter(station => station.statut === 'maintenance').length} />
+                <StatCard title="Indisponibles" icon={<CircleOff size={20} strokeWidth={1.8} />} value={isLoading ? '—' : stations.filter(station => station.statut === 'indisponible').length} />
             </div>
             <StationsMap stations={stations} loading={isLoading} onEdit={openEditModal} />
             <StationsTable
-                errorContent={isError ? (
-                    <ErrorState
-                        title="Impossible de charger les stations"
-                        description={error?.message}
-                        action={<Button onClick={() => refetch()}>Réessayer</Button>}
-                    />
-                ) : null}
                 stations={stations}
                 loading={isLoading}
                 onEdit={openEditModal}
                 onDelete={station => {
-                    setDeleteError('')
+
                     setStationToDelete(station)
                 }}
             />
@@ -132,7 +136,6 @@ function StationsPage() {
             <DeleteStationDialog
                 station={stationToDelete}
                 loading={deleteMutation.isPending}
-                error={deleteError}
                 onClose={() => {
                     if (!deleteMutation.isPending) setStationToDelete(null)
                 }}

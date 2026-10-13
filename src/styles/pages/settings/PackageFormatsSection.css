@@ -121,29 +121,26 @@
 .package-format-switch input:focus-visible { outline:2px solid var(--color-text-primary); outline-offset:3px; }
 @media(max-width:600px) { .package-format-form-grid { grid-template-columns:1fr; } }
 
-/* Formats card: visual treatment from the back-office mockup. */
-.package-formats-card {
-    border: 0;
-    border-radius: 28px;
-    box-shadow: none;
-    background: #fff;
+/* Formats section aligned with the page and standalone table. */
+.package-formats-section {
+    min-width: 0;
 }
-.package-formats-card .settings-card-header {
-    padding: 24px 24px 18px;
+.package-formats-section .settings-card-header {
+    padding: 0 0 18px;
     align-items: center;
 }
-.package-formats-card .settings-card-header h2 {
+.package-formats-section .settings-card-header h2 {
     margin: 0 0 5px;
     font-size: 20px;
     line-height: 1.3;
     font-weight: 650;
 }
-.package-formats-card .settings-card-header p {
+.package-formats-section .settings-card-header p {
     max-width: 850px;
     color: #777780;
     font-size: 14px;
 }
-.package-formats-card .package-format-add {
+.package-formats-section .package-format-add {
     flex-shrink: 0;
     min-height: 44px;
     padding: 12px 18px;
@@ -155,38 +152,38 @@
     font-size: 14px;
     font-weight: 600;
 }
-.package-formats-card .package-format-add:hover { background: #303030; }
-.package-formats-card .package-formats-table-wrapper { padding: 0 24px 20px; overflow: visible; }
-.package-formats-card .tabs-list { gap: 24px; border-color: #eeeef1; }
-.package-formats-card .tab { font-size: 13px; padding: 10px 0; }
-.package-formats-card .tab-active::after { background: #111; }
-.package-formats-card .tabs-content { padding-top: 10px; }
-.package-formats-card .table-container { border: 0; border-radius: 0; }
-.package-formats-card .table { min-width: 960px; }
-.package-formats-card .table thead { background: transparent; }
-.package-formats-card .table th {
+.package-formats-section .package-format-add:hover { background: #303030; }
+.package-formats-section .package-formats-table-wrapper { padding: 0; overflow: visible; }
+.package-formats-section .tabs-list { gap: 24px; border-color: #eeeef1; }
+.package-formats-section .tab { font-size: 13px; padding: 10px 0; }
+.package-formats-section .tab-active::after { background: #111; }
+.package-formats-section .tabs-content { padding-top: 10px; }
+.package-formats-section .table-container { border: 1px solid var(--color-border-light); border-radius: var(--radius-lg); }
+.package-formats-section .table { min-width: 960px; }
+.package-formats-section .table thead { background: #e4e4e8; }
+.package-formats-section .table th {
     padding: 12px 10px;
     border-bottom: 1px solid #e8e8ec;
-    color: #72727b;
+    color: var(--color-text-primary);
     font-size: 13px;
     font-weight: 600;
     text-transform: none;
     letter-spacing: normal;
 }
-.package-formats-card .table td {
+.package-formats-section .table td {
     height: 72px;
     padding: 12px 10px;
     border-color: #f0f0f3;
     font-size: 14px;
     vertical-align: middle;
 }
-.package-formats-card .table td:nth-child(3) { min-width: 180px; max-width: 280px; }
-.package-formats-card .table td:nth-child(4),
-.package-formats-card .table td:nth-child(5),
-.package-formats-card .table td:nth-child(6) { white-space: nowrap; }
-.package-formats-card .table th:last-child,
-.package-formats-card .table td:last-child { text-align: right; }
-.package-formats-card .package-format-image {
+.package-formats-section .table td:nth-child(3) { min-width: 180px; max-width: 280px; }
+.package-formats-section .table td:nth-child(4),
+.package-formats-section .table td:nth-child(5),
+.package-formats-section .table td:nth-child(6) { white-space: nowrap; }
+.package-formats-section .table th:last-child,
+.package-formats-section .table td:last-child { text-align: right; }
+.package-formats-section .package-format-image {
     width: 48px;
     height: 48px;
     border-radius: 16px;
@@ -195,21 +192,21 @@
     font-size: 26px;
 }
 .package-format-image-empty { width: 24px; height: 6px; border-radius: 3px; background: #d3d3da; }
-.package-formats-card .package-format-name { gap: 4px; }
-.package-formats-card .package-format-name strong { font-size: 15px; font-weight: 650; }
-.package-formats-card .package-format-name span { color: #80808a; font-size: 12px; }
-.package-formats-card .package-format-status { padding: 5px 10px; font-size: 12px; line-height: 1.3; }
-.package-formats-card .package-format-status-active { background: #e2f3ec; color: #176b50; }
-.package-formats-card .package-format-status-archived { background: #ebebef; color: #62626b; }
-.package-formats-card .package-format-actions { justify-content: flex-end; }
-.package-formats-card .package-format-actions button { padding: 4px 0; text-decoration: underline; text-underline-offset: 2px; font-size: 14px; }
+.package-formats-section .package-format-name { gap: 4px; }
+.package-formats-section .package-format-name strong { font-size: 15px; font-weight: 650; }
+.package-formats-section .package-format-name span { color: #80808a; font-size: 12px; }
+.package-formats-section .package-format-status { padding: 5px 10px; font-size: 12px; line-height: 1.3; }
+.package-formats-section .package-format-status-active { background: #e2f3ec; color: #176b50; }
+.package-formats-section .package-format-status-archived { background: #ebebef; color: #62626b; }
+.package-formats-section .package-format-actions { justify-content: flex-end; }
+.package-formats-section .package-format-actions button { padding: 4px 0; text-decoration: underline; text-underline-offset: 2px; font-size: 14px; }
 @media (max-width: 900px) {
-    .package-formats-card .settings-card-header { align-items: flex-start; }
+    .package-formats-section .settings-card-header { align-items: flex-start; }
 }
 @media (max-width: 600px) {
-    .package-formats-card { border-radius: 20px; }
-    .package-formats-card .settings-card-header { padding: 20px 16px 12px; }
-    .package-formats-card .package-formats-table-wrapper { padding: 0 16px 16px; }
-    .package-formats-card .package-format-add { width: 100%; }
-    .package-formats-card .tabs-list { gap: 18px; }
+    .package-formats-section { border-radius: 20px; }
+    .package-formats-section .settings-card-header { padding: 20px 16px 12px; }
+    .package-formats-section .package-formats-table-wrapper { padding: 0 16px 16px; }
+    .package-formats-section .package-format-add { width: 100%; }
+    .package-formats-section .tabs-list { gap: 18px; }
 }

@@ -10,7 +10,7 @@ import Button from '../../../components/ui/Button'
 function LoginPage() {
     const navigate = useNavigate()
 
-    const { login, isLoggingIn, loginError } = useLogin()
+    const { login, isLoggingIn } = useLogin()
     const [showPassword, setShowPassword] = useState(false)
 
     const [form, setForm] = useState({
@@ -37,7 +37,7 @@ function LoginPage() {
                 navigate('/verify-code')
             }
         } catch {
-            // erreur disponible via loginError
+            // The mutation cache displays the error toast.
         }
     }
 
@@ -52,7 +52,7 @@ function LoginPage() {
             </div>
 
             <form className="login-form" onSubmit={handleSubmit}>
-                {loginError && <div className="login-error">{loginError.message}</div>}
+
 
                 <Input
                     label="Adresse email"

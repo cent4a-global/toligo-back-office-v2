@@ -11,6 +11,7 @@ import { removeResetEmail, saveResetEmail } from '../storage/auth.storage'
 
 export function useForgotPassword() {
     const mutation = useMutation({
+        meta: { successMessage: 'Code de réinitialisation envoyé.' },
         mutationFn: forgotPassword,
 
         onSuccess: (response, email) => {
@@ -30,6 +31,7 @@ export function useForgotPassword() {
 
 export function useResendResetOtp() {
     const mutation = useMutation({
+        meta: { successMessage: 'Un nouveau code vous a été envoyé.' },
         mutationFn: resendResetOtp,
     })
 
@@ -42,6 +44,7 @@ export function useResendResetOtp() {
 
 export function useVerifyResetOtp() {
     const mutation = useMutation({
+        meta: { successMessage: 'Code vérifié.' },
         mutationFn: verifyResetOtp,
     })
 
@@ -55,12 +58,13 @@ export function useVerifyResetOtp() {
 
 export function useConfirmResetPassword() {
     const mutation = useMutation({
+        meta: { successMessage: 'Mot de passe réinitialisé.' },
         mutationFn: confirmResetPassword,
 
         onSuccess: response => {
             if (response.success) {
                 removeResetEmail()
-                
+
             }
         },
     })

@@ -1,3 +1,4 @@
+import { notifyError } from '../../../lib/notifications'
 import { useState } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import Input from '../../../components/ui/Input'
@@ -10,7 +11,6 @@ function ResetPasswordPage() {
     const navigate = useNavigate()
     const [email] = useState(getResetEmail)
     const { confirmResetPassword, isResetting } = useConfirmResetPassword()
-    const [error, setError] = useState('')
     const [newPassword, setNewPassword] = useState('')
     const [newPasswordConfirmation, setNewPasswordConfirmation] = useState('')
     const strength = validatePassword(newPassword)
@@ -20,7 +20,7 @@ function ResetPasswordPage() {
 
     async function handleReset(event) {
         event.preventDefault()
-        setError('')
+
         try {
             if (!strength.isValid) throw new Error(strength.error)
             if (newPassword !== newPasswordConfirmation)
@@ -34,7 +34,7 @@ function ResetPasswordPage() {
                 throw new Error(response.message || 'Impossible de réinitialiser le mot de passe.')
             navigate('/login', { replace: true })
         } catch (failure) {
-            setError(failure.message || 'Impossible de réinitialiser le mot de passe.')
+            notifyError(failure)
         }
     }
 
@@ -81,11 +81,7 @@ function ResetPasswordPage() {
                         {confirmationMatches ? 'Les mots de passe correspondent.' : 'Les mots de passe ne correspondent pas.'}
                     </p>
                 )}
-                {error && (
-                    <p className="auth-error" role="alert">
-                        {error}
-                    </p>
-                )}
+
                 <Button type="submit" loading={isResetting}>
                     Réinitialiser le mot de passe
                 </Button>

@@ -1,3 +1,4 @@
+import toast from 'react-hot-toast'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { login, verifyCode, resendCode } from '../api/auth.api'
 
@@ -14,6 +15,7 @@ import {
 
 export function useLogin() {
     const mutation = useMutation({
+        meta: { successMessage: 'Code de vérification envoyé.' },
         mutationFn: login,
 
         onSuccess: (response, credentials) => {
@@ -35,6 +37,7 @@ export function useVerifyCode() {
     const queryClient = useQueryClient()
 
     const mutation = useMutation({
+        meta: { successMessage: 'Connexion réussie.' },
         mutationFn: async credentials => {
             const response = await verifyCode(credentials)
             if (response.success && !response.data?.token) {
@@ -72,6 +75,7 @@ export function useVerifyCode() {
 
 export function useResendCode() {
     const mutation = useMutation({
+        meta: { successMessage: 'Un nouveau code vous a été envoyé.' },
         mutationFn: resendCode,
     })
 
@@ -88,6 +92,7 @@ export function useLogout() {
     function logout() {
         clearAuthStorage()
         queryClient.clear()
+        toast.success('Déconnexion réussie.')
     }
 
     return {

@@ -33,10 +33,10 @@ function PackageFormatFormModal({ format, onClose }) {
         try {
             await mutation.mutateAsync({ id: format?.id, payload })
             onClose()
-        } catch { /* Mutation error is displayed below. */ }
+        } catch { /* The mutation cache displays the error toast. */ }
     }
     return (
-        <Modal open title={format ? 'Modifier le format' : 'Nouveau format'} size="lg" onClose={mutation.isPending ? undefined : onClose} closeOnOverlayClick={false}>
+        <Modal subtitle="Définissez les caractéristiques de ce format de colis." open title={format ? 'Modifier le format' : 'Nouveau format'} size="lg" onClose={mutation.isPending ? undefined : onClose} closeOnOverlayClick={false}>
             <form onSubmit={submit} className="package-format-form">
                 <fieldset disabled={mutation.isPending} className="package-format-form-grid">
                     <Input label="Libellé" name="libelle" value={values.libelle} onChange={change} required />
@@ -49,7 +49,7 @@ function PackageFormatFormModal({ format, onClose }) {
                     </div>
                     <label className="package-format-switch"><input type="checkbox" role="switch" name="est_actif" checked={values.est_actif} onChange={change} />Actif</label>
                 </fieldset>
-                {mutation.isError && <p className="settings-feedback settings-feedback-error" role="alert">{mutation.error.message}</p>}
+
                 <div className="package-format-form-actions">
                     <Button type="button" variant="secondary" onClick={onClose} disabled={mutation.isPending}>Annuler</Button>
                     <Button type="submit" loading={mutation.isPending}>Enregistrer</Button>

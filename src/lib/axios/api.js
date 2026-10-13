@@ -2,7 +2,7 @@
 import axios from 'axios'
 import { clearAuthStorage, getToken } from '../../features/auth/storage/auth.storage'
 
-const API_URL = 'http://192.168.1.94:8000'
+const API_URL = 'http://192.168.1.73:8000'
 
 const isAuthRequest = config =>
     config.url?.startsWith('/api/admin/login') ||
@@ -16,7 +16,7 @@ const api = axios.create({
         Accept: 'application/json',
         'Content-Type': 'application/json',
     },
-    timeout: 10000,
+    timeout: 30000,
 })
 
 // Intercepteur pour ajouter le token automatiquement

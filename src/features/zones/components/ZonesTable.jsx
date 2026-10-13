@@ -1,9 +1,8 @@
 import Table from '../../../components/ui/Table'
 import Badge from '../../../components/ui/Badge'
 import Dropdown from '../../../components/ui/Dropdown'
-import Card from '../../../components/ui/Card'
 
-function ZonesTable({ zones = [], loading = false, errorContent, onEdit, onDelete }) {
+function ZonesTable({ zones = [], loading = false, onEdit, onDelete }) {
     const columns = [
         {
             key: 'nom',
@@ -71,17 +70,16 @@ function ZonesTable({ zones = [], loading = false, errorContent, onEdit, onDelet
     ]
 
     return (
-        <Card className="zones-table-card">
+        <div className="zones-table-section">
             <div className="zones-table">
                 <Table
                     columns={columns}
                     data={zones}
                     loading={loading}
-                errorContent={errorContent}
                     emptyMessage="Aucune zone disponible"
                 />
             </div>
-        </Card>
+        </div>
     )
 }
 

@@ -12,12 +12,11 @@ function VerifyCodePage() {
 
     const { tempEmail, isAuthenticated } = useAuth()
 
-    const { verifyCode, isVerifying, verifyError } = useVerifyCode()
+    const { verifyCode, isVerifying } = useVerifyCode()
 
-    const { resendCode, isResending, resendError } = useResendCode()
+    const { resendCode, isResending } = useResendCode()
 
     const [code, setCode] = useState('')
-    const [notice, setNotice] = useState('')
 
     if (isAuthenticated) return <Navigate to="/dashboard" replace />
     if (!tempEmail) return <Navigate to="/login" replace />
@@ -40,7 +39,7 @@ function VerifyCodePage() {
                 navigate('/dashboard', { replace: true })
             }
         } catch {
-            // erreur disponible dans verifyError
+            // The mutation cache displays the error toast.
         }
     }
 
@@ -52,9 +51,9 @@ function VerifyCodePage() {
 
         try {
             await resendCode(tempEmail)
-            setNotice('Un nouveau code vous a été envoyé.')
+
         } catch {
-            // gérer plus tard avec toast
+            // The mutation cache displays the error toast.
         }
     }
 
@@ -69,9 +68,9 @@ function VerifyCodePage() {
             </div>
 
             <form className="verify-code-form" onSubmit={handleSubmit}>
-                {verifyError && <div className="verify-code-error">{verifyError.message}</div>}
-                {resendError && <div className="verify-code-error" role="alert">{resendError.message}</div>}
-                {notice && <p role="status">{notice}</p>}
+
+
+
 
                 <Input
                     label="Code de vérification"

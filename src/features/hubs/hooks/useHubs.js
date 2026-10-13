@@ -25,6 +25,7 @@ export function useCreateHub() {
     const queryClient = useQueryClient()
 
     return useMutation({
+        meta: { successMessage: 'Hub créé.' },
         mutationFn: createHub,
 
         onSuccess: () => {
@@ -39,6 +40,7 @@ export function useUpdateHub() {
     const queryClient = useQueryClient()
 
     return useMutation({
+        meta: { successMessage: 'Hub modifié.' },
         mutationFn: ({ id, data }) => updateHub(id, data),
 
         onSuccess: (_response, variables) => {
@@ -57,6 +59,7 @@ export function useDeleteHub() {
     const queryClient = useQueryClient()
 
     return useMutation({
+        meta: { successMessage: 'Hub supprimé.' },
         mutationFn: deleteHub,
 
         onSuccess: () => {

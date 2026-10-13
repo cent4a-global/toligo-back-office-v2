@@ -1,3 +1,4 @@
+import { notifyError } from '../../../lib/notifications'
 import { useState } from 'react'
 import Modal from '../../../components/ui/Modal'
 import Input from '../../../components/ui/Input'
@@ -12,7 +13,6 @@ export default function StationFormModal({ open, station, loading = false, onClo
     const communesQuery = useCommunes()
     const warehousesQuery = useWarehouses()
     const [mode, setMode] = useState('manual')
-    const [error, setError] = useState('')
     const [form, setForm] = useState(() => ({
         nom: station?.nom ?? '',
         code: station?.code ?? '',
@@ -48,11 +48,11 @@ export default function StationFormModal({ open, station, loading = false, onClo
     const submit = async event => {
         event.preventDefault()
         if (loading) return
-        setError('')
+
         try {
             await onSubmit(createStationPayload(form))
         } catch (failure) {
-            setError(failure.message || 'Impossible d’enregistrer la station.')
+            notifyError(failure)
         }
     }
     const updateHour = (index, key, value) =>
@@ -63,7 +63,7 @@ export default function StationFormModal({ open, station, loading = false, onClo
             ),
         }))
     return (
-        <Modal
+        <Modal subtitle="Configurez la station, sa localisation et ses horaires."
             open={open}
             onClose={loading ? undefined : onClose}
             closeOnOverlayClick={false}
@@ -288,11 +288,7 @@ export default function StationFormModal({ open, station, loading = false, onClo
                         disabled={loading}
                     />
                 </div>
-                {error && (
-                    <p className="station-error" role="alert">
-                        {error}
-                    </p>
-                )}
+
                 <div className="station-form-actions">
                     <Button variant="secondary" disabled={loading} onClick={onClose}>
                         Annuler

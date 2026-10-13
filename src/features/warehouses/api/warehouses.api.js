@@ -1,11 +1,42 @@
 import api from '../../../lib/axios/api'
+import { isAdminUuid } from '../utils/adminUuid'
+
+export async function assignWarehouseAdmins(id, adminIds) {
+    if (!Array.isArray(adminIds) || adminIds.some(value => !isAdminUuid(value))) {
+        throw new Error('Chaque administrateur sélectionné doit avoir un UUID valide.')
+    }
+    try {
+        const response = await api.post(`/api/superadmin/entrepots/${id}/admins`, {
+            admin_ids: [...new Set(adminIds.map(value => value.trim()))],
+        })
+        if (response.data?.success === false) {
+            throw new Error(response.data.message || 'Impossible de modifier les administrateurs.')
+        }
+        return response.data
+    } catch (error) {
+        const body = error.response?.data
+        const validation = Object.values(body?.errors ?? {}).flat().join(' ')
+        throw new Error(validation || body?.message || error.message || 'Impossible de modifier les administrateurs.', { cause: error })
+    }
+}
+
+function normalizeWarehouse(warehouse) {
+    return {
+        ...warehouse,
+        name: warehouse.nom ?? warehouse.name,
+        address: warehouse.adresse ?? warehouse.address,
+        locality: warehouse.commune?.nom ?? warehouse.commune?.name ?? warehouse.locality,
+    }
+}
 
 // Récupérer la liste des entrepôts
 export async function getWarehouses() {
     try {
         const response = await api.get('/api/admin/entrepots')
 
-        return response.data
+        const body = response.data
+        if (Array.isArray(body)) return { data: body.map(normalizeWarehouse) }
+        return { ...body, data: Array.isArray(body.data) ? body.data.map(normalizeWarehouse) : [] }
     } catch (error) {
         const message =
             error.response?.data?.message || 'Erreur lors de la récupération des entrepôts'
@@ -21,7 +52,10 @@ export async function getWarehouseById(id) {
     try {
         const response = await api.get(`/api/admin/entrepots/${id}`)
 
-        return response.data
+        const body = response.data
+        return body.data
+            ? { ...body, data: normalizeWarehouse(body.data) }
+            : { data: normalizeWarehouse(body) }
     } catch (error) {
         const message =
             error.response?.data?.message || "Erreur lors de la récupération de l'entrepôt"
@@ -37,9 +71,12 @@ export async function createWarehouse(warehouseData) {
     try {
         const response = await api.post('/api/superadmin/entrepots', warehouseData)
 
+        if (response.data?.success === false) {
+            throw new Error(response.data.message || "Impossible d'enregistrer cet entrepôt.")
+        }
         return response.data
     } catch (error) {
-        const message = error.response?.data?.message || "Erreur lors de la création de l'entrepôt"
+        const message = error.response?.data?.message || error.message || "Erreur lors de la création de l'entrepôt"
 
         throw new Error(message, {
             cause: error,
@@ -52,10 +89,13 @@ export async function updateWarehouse(id, warehouseData) {
     try {
         const response = await api.put(`/api/superadmin/entrepots/${id}`, warehouseData)
 
+        if (response.data?.success === false) {
+            throw new Error(response.data.message || "Impossible d'enregistrer cet entrepôt.")
+        }
         return response.data
     } catch (error) {
         const message =
-            error.response?.data?.message || "Erreur lors de la mise à jour de l'entrepôt"
+            error.response?.data?.message || error.message || "Erreur lors de la mise à jour de l'entrepôt"
 
         throw new Error(message, {
             cause: error,

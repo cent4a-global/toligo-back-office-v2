@@ -5,7 +5,6 @@ const Table = ({
     data = [],
     emptyMessage = 'Aucune donnée disponible',
     loading = false,
-    errorContent,
     className = '',
 }) => {
     const classes = ['table-container', className].filter(Boolean).join(' ')
@@ -30,12 +29,6 @@ const Table = ({
                                 ))}
                             </tr>
                         ))
-                    ) : errorContent ? (
-                        <tr>
-                            <td colSpan={Math.max(columns.length, 1)}>
-                                <div role="alert">{errorContent}</div>
-                            </td>
-                        </tr>
                     ) : data.length === 0 ? (
                         <tr>
                             <td colSpan={columns.length} className="table-message">

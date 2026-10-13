@@ -1,4 +1,5 @@
-﻿import { useState } from 'react'
+import { notifyError } from '../../../lib/notifications'
+import { useState } from 'react'
 import Modal from '../../../components/ui/Modal'
 import Input from '../../../components/ui/Input'
 import Button from '../../../components/ui/Button'
@@ -19,7 +20,6 @@ function ZoneFormModal({ open, zone, loading = false, onClose, onSubmit }) {
             ? zone.polygone.map(point => ({ ...point }))
             : [],
     }))
-    const [error, setError] = useState('')
     const [polygonMode, setPolygonMode] = useState('map')
 
     const changePolygonMode = mode => {
@@ -44,20 +44,20 @@ function ZoneFormModal({ open, zone, loading = false, onClose, onSubmit }) {
                 i === index ? { ...point, [key]: value } : point,
             ),
         }))
-        
+
     const handleSubmit = async event => {
         event.preventDefault()
         if (loading) return
-        setError('')
+
         try {
             await onSubmit?.(createZonePayload(form))
         } catch (failure) {
-            setError(failure.message || 'Impossible d’enregistrer cette zone.')
+            notifyError(failure)
         }
     }
 
     return (
-        <Modal
+        <Modal subtitle="Définissez le périmètre et les communes de la zone."
             open={open}
             onClose={loading ? undefined : onClose}
             closeOnOverlayClick={false}
@@ -179,11 +179,7 @@ function ZoneFormModal({ open, zone, loading = false, onClose, onSubmit }) {
                     </Button>
                     </>}
                 </fieldset>
-                {error && (
-                    <p className="zone-error" role="alert">
-                        {error}
-                    </p>
-                )}
+
                 <div className="zone-form-actions">
                     <Button variant="secondary" onClick={onClose} disabled={loading}>
                         Annuler

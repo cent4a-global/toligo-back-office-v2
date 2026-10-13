@@ -1,3 +1,5 @@
+import { Network, CircleCheck, Wrench, PackageCheck, CircleOff } from 'lucide-react'
+import { notifyError } from '../../../lib/notifications'
 import { useState } from 'react'
 
 import PageHeader from '../../../components/ui/PageHeader'
@@ -32,7 +34,6 @@ function HubsPage() {
     })
 
     const [hubToDelete, setHubToDelete] = useState(null)
-    const [deleteError, setDeleteError] = useState('')
 
     const hubs = data?.data ?? []
 
@@ -79,15 +80,25 @@ function HubsPage() {
             return
         }
 
-        setDeleteError('')
+
         try {
             await deleteMutation.mutateAsync(hubToDelete.id)
             setHubToDelete(null)
         } catch (failure) {
-            setDeleteError(failure.message || 'Impossible de supprimer ce hub.')
+            notifyError(failure)
         }
     }
 
+
+    if (isError) {
+        return (
+            <ErrorState
+                title="Impossible de charger les hubs"
+                description={error.message}
+                actions={<Button onClick={() => refetch()}>Réessayer</Button>}
+            />
+        )
+    }
 
     const freeHubs = hubs.filter(hub => hub.statut === 'libre').length
 
@@ -107,30 +118,23 @@ function HubsPage() {
             />
 
             <div className="hubs-stats">
-                <StatCard title="Hubs" value={isLoading ? '—' : hubs.length} />
+                <StatCard title="Hubs" icon={<Network size={20} strokeWidth={1.8} />} value={isLoading ? '—' : hubs.length} />
 
-                <StatCard title="Hubs libres" value={isLoading ? '—' : freeHubs} />
+                <StatCard title="Hubs libres" icon={<CircleCheck size={20} strokeWidth={1.8} />} value={isLoading ? '—' : freeHubs} />
 
-                <StatCard title="En maintenance" value={isLoading ? '—' : maintenanceHubs} />
+                <StatCard title="En maintenance" icon={<Wrench size={20} strokeWidth={1.8} />} value={isLoading ? '—' : maintenanceHubs} />
 
-                <StatCard title="Hubs occupés" value={isLoading ? '—' : hubs.filter(hub => hub.statut === 'occupe').length} />
+                <StatCard title="Hubs occupés" icon={<PackageCheck size={20} strokeWidth={1.8} />} value={isLoading ? '—' : hubs.filter(hub => hub.statut === 'occupe').length} />
 
-                <StatCard title="Indisponibles" value={isLoading ? '—' : hubs.filter(hub => hub.statut === 'indisponible').length} />
+                <StatCard title="Indisponibles" icon={<CircleOff size={20} strokeWidth={1.8} />} value={isLoading ? '—' : hubs.filter(hub => hub.statut === 'indisponible').length} />
             </div>
 
             {stationsQuery.isError && <div className="hub-error" role="alert">{stationsQuery.error.message} <Button variant="secondary" size="sm" onClick={() => stationsQuery.refetch()}>Réessayer les stations</Button></div>}
             <HubsTable
-                errorContent={isError ? (
-                    <ErrorState
-                        title="Impossible de charger les hubs"
-                        description={error?.message}
-                        action={<Button onClick={() => refetch()}>Réessayer</Button>}
-                    />
-                ) : null}
                 hubs={hubs}
                 loading={isLoading}
                 onEdit={openEditModal}
-                onDelete={hub => { setDeleteError(''); setHubToDelete(hub) }}
+                onDelete={hub => {  setHubToDelete(hub) }}
             />
 
             {formModal.open && <HubFormModal
@@ -145,7 +149,6 @@ function HubsPage() {
             <DeleteHubDialog
                 hub={hubToDelete}
                 loading={deleteMutation.isPending}
-                error={deleteError}
                 onClose={() => { if (!deleteMutation.isPending) setHubToDelete(null) }}
                 onConfirm={handleDelete}
             />

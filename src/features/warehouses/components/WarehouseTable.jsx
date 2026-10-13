@@ -3,13 +3,12 @@ import {
 } from 'react-router-dom'
 
 import Table from '../../../components/ui/Table'
-import Badge from '../../../components/ui/Badge'
 import Dropdown from '../../../components/ui/Dropdown'
 
 
 function WarehouseTable({
     warehouses = [],
-    loading = false, errorContent,
+    loading = false,
     onEdit,
     onDelete,
 }) {
@@ -122,28 +121,6 @@ function WarehouseTable({
         },
 
         {
-            key: 'status',
-            label: 'Statut',
-
-            render: warehouse => (
-                <Badge
-                    variant={
-                        warehouse.status ===
-                        'active'
-                            ? 'success'
-                            : 'default'
-                    }
-                    size="sm"
-                >
-                    {warehouse.status ===
-                    'active'
-                        ? 'Actif'
-                        : 'Inactif'}
-                </Badge>
-            ),
-        },
-
-        {
             key: 'actions',
             label: 'Actions',
 
@@ -193,7 +170,6 @@ function WarehouseTable({
                 columns={columns}
                 data={warehouses}
                 loading={loading}
-                errorContent={errorContent}
                 emptyMessage="Aucun entrepôt disponible"
             />
         </div>

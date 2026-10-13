@@ -25,7 +25,7 @@ const statusConfig = {
     },
 }
 
-function HubsTable({ hubs = [], loading = false, errorContent, onEdit, onDelete }) {
+function HubsTable({ hubs = [], loading = false, onEdit, onDelete }) {
     const columns = [
         {
             key: 'code',
@@ -118,7 +118,6 @@ function HubsTable({ hubs = [], loading = false, errorContent, onEdit, onDelete 
                 columns={columns}
                 data={hubs}
                 loading={loading}
-                errorContent={errorContent}
                 emptyMessage="Aucun hub disponible"
             />
         </div>

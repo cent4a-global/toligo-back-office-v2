@@ -18,6 +18,7 @@ export function useSaveSettings() {
     const queryClient = useQueryClient()
 
     return useMutation({
+        meta: { successMessage: 'Paramètres enregistrés.' },
         mutationFn: saveSettings,
 
         onSettled: () => {

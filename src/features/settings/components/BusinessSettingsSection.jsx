@@ -1,3 +1,5 @@
+import toast from 'react-hot-toast'
+import { notifyError } from '../../../lib/notifications'
 import { useMemo, useState } from 'react'
 import Button from '../../../components/ui/Button'
 import { normalizeSettingValue } from '../utils/settingValues'
@@ -57,7 +59,7 @@ function BusinessSettingsSection({
 
     const [values, setValues] = useState({})
 
-    const [feedback, setFeedback] = useState(null)
+
 
     const handleChange = (key, value) => {
         setValues(previous => ({
@@ -71,7 +73,7 @@ function BusinessSettingsSection({
     const handleSubmit = async event => {
         event.preventDefault()
         if (loading) return
-        setFeedback(null)
+
         try {
             const updates = orderedSettings
                 .filter(setting => setting.est_modifiable && Object.hasOwn(values, setting.cle))
@@ -83,15 +85,15 @@ function BusinessSettingsSection({
                 .filter(item => JSON.stringify(item.value) !== JSON.stringify(item.original))
                 .map(({ key, value }) => ({ key, value }))
             if (!updates.length) {
-                setFeedback({ type: 'success', message: 'Aucune modification à enregistrer.' })
+                toast('Aucune modification à enregistrer.')
                 return
             }
             await onSave?.(updates)
             setValues({})
-            setFeedback({ type: 'success', message: 'Paramètres enregistrés avec succès.' })
+
         } catch (failure) {
             if (failure.savedKeys?.length) setValues(previous => Object.fromEntries(Object.entries(previous).filter(([key]) => !failure.savedKeys.includes(key))))
-            setFeedback({ type: 'error', message: failure.message || 'Impossible d’enregistrer les paramètres.' })
+            notifyError(failure)
         }
     }
 
@@ -158,7 +160,7 @@ function BusinessSettingsSection({
                 </div>
 
                 {!orderedSettings.length && <p className="settings-empty">Aucun paramètre disponible.</p>}
-                {feedback && <p className={`settings-feedback settings-feedback-${feedback.type}`} role={feedback.type === 'error' ? 'alert' : 'status'}>{feedback.message}</p>}
+
                 <div className="business-settings-footer">
                     <div className="business-settings-last-update">
                         {lastUpdate ? (
