@@ -1,11 +1,11 @@
 import { useEffect, useRef } from 'react'
-import { CircleMarker, MapContainer, Polygon, Polyline, TileLayer, Tooltip, useMap, useMapEvents } from 'react-leaflet'
+import { CircleMarker, MapContainer, Pane, Polygon, Polyline, TileLayer, Tooltip, useMap, useMapEvents } from 'react-leaflet'
 import Button from '../../../components/ui/Button'
 import { communePolygon, communePosition } from '../utils/communeGeometry'
 
-function MapControls({ points, onAdd, disabled }) {
+function MapControls({ points, existingPoints, onAdd, disabled }) {
     const map = useMap()
-    const initialPoints = useRef(points)
+    const initialPoints = useRef(points.length ? points : existingPoints)
     useEffect(() => {
         if (initialPoints.current.length > 1) {
             map.fitBounds(initialPoints.current, { padding: [24, 24], maxZoom: 16 })
@@ -21,7 +21,9 @@ function MapControls({ points, onAdd, disabled }) {
     return null
 }
 
-export default function ZonePolygonMap({ points, onAdd, onUndo, onClear, disabled, communes = [], selectedCommunes = [], onToggleCommune }) {
+export default function ZonePolygonMap({ points, onAdd, onUndo, onClear, disabled, zones = [], communes = [], selectedCommunes = [], onToggleCommune }) {
+    const mappedZones = zones.map(zone => ({ zone, polygon: communePolygon(zone) }))
+        .filter(item => item.polygon.length)
     const locatedCommunes = communes.map(commune => ({ commune, polygon: communePolygon(commune), position: communePosition(commune) }))
         .filter(item => item.polygon.length || item.position)
     const positions = points
@@ -37,7 +39,14 @@ export default function ZonePolygonMap({ points, onAdd, onUndo, onClear, disable
             {communes.length > locatedCommunes.length && <p className="zone-polygon-help" role="status">{communes.length - locatedCommunes.length} commune(s) sans données géographiques ne peuvent pas être affichées sur la carte.</p>}
             <MapContainer className="zone-polygon-map" center={positions[0] ?? [5.3364, -4.0267]} zoom={13} scrollWheelZoom={true} doubleClickZoom={false}>
                 <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                <MapControls points={positions} onAdd={onAdd} disabled={disabled} />
+                <MapControls points={positions} existingPoints={mappedZones.flatMap(item => item.polygon)} onAdd={onAdd} disabled={disabled} />
+                <Pane name="existing-zones" style={{ zIndex: 350, pointerEvents: 'none' }}>
+                    {mappedZones.map(({ zone, polygon }) => (
+                        <Polygon key={zone.id} positions={polygon} interactive={false}
+                            pathOptions={{ color: '#6554a4', fillColor: '#6554a4', fillOpacity: 0.12, weight: 2, dashArray: zone.est_active ? undefined : '6 5' }}>
+                        </Polygon>
+                    ))}
+                </Pane>
                 {locatedCommunes.map(({ commune, polygon, position }) => {
                     const selected = selectedCommunes.includes(commune.id)
                     const events = { click: () => { if (!disabled) onToggleCommune?.(commune.id) } }
@@ -57,6 +66,12 @@ export default function ZonePolygonMap({ points, onAdd, onUndo, onClear, disable
                     </CircleMarker>
                 ))}
             </MapContainer>
+            {mappedZones.length > 0 && (
+                <p className="zone-polygon-help">Zones existantes en violet · Contour en cours en orange · Communes sélectionnées en vert.</p>
+            )}
+            {zones.length > mappedZones.length && (
+                <p className="zone-polygon-help" role="status">{zones.length - mappedZones.length} zone(s) sans contour valide ne peuvent pas être affichées.</p>
+            )}
             <div className="zone-map-actions">
                 <span className="zone-polygon-help" role="status">{positions.length} point(s) sélectionné(s)</span>
                 <Button size="sm" variant="secondary" onClick={onUndo} disabled={disabled || !points.length}>Retirer le dernier</Button>

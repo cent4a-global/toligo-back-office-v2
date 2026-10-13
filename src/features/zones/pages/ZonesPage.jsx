@@ -11,6 +11,7 @@ import ZonesTable from '../components/ZonesTable'
 import ZoneFormModal from '../components/ZoneFormModal'
 import DeleteZoneDialog from '../components/DeleteZoneDialog'
 import ZonesMap from '../components/ZonesMap'
+import MapViewer from '../../../components/ui/MapViewer'
 
 function ZonesPage() {
     const { data, isLoading, isError, error, refetch } = useZones()
@@ -103,7 +104,9 @@ function ZonesPage() {
                 }
             />
 
-            <ZonesMap zones={zones} loading={isLoading} onEdit={openEditModal} />
+            <MapViewer label="Carte des zones">
+                <ZonesMap zones={zones} loading={isLoading} onEdit={openEditModal} onDelete={setZoneToDelete} />
+            </MapViewer>
 
             <ZonesTable
                 zones={zones}
@@ -119,6 +122,7 @@ function ZonesPage() {
                 <ZoneFormModal
                     open={formModal.open}
                     zone={formModal.zone}
+                    zones={zones}
                     loading={createMutation.isPending || updateMutation.isPending}
                     onClose={closeFormModal}
                     onSubmit={handleSubmit}

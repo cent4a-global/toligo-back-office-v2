@@ -66,6 +66,7 @@ function AppRoutes() {
 
                         <Route element={<RoleRoute allowedRoles={['superadmin']} />}>
                             <Route path="/stations" element={<Stations />} />
+                            <Route path="/stations/:stationId/hubs" element={<Hubs />} />
                             <Route path="/hubs" element={<Hubs />} />
                             <Route path="/zones" element={<Zones />} />
                             <Route path="/warehouses" element={<Warehouses />} />

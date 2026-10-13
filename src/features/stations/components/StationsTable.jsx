@@ -1,8 +1,9 @@
 import Table from '../../../components/ui/Table'
 import Badge from '../../../components/ui/Badge'
 import Dropdown from '../../../components/ui/Dropdown'
+import Button from '../../../components/ui/Button'
 
-function StationsTable({ stations = [], loading = false, onEdit, onDelete }) {
+function StationsTable({ stations = [], loading = false, onEdit, onDelete, onManageHubs }) {
     const columns = [
         {
             key: 'nom',
@@ -15,6 +16,12 @@ function StationsTable({ stations = [], loading = false, onEdit, onDelete }) {
                     {station.code && <span>{station.code}</span>}
                 </div>
             ),
+        },
+
+        {
+            key: 'hubs_count',
+            label: 'Nombre de hubs',
+            render: station => station.hubs_count ?? '—',
         },
 
         {
@@ -66,6 +73,10 @@ function StationsTable({ stations = [], loading = false, onEdit, onDelete }) {
             label: 'Actions',
 
             render: station => (
+                <div className="station-row-actions">
+                <Button size="sm" variant="secondary" onClick={() => onManageHubs?.(station)} disabled={!onManageHubs}>
+                    Gérer les hubs
+                </Button>
                 <Dropdown
                     trigger={
                         <button
@@ -90,6 +101,7 @@ function StationsTable({ stations = [], loading = false, onEdit, onDelete }) {
                         },
                     ]}
                 />
+                </div>
             ),
         },
     ]

@@ -3,10 +3,13 @@ const Pagination = ({ currentPage, totalPages, onPageChange, className = '' }) =
         return null
     }
 
-    const pages = Array.from({ length: totalPages }, (_, index) => index + 1)
+    const visible = new Set([1, totalPages, currentPage - 1, currentPage, currentPage + 1])
+    if (currentPage <= 3) [2, 3, 4].forEach(page => visible.add(page))
+    if (currentPage >= totalPages - 2) [totalPages - 3, totalPages - 2, totalPages - 1].forEach(page => visible.add(page))
+    const pages = [...visible].filter(page => page >= 1 && page <= totalPages).sort((a, b) => a - b)
 
     return (
-        <div className={`pagination ${className}`}>
+        <nav className={`pagination ${className}`} aria-label="Pagination du tableau">
             <button
                 type="button"
                 className="pagination-button"
@@ -16,17 +19,21 @@ const Pagination = ({ currentPage, totalPages, onPageChange, className = '' }) =
             </button>
 
             <div className="pagination-pages">
-                {pages.map(page => (
+                {pages.flatMap((page, index) => [
+                    ...(index > 0 && page - pages[index - 1] > 1
+                        ? [<span key={`gap-${page}`} className="pagination-ellipsis" aria-hidden="true">…</span>] : []),
                     <button
                         key={page}
                         type="button"
+                        aria-label={`Page ${page}`}
+                        aria-current={page === currentPage ? 'page' : undefined}
                         className={`pagination-page ${
                             page === currentPage ? 'pagination-page-active' : ''
                         }`}
                         onClick={() => onPageChange(page)}>
                         {page}
-                    </button>
-                ))}
+                    </button>,
+                ])}
             </div>
 
             <button
@@ -36,7 +43,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange, className = '' }) =
                 onClick={() => onPageChange(currentPage + 1)}>
                 Suivant
             </button>
-        </div>
+        </nav>
     )
 }
 

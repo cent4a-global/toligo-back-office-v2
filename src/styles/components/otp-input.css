@@ -1,0 +1,16 @@
+.otp-input {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: clamp(6px, 2vw, 12px);
+}
+
+.otp-input .otp-input-digit {
+    min-width: 0;
+    height: clamp(48px, 12vw, 60px);
+    padding: 0;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    caret-color: var(--color-brand);
+}

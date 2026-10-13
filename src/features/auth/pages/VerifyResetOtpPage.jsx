@@ -1,6 +1,6 @@
 import { notifyError } from '../../../lib/notifications'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
-import Input from '../../../components/ui/Input'
+import OtpInput from '../../../components/ui/OtpInput'
 import Button from '../../../components/ui/Button'
 import { useVerifyResetOtp, useResendResetOtp } from '../hooks/usePasswordReset'
 import { getResetEmail } from '../storage/auth.storage'
@@ -46,11 +46,9 @@ function VerifyResetOtpPage() {
             <h1>Vérifiez votre code</h1>
             <p>Saisissez le code envoyé à {email}.</p>
             <form onSubmit={handleVerify}>
-                <Input
+                <OtpInput
                     name="code"
                     label="Code de vérification"
-                    autoComplete="one-time-code"
-                    inputMode="numeric"
                     required
                     disabled={isVerifying || isResending}
                 />

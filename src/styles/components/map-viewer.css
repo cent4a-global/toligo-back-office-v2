@@ -1,0 +1,21 @@
+.map-viewer-toolbar { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; }
+.map-viewer-fullscreen {
+    position: fixed;
+    inset: 0;
+    z-index: 900;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    background: var(--color-bg-page);
+}
+.map-viewer-fullscreen .map-viewer-toolbar { flex-shrink: 0; }
+.map-viewer-fullscreen .map-viewer-content { flex: 1; min-height: 0; }
+.map-viewer-fullscreen :is(.stations-map-card, .zones-map-card) { display: flex; flex-direction: column; height: 100%; }
+.map-viewer-fullscreen :is(.stations-map-header, .zones-map-header) { flex-shrink: 0; }
+.map-viewer-fullscreen :is(.stations-overview-map, .zones-overview-map) { flex: 1; min-height: 160px; height: auto; }
+.map-viewer-fullscreen :is(.stations-map-legend, .zones-map-legend) { flex-shrink: 0; max-height: 100px; overflow-y: auto; }
+.map-viewer-fullscreen :is(.stations-map-message, .zones-map-message) { flex-shrink: 0; }
+@media (max-width: 600px) {
+    .map-viewer-fullscreen { padding: 8px; }
+    .map-viewer-fullscreen :is(.stations-map-header, .zones-map-header) { padding: 12px; }
+}

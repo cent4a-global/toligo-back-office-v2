@@ -3,6 +3,7 @@ const StatCard = ({
     value,
     description,
     icon,
+    iconColor = 'blue',
     trend,
     trendType = 'neutral',
     className = '',
@@ -14,7 +15,7 @@ const StatCard = ({
             <div className="stat-card-header">
                 <span className="stat-card-title">{title}</span>
 
-                {icon && <div className="stat-card-icon" aria-hidden="true">{icon}</div>}
+                {icon && <div className={`stat-card-icon stat-card-icon-${iconColor}`} aria-hidden="true">{icon}</div>}
             </div>
 
             <div className="stat-card-value">{value}</div>

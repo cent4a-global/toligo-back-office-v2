@@ -60,7 +60,7 @@ function ClientsTable({ clients = [], loading = false, onView }) {
     ]
     return (
         <div className="clients-table">
-            <Table columns={columns} data={clients} loading={loading} emptyMessage="Aucun client" />
+            <Table paginated={false} columns={columns} data={clients} loading={loading} emptyMessage="Aucun client" />
         </div>
     )
 }
