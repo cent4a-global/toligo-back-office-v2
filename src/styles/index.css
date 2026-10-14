@@ -39,10 +39,14 @@
 @import './pages/warehouses/WarehouseFormModal.css';
 @import './pages/warehouses/WarehouseAdminsModal.css';
 @import 'leaflet/dist/leaflet.css';
-@import './pages/warehouses/WarehouseTable.css';
+@import './pages/warehouses/WarehouseGrid.css';
 @import './pages/warehouses/WarehouseDetailsPage.css';
 @import './pages/warehouses/WarehousesPage.css';
 @import './pages/profile.css';
+@import './pages/sub-admins.css';
+@import './pages/clients.css';
+@import './pages/locations.css';
+@import './pages/categories.css';
 @import './components/scrollbar.css';
 @import './pages/zones/ZonesTable.css';
 @import './pages/zones/ZoneFormModal.css';

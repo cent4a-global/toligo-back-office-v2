@@ -26,11 +26,19 @@ const Supervision = lazy(() => import('../../pages/Supervision'))
 const Users = lazy(() => import('../../features/users/pages/UsersRolesPage'))
 const Warehouses = lazy(() => import('../../features/warehouses/pages/WarehousesPage'))
 const Zones = lazy(() => import('../../features/zones/pages/ZonesPage'))
+const WarehouseAdmins = lazy(() => import('../../features/warehouses/pages/WarehouseAdminsPage'))
+const WarehouseBoxes = lazy(() => import('../../features/warehouses/pages/WarehouseBoxesPage'))
 const WarehouseDetails = lazy(() => import('../../features/warehouses/pages/WarehouseDetailsPage'))
 const NotFound = lazy(() => import('../../pages/NotFound'))
 const Unauthorized = lazy(() => import('../../pages/Unauthorized'))
 const Profile = lazy(() => import('../../pages/Profile'))
 const Map = lazy(() => import('../../pages/Map'))
+const SubAdmins = lazy(() => import('../../pages/SubAdmins'))
+const Categories = lazy(() => import('../../pages/Categories'))
+const Clients = lazy(() => import('../../pages/Clients'))
+const ClientLocations = lazy(() => import('../../pages/ClientLocations'))
+const PushNotifications = lazy(() => import('../../pages/PushNotifications'))
+const Locations = lazy(() => import('../../pages/Locations'))
 
 function AppRoutes() {
     return (
@@ -65,11 +73,20 @@ function AppRoutes() {
                         <Route path="/unauthorized" element={<Unauthorized />} />
 
                         <Route element={<RoleRoute allowedRoles={['superadmin']} />}>
+                            <Route path="/sub-admins" element={<SubAdmins />} />
+                            <Route path="/categories" element={<Categories />} />
+                            <Route path="/clients" element={<Clients />} />
+                            <Route path="/clients/:clientId/locations" element={<ClientLocations />} />
+                            <Route path="/push-notifications" element={<PushNotifications />} />
+                            <Route path="/locations" element={<Locations />} />
+                            <Route path="/rentals" element={<Navigate to="/locations" replace />} />
                             <Route path="/stations" element={<Stations />} />
                             <Route path="/hubs" element={<Hubs />} />
                             <Route path="/zones" element={<Zones />} />
                             <Route path="/warehouses" element={<Warehouses />} />
                             <Route path="/warehouses/:id" element={<WarehouseDetails />} />
+                            <Route path="/warehouses/:id/admins" element={<WarehouseAdmins />} />
+                            <Route path="/warehouses/:id/boxes" element={<WarehouseBoxes />} />
                             <Route path="/settings" element={<Settings />} />
                             <Route path="/users" element={<Users />} />
                             <Route path="/audit-log" element={<AuditLog />} />

@@ -1,0 +1,3498 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        <title>BusTicket CI — Back-office</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"
+            rel="stylesheet" />
+        <style>
+            :root {
+                --bl: #0878e8;
+                --bd: #062b55;
+                --bc: #eaf5ff;
+                --vt: #10a36c;
+                --vc: #e6f6ef;
+                --rg: #e63946;
+                --rc: #fdecee;
+                --or: #f59e0b;
+                --oc: #fef3c7;
+                --bg: #f7fafc;
+                --sf: #ffffff;
+                --tx: #0f172a;
+                --t2: #64748b;
+                --ln: #e2e8f0;
+                --side: #062b55;
+                --inp: #ffffff;
+                --hov: #f1f6fb;
+                --bt: #0878e8;
+                --okt: #0b7f55;
+                --kot: #c42b38;
+                --wtt: #b45309;
+                --gr: #eef2f6;
+                --sh: 0 1px 2px rgba(6, 43, 85, 0.06);
+                box-sizing: border-box;
+                padding-top: env(safe-area-inset-top, 0px);
+                padding-bottom: env(safe-area-inset-bottom, 0px);
+            }
+            @media (prefers-color-scheme: dark) {
+                :root:not([data-theme='light']) {
+                    --bg: #0b1220;
+                    --sf: #111b2e;
+                    --tx: #e5ecf5;
+                    --t2: #94a3b8;
+                    --ln: #22304a;
+                    --side: #071426;
+                    --inp: #0d1626;
+                    --hov: #16233a;
+                    --bc: #0f2a4a;
+                    --vc: #0e2c23;
+                    --rc: #341820;
+                    --oc: #3a2a0a;
+                    --bt: #5ab0ff;
+                    --okt: #34d399;
+                    --kot: #ff8a94;
+                    --wtt: #fbbf24;
+                    --gr: #1a2740;
+                    --sh: none;
+                }
+            }
+            :root[data-theme='dark'] {
+                --bg: #0b1220;
+                --sf: #111b2e;
+                --tx: #e5ecf5;
+                --t2: #94a3b8;
+                --ln: #22304a;
+                --side: #071426;
+                --inp: #0d1626;
+                --hov: #16233a;
+                --bc: #0f2a4a;
+                --vc: #0e2c23;
+                --rc: #341820;
+                --oc: #3a2a0a;
+                --bt: #5ab0ff;
+                --okt: #34d399;
+                --kot: #ff8a94;
+                --wtt: #fbbf24;
+                --gr: #1a2740;
+                --sh: none;
+            }
+            html {
+                scroll-padding-top: env(safe-area-inset-top, 0px);
+                height: 100%;
+            }
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+            body {
+                height: 100%;
+                background: var(--bg);
+                color: var(--tx);
+                font-family:
+                    Inter,
+                    system-ui,
+                    -apple-system,
+                    'Segoe UI',
+                    sans-serif;
+                font-size: 14px;
+                line-height: 1.45;
+            }
+            h1,
+            h2,
+            h3,
+            .num {
+                font-family: 'Plus Jakarta Sans', Inter, system-ui, sans-serif;
+            }
+            button,
+            input,
+            select,
+            textarea {
+                font: inherit;
+                color: inherit;
+            }
+            button {
+                cursor: pointer;
+                background: none;
+                border: 0;
+            }
+            :focus-visible {
+                outline: 2px solid var(--bl);
+                outline-offset: 2px;
+                border-radius: 8px;
+            }
+            .app {
+                display: grid;
+                grid-template-columns: 240px minmax(0, 1fr);
+                min-height: 100%;
+            }
+            /* sidebar */
+            .side {
+                background: var(--side);
+                color: #bfd3ea;
+                padding: 18px 12px;
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+                position: sticky;
+                top: 0;
+                height: 100vh;
+                overflow-y: auto;
+                z-index: 30;
+            }
+            .brand {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                color: #fff;
+                padding: 2px 8px 16px;
+            }
+            .brand .lg {
+                width: 34px;
+                height: 34px;
+                border-radius: 10px;
+                background: var(--bl);
+                display: grid;
+                place-items: center;
+            }
+            .brand b {
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                font-size: 15px;
+                line-height: 1.1;
+            }
+            .brand small {
+                display: block;
+                font-size: 11px;
+                color: #8fb0d3;
+                font-weight: 500;
+            }
+            .grp {
+                font-size: 11.5px;
+                color: #7f9dc0;
+                padding: 14px 10px 5px;
+                font-weight: 600;
+            }
+            .nav a {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 9px 10px;
+                border-radius: 10px;
+                color: #cfe0f3;
+                text-decoration: none;
+                font-weight: 500;
+                font-size: 13.5px;
+            }
+            .nav a:hover {
+                background: rgba(255, 255, 255, 0.07);
+            }
+            .nav a.on {
+                background: var(--bl);
+                color: #fff;
+                font-weight: 600;
+            }
+            .nav a .bd {
+                margin-left: auto;
+                background: var(--rg);
+                color: #fff;
+                border-radius: 99px;
+                font-size: 10.5px;
+                padding: 1px 7px;
+                font-weight: 700;
+            }
+            .side .me {
+                margin-top: auto;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 12px 8px 2px;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            .av {
+                width: 34px;
+                height: 34px;
+                border-radius: 50%;
+                background: var(--bl);
+                color: #fff;
+                display: grid;
+                place-items: center;
+                font-weight: 700;
+                font-size: 12px;
+                flex: none;
+            }
+            .me b {
+                display: block;
+                color: #fff;
+                font-size: 13px;
+            }
+            .me small {
+                color: #8fb0d3;
+                font-size: 11.5px;
+            }
+            .me button {
+                margin-left: auto;
+                color: #8fb0d3;
+                padding: 6px;
+                border-radius: 8px;
+            }
+            .me button:hover {
+                background: rgba(255, 255, 255, 0.08);
+                color: #fff;
+            }
+            /* top */
+            .main {
+                min-width: 0;
+                display: flex;
+                flex-direction: column;
+            }
+            .top {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 12px 28px;
+                border-bottom: 1px solid var(--ln);
+                background: var(--sf);
+                position: sticky;
+                top: 0;
+                z-index: 20;
+            }
+            .top .menu {
+                display: none;
+            }
+            .srch {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                background: var(--bg);
+                border: 1px solid var(--ln);
+                border-radius: 12px;
+                padding: 8px 12px;
+                flex: 1;
+                max-width: 420px;
+                color: var(--t2);
+            }
+            .srch input {
+                background: none;
+                border: 0;
+                outline: 0;
+                flex: 1;
+                min-width: 0;
+                color: var(--tx);
+            }
+            .ibtn {
+                width: 38px;
+                height: 38px;
+                border-radius: 12px;
+                display: grid;
+                place-items: center;
+                border: 1px solid var(--ln);
+                background: var(--sf);
+                color: var(--t2);
+                position: relative;
+            }
+            .ibtn:hover {
+                background: var(--hov);
+            }
+            .ibtn .dot {
+                position: absolute;
+                top: 8px;
+                right: 9px;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: var(--rg);
+                border: 2px solid var(--sf);
+            }
+            .sp {
+                flex: 1;
+            }
+            .page {
+                padding: 26px 28px 60px;
+                max-width: 1280px;
+                width: 100%;
+            }
+            .ph {
+                display: flex;
+                align-items: flex-end;
+                justify-content: space-between;
+                gap: 16px;
+                flex-wrap: wrap;
+                margin-bottom: 20px;
+            }
+            .ph h1 {
+                font-size: 24px;
+                font-weight: 800;
+                letter-spacing: -0.01em;
+            }
+            .ph p {
+                color: var(--t2);
+                margin-top: 2px;
+            }
+            .acts {
+                display: flex;
+                gap: 8px;
+                flex-wrap: wrap;
+            }
+            /* components */
+            .btn {
+                display: inline-flex;
+                align-items: center;
+                gap: 7px;
+                background: var(--bl);
+                color: #fff;
+                border-radius: 12px;
+                padding: 9px 15px;
+                font-weight: 600;
+                font-size: 13.5px;
+                white-space: nowrap;
+            }
+            .btn:hover {
+                filter: brightness(1.07);
+            }
+            .btn.gh {
+                background: var(--sf);
+                color: var(--tx);
+                border: 1px solid var(--ln);
+            }
+            .btn.gh:hover {
+                background: var(--hov);
+            }
+            .btn.rd {
+                background: var(--rg);
+            }
+            .btn.sm {
+                padding: 6px 11px;
+                font-size: 12.5px;
+                border-radius: 10px;
+            }
+            .btn.rdo {
+                background: var(--sf);
+                color: var(--kot);
+                border: 1px solid var(--rg);
+            }
+            .card {
+                background: var(--sf);
+                border: 1px solid var(--ln);
+                border-radius: 16px;
+                padding: 18px;
+                box-shadow: var(--sh);
+            }
+            .card h3 {
+                font-size: 15px;
+                font-weight: 700;
+                margin-bottom: 2px;
+            }
+            .card .hint {
+                color: var(--t2);
+                font-size: 12.5px;
+                margin-bottom: 12px;
+            }
+            .g4 {
+                display: grid;
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+                gap: 14px;
+            }
+            .g3 {
+                display: grid;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 14px;
+            }
+            .g2 {
+                display: grid;
+                grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+                gap: 14px;
+            }
+            .g2e {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 14px;
+            }
+            .stack {
+                display: flex;
+                flex-direction: column;
+                gap: 14px;
+            }
+            .kpi {
+                padding: 16px 18px;
+            }
+            .kpi small {
+                color: var(--t2);
+                font-size: 12.5px;
+                font-weight: 500;
+            }
+            .kpi .num {
+                display: block;
+                font-size: 28px;
+                font-weight: 800;
+                letter-spacing: -0.02em;
+                margin: 4px 0 2px;
+            }
+            .kpi .dl {
+                font-size: 12px;
+                font-weight: 600;
+            }
+            .up {
+                color: var(--okt);
+            }
+            .dn {
+                color: var(--kot);
+            }
+            .mu {
+                color: var(--t2);
+            }
+            .chip {
+                display: inline-block;
+                padding: 3px 9px;
+                border-radius: 99px;
+                font-size: 11.5px;
+                font-weight: 600;
+                white-space: nowrap;
+            }
+            .ok {
+                background: var(--vc);
+                color: var(--okt);
+            }
+            .ko {
+                background: var(--rc);
+                color: var(--kot);
+            }
+            .wt {
+                background: var(--oc);
+                color: var(--wtt);
+            }
+            .in {
+                background: var(--bc);
+                color: var(--bt);
+            }
+            .gr {
+                background: var(--gr);
+                color: var(--t2);
+            }
+            .tw {
+                overflow-x: auto;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 13px;
+                min-width: 560px;
+            }
+            th {
+                text-align: left;
+                color: var(--t2);
+                font-weight: 600;
+                font-size: 12px;
+                padding: 9px 12px;
+                border-bottom: 1px solid var(--ln);
+                white-space: nowrap;
+            }
+            td {
+                padding: 11px 12px;
+                border-bottom: 1px solid var(--ln);
+                font-variant-numeric: tabular-nums;
+                vertical-align: middle;
+            }
+            tbody tr:last-child td {
+                border-bottom: 0;
+            }
+            tr.clk {
+                cursor: pointer;
+            }
+            tr.clk:hover td {
+                background: var(--hov);
+            }
+            .tr {
+                text-align: right;
+            }
+            .tb {
+                display: flex;
+                gap: 10px;
+                flex-wrap: wrap;
+                align-items: center;
+                margin-bottom: 14px;
+            }
+            .tb .srch {
+                max-width: 300px;
+                background: var(--sf);
+            }
+            .tabs {
+                display: inline-flex;
+                background: var(--gr);
+                border-radius: 12px;
+                padding: 3px;
+                gap: 2px;
+            }
+            .tabs button {
+                padding: 6px 13px;
+                border-radius: 9px;
+                font-weight: 600;
+                font-size: 13px;
+                color: var(--t2);
+            }
+            .tabs button.on {
+                background: var(--sf);
+                color: var(--bt);
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            }
+            select,
+            .fld input,
+            .fld select,
+            .fld textarea {
+                background: var(--inp);
+                border: 1px solid var(--ln);
+                border-radius: 11px;
+                padding: 9px 12px;
+                color: var(--tx);
+                width: 100%;
+            }
+            .tb select {
+                width: auto;
+                padding: 8px 12px;
+            }
+            .fld {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+                margin-bottom: 12px;
+            }
+            .fld label {
+                font-size: 12.5px;
+                font-weight: 600;
+                color: var(--t2);
+            }
+            .fld small {
+                color: var(--t2);
+                font-size: 12px;
+            }
+            .row2 {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+            .note {
+                display: flex;
+                gap: 10px;
+                background: var(--bc);
+                border: 1px solid color-mix(in srgb, var(--bl) 25%, transparent);
+                border-radius: 12px;
+                padding: 12px 14px;
+                color: var(--tx);
+                font-size: 13px;
+            }
+            .note svg {
+                flex: none;
+                color: var(--bt);
+                margin-top: 1px;
+            }
+            .alerts {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                margin-bottom: 14px;
+            }
+            .al {
+                display: flex;
+                gap: 10px;
+                align-items: center;
+                border-radius: 12px;
+                padding: 10px 14px;
+                font-size: 13px;
+            }
+            .al.w {
+                background: var(--oc);
+                color: var(--wtt);
+            }
+            .al.e {
+                background: var(--rc);
+                color: var(--kot);
+            }
+            .al.i {
+                background: var(--bc);
+                color: var(--bt);
+            }
+            .al b {
+                font-weight: 700;
+            }
+            .al .go {
+                margin-left: auto;
+                font-weight: 700;
+                text-decoration: underline;
+                white-space: nowrap;
+            }
+            .kv {
+                display: flex;
+                justify-content: space-between;
+                gap: 12px;
+                padding: 9px 0;
+                border-bottom: 1px dashed var(--ln);
+                font-size: 13px;
+            }
+            .kv:last-child {
+                border: 0;
+            }
+            .kv span {
+                color: var(--t2);
+            }
+            .kv b {
+                text-align: right;
+            }
+            .lst {
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+            }
+            .li {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 10px 12px;
+                border: 1px solid var(--ln);
+                border-radius: 12px;
+                background: var(--sf);
+                text-align: left;
+                width: 100%;
+            }
+            .li:hover {
+                background: var(--hov);
+            }
+            .li.on {
+                border-color: var(--bl);
+                background: var(--bc);
+            }
+            .li .m {
+                flex: 1;
+                min-width: 0;
+            }
+            .li .m b {
+                display: block;
+                font-size: 13.5px;
+            }
+            .li .m span {
+                color: var(--t2);
+                font-size: 12px;
+            }
+            .ln {
+                width: 38px;
+                height: 38px;
+                border-radius: 11px;
+                background: var(--bl);
+                color: #fff;
+                display: grid;
+                place-items: center;
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                font-weight: 800;
+                font-size: 14px;
+                flex: none;
+            }
+            .tl {
+                position: relative;
+                padding-left: 26px;
+                margin: 4px 0;
+            }
+            .tl:before {
+                content: '';
+                position: absolute;
+                left: 8px;
+                top: 8px;
+                bottom: 8px;
+                width: 3px;
+                background: var(--bl);
+                border-radius: 3px;
+                opacity: 0.35;
+            }
+            .tl div {
+                position: relative;
+                padding: 6px 0;
+                font-size: 13.5px;
+            }
+            .tl div:before {
+                content: '';
+                position: absolute;
+                left: -23px;
+                top: 11px;
+                width: 11px;
+                height: 11px;
+                border-radius: 50%;
+                background: var(--sf);
+                border: 3px solid var(--bl);
+            }
+            .tl div:first-child:before,
+            .tl div:last-child:before {
+                background: var(--bl);
+            }
+            .tl small {
+                display: block;
+                color: var(--t2);
+                font-size: 12px;
+            }
+            .qrb {
+                background: #fff;
+                border-radius: 12px;
+                padding: 10px;
+                display: inline-block;
+                line-height: 0;
+                border: 1px solid var(--ln);
+            }
+            .qgrid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+                gap: 14px;
+            }
+            .qc {
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 8px;
+            }
+            .qc b {
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                font-size: 15px;
+            }
+            .qc code,
+            code {
+                background: var(--gr);
+                padding: 2px 8px;
+                border-radius: 7px;
+                font-size: 12px;
+                font-family: ui-monospace, Menlo, Consolas, monospace;
+            }
+            .sw {
+                width: 38px;
+                height: 22px;
+                border-radius: 99px;
+                background: var(--bl);
+                position: relative;
+                flex: none;
+                border: 0;
+            }
+            .sw:after {
+                content: '';
+                position: absolute;
+                right: 3px;
+                top: 3px;
+                width: 16px;
+                height: 16px;
+                border-radius: 50%;
+                background: #fff;
+                transition: 0.15s;
+            }
+            .sw.off {
+                background: #94a3b8;
+            }
+            .sw.off:after {
+                right: auto;
+                left: 3px;
+            }
+            .bar {
+                height: 8px;
+                border-radius: 99px;
+                background: var(--gr);
+                overflow: hidden;
+                flex: 1;
+            }
+            .bar i {
+                display: block;
+                height: 100%;
+                background: var(--bl);
+                border-radius: 99px;
+            }
+            .hb {
+                display: grid;
+                grid-template-columns: 120px 1fr 72px;
+                align-items: center;
+                gap: 12px;
+                padding: 7px 0;
+                font-size: 13px;
+            }
+            .leg {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                font-size: 13px;
+            }
+            .leg div {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            .leg i {
+                width: 10px;
+                height: 10px;
+                border-radius: 3px;
+                flex: none;
+            }
+            .leg b {
+                margin-left: auto;
+            }
+            /* overlay: drawer + modal */
+            .ov {
+                position: fixed;
+                inset: 0;
+                background: rgba(6, 18, 36, 0.5);
+                z-index: 60;
+                display: flex;
+                justify-content: flex-end;
+            }
+            .ov[hidden] {
+                display: none;
+            }
+            .dr {
+                width: min(460px, 100%);
+                height: 100%;
+                background: var(--sf);
+                overflow-y: auto;
+                padding: 22px;
+                display: flex;
+                flex-direction: column;
+                gap: 14px;
+                animation: slin 0.18s ease-out;
+            }
+            .ov.mo {
+                justify-content: center;
+                align-items: center;
+                padding: 16px;
+            }
+            .ov.mo .dr {
+                height: auto;
+                max-height: 92vh;
+                border-radius: 18px;
+                width: min(520px, 100%);
+                animation: pop 0.16s ease-out;
+            }
+            .dh {
+                display: flex;
+                align-items: flex-start;
+                justify-content: space-between;
+                gap: 12px;
+            }
+            .dh h2 {
+                font-size: 19px;
+                font-weight: 800;
+            }
+            .dh p {
+                color: var(--t2);
+                font-size: 13px;
+            }
+            .df {
+                display: flex;
+                gap: 8px;
+                justify-content: flex-end;
+                flex-wrap: wrap;
+                margin-top: 6px;
+            }
+            @keyframes slin {
+                from {
+                    transform: translateX(24px);
+                    opacity: 0.4;
+                }
+                to {
+                    transform: none;
+                    opacity: 1;
+                }
+            }
+            @keyframes pop {
+                from {
+                    transform: scale(0.97);
+                    opacity: 0.4;
+                }
+                to {
+                    transform: none;
+                    opacity: 1;
+                }
+            }
+            .toast {
+                position: fixed;
+                left: 50%;
+                bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+                transform: translateX(-50%);
+                background: var(--bd);
+                color: #fff;
+                padding: 11px 18px;
+                border-radius: 12px;
+                font-weight: 600;
+                font-size: 13.5px;
+                z-index: 80;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+                display: flex;
+                gap: 8px;
+                align-items: center;
+            }
+            .toast[hidden] {
+                display: none;
+            }
+            /* login */
+            .login {
+                min-height: 100vh;
+                display: grid;
+                grid-template-columns: 1.1fr 1fr;
+            }
+            .lp {
+                background: linear-gradient(150deg, #0878e8, #062b55 70%);
+                color: #fff;
+                padding: 48px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+            .lp h1 {
+                font-size: 40px;
+                font-weight: 800;
+                line-height: 1.1;
+                letter-spacing: -0.02em;
+                max-width: 420px;
+            }
+            .lp p {
+                color: #cfe4fa;
+                max-width: 380px;
+                margin-top: 12px;
+            }
+            .lp .stops {
+                display: flex;
+                align-items: center;
+                gap: 0;
+                margin-top: 34px;
+            }
+            .lp .stops i {
+                width: 14px;
+                height: 14px;
+                border-radius: 50%;
+                background: #fff;
+                flex: none;
+            }
+            .lp .stops s {
+                height: 4px;
+                flex: 1;
+                background: rgba(255, 255, 255, 0.35);
+                max-width: 70px;
+            }
+            .lp .stops i:nth-child(odd) {
+                background: #fff;
+            }
+            .lp .stops i:nth-child(even) {
+                background: transparent;
+                border: 3px solid #fff;
+            }
+            .lf {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 32px;
+                background: var(--bg);
+            }
+            .lf form {
+                width: min(380px, 100%);
+            }
+            .lf h2 {
+                font-size: 24px;
+                font-weight: 800;
+                margin-bottom: 4px;
+            }
+            @media (max-width: 1100px) {
+                .g4 {
+                    grid-template-columns: repeat(2, minmax(0, 1fr));
+                }
+                .g2 {
+                    grid-template-columns: minmax(0, 1fr);
+                }
+                .g3 {
+                    grid-template-columns: minmax(0, 1fr);
+                }
+            }
+            @media (max-width: 900px) {
+                .app {
+                    grid-template-columns: minmax(0, 1fr);
+                }
+                .side {
+                    position: fixed;
+                    left: 0;
+                    top: 0;
+                    transform: translateX(-100%);
+                    transition: transform 0.2s;
+                    width: 260px;
+                }
+                .side.open {
+                    transform: none;
+                }
+                .top {
+                    padding: 10px 14px;
+                }
+                .top .menu {
+                    display: grid;
+                }
+                .page {
+                    padding: 18px 14px 50px;
+                }
+                .login {
+                    grid-template-columns: 1fr;
+                }
+                .lp {
+                    padding: 28px;
+                }
+                .lp h1 {
+                    font-size: 28px;
+                }
+                .g2e,
+                .row2 {
+                    grid-template-columns: 1fr;
+                }
+                .hb {
+                    grid-template-columns: 90px 1fr 64px;
+                }
+            }
+            @media (max-width: 520px) {
+                .g4 {
+                    grid-template-columns: 1fr;
+                }
+                .srch {
+                    max-width: none;
+                }
+                .top .hide {
+                    display: none;
+                }
+            }
+            @media (prefers-reduced-motion: reduce) {
+                * {
+                    animation: none !important;
+                    transition: none !important;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div id="root"></div>
+        <div id="ov" class="ov" hidden></div>
+        <div id="toast" class="toast" hidden></div>
+
+        <script>
+            ;(function () {
+                'use strict'
+                /* ---------- utilitaires ---------- */
+                var $ = function (s, r) {
+                    return (r || document).querySelector(s)
+                }
+                var IC = {
+                    grid: 'M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z',
+                    bus: 'M6 4h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zM4 11h16M7 18v2M17 18v2M8 14.5h.01M16 14.5h.01',
+                    route: 'M6 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM18 9a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM8 17h6a3 3 0 0 0 0-6h-4a3 3 0 0 1 0-6h6',
+                    qr: 'M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h3v3h-3zM20 14v1M14 20h1M18 18h3v3h-3z',
+                    tag: 'M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8zM7.5 7.5h.01',
+                    ticket: 'M3 7h18v4a2 2 0 0 0 0 4v4H3v-4a2 2 0 0 0 0-4zM13 7v12',
+                    card: 'M3 6h18v12H3zM3 10h18M7 15h3',
+                    swap: 'M7 4L3 8l4 4M3 8h14M17 20l4-4-4-4M21 16H7',
+                    users: 'M16 20v-1a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v1M9.5 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM21 20v-1a4 4 0 0 0-3-3.9M16 4.1a3.5 3.5 0 0 1 0 6.8',
+                    shield: 'M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6zM9 12l2 2 4-4',
+                    chart: 'M4 20V4M4 20h16M8 16v-5M12 16V8M16 16v-3',
+                    set: 'M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0M14 4v4M8 10v4M16 16v4',
+                    log: 'M5 4h14v16H5zM9 9h6M9 13h6M9 17h3',
+                    search: 'M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM21 21l-5-5',
+                    bell: 'M6 16v-5a6 6 0 0 1 12 0v5l2 2H4zM10 21h4',
+                    plus: 'M12 5v14M5 12h14',
+                    x: 'M6 6l12 12M18 6L6 18',
+                    dl: 'M12 4v11M7 11l5 5 5-5M5 20h14',
+                    pr: 'M7 9V4h10v5M7 17H4v-7h16v7h-3M7 14h10v6H7z',
+                    out: 'M9 4H5v16h4M16 8l4 4-4 4M20 12H9',
+                    sun: 'M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4',
+                    menu: 'M4 6h16M4 12h16M4 18h16',
+                    check: 'M5 12l5 5 9-10',
+                    alert: 'M12 3L2 20h20zM12 10v4M12 17h.01',
+                    info: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 11v5M12 8h.01',
+                    ref: 'M20 11a8 8 0 0 0-14-4L4 9M4 4v5h5M4 13a8 8 0 0 0 14 4l2-2M20 20v-5h-5',
+                }
+                function ic(n, s) {
+                    s = s || 18
+                    return (
+                        '<svg width="' +
+                        s +
+                        '" height="' +
+                        s +
+                        '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="' +
+                        IC[n] +
+                        '"/></svg>'
+                    )
+                }
+                function F(n) {
+                    return (
+                        n.toLocaleString('fr-FR').replace(/[\u202f\u00a0]/g, '\u00a0') + '\u00a0F'
+                    )
+                }
+                var CM = {
+                    'En service': 'ok',
+                    Maintenance: 'wt',
+                    'Hors service': 'gr',
+                    Actif: 'ok',
+                    Expiré: 'gr',
+                    Annulé: 'ko',
+                    Réussi: 'ok',
+                    Échoué: 'ko',
+                    'En attente': 'wt',
+                    Remboursé: 'in',
+                    Réconcilié: 'ok',
+                    Écart: 'ko',
+                    Suspendu: 'ko',
+                    Révoqué: 'ko',
+                    Valide: 'ok',
+                    Refusé: 'ko',
+                    Active: 'ok',
+                    Suspendue: 'wt',
+                    Inactif: 'gr',
+                }
+                function chip(t, c) {
+                    return '<span class="chip ' + (c || CM[t] || 'gr') + '">' + t + '</span>'
+                }
+                function esc(s) {
+                    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
+                }
+                function qr(seed, size, col) {
+                    var N = 21,
+                        s = seed || 1,
+                        u = size / N,
+                        r = ''
+                    function rnd() {
+                        s = (s * 1103515245 + 12345) & 0x7fffffff
+                        return s / 0x7fffffff
+                    }
+                    function fin(x, y) {
+                        return (x < 7 && y < 7) || (x >= N - 7 && y < 7) || (x < 7 && y >= N - 7)
+                    }
+                    function finder(x, y) {
+                        var ox = x < 7 ? 0 : N - 7,
+                            oy = y < 7 ? 0 : N - 7,
+                            i = x - ox,
+                            j = y - oy
+                        return (
+                            i === 0 ||
+                            i === 6 ||
+                            j === 0 ||
+                            j === 6 ||
+                            (i >= 2 && i <= 4 && j >= 2 && j <= 4)
+                        )
+                    }
+                    for (var y = 0; y < N; y++)
+                        for (var x = 0; x < N; x++) {
+                            var on = fin(x, y)
+                                ? finder(x, y)
+                                : (x < 8 && y < 8) || (x >= N - 8 && y < 8) || (x < 8 && y >= N - 8)
+                                  ? false
+                                  : rnd() > 0.52
+                            if (on)
+                                r +=
+                                    '<rect x="' +
+                                    (x * u).toFixed(2) +
+                                    '" y="' +
+                                    (y * u).toFixed(2) +
+                                    '" width="' +
+                                    (u + 0.3).toFixed(2) +
+                                    '" height="' +
+                                    (u + 0.3).toFixed(2) +
+                                    '"/>'
+                        }
+                    return (
+                        '<span class="qrb"><svg width="' +
+                        size +
+                        '" height="' +
+                        size +
+                        '" viewBox="0 0 ' +
+                        size +
+                        ' ' +
+                        size +
+                        '" fill="' +
+                        (col || '#062B55') +
+                        '" role="img" aria-label="QR code">' +
+                        r +
+                        '</svg></span>'
+                    )
+                }
+                function hash(s) {
+                    var h = 7
+                    for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) & 0xffff
+                    return h + 1
+                }
+
+                /* ---------- données ---------- */
+                var LINES = [
+                    {
+                        n: '03',
+                        a: 'Treichville',
+                        b: 'Marcory',
+                        fare: 200,
+                        bus: 22,
+                        stops: ['Treichville Gare', 'Biafra', 'Zone 4', 'Marcory Résidentiel'],
+                        freq: 10,
+                        rev: 94400,
+                    },
+                    {
+                        n: '07',
+                        a: 'Yopougon',
+                        b: 'Plateau',
+                        fare: 400,
+                        bus: 41,
+                        stops: [
+                            'Yopougon Sicogi',
+                            'Niangon',
+                            'Banco',
+                            'Adjamé Liberté',
+                            'Plateau Cathédrale',
+                        ],
+                        freq: 6,
+                        rev: 924000,
+                    },
+                    {
+                        n: '12',
+                        a: 'Adjamé',
+                        b: 'Cocody',
+                        fare: 300,
+                        bus: 36,
+                        stops: ['Adjamé Liberté', 'Williamsville', 'Cocody Danga', 'Cocody Angré'],
+                        freq: 8,
+                        rev: 582000,
+                    },
+                    {
+                        n: '21',
+                        a: 'Abobo',
+                        b: 'Plateau',
+                        fare: 400,
+                        bus: 33,
+                        stops: [
+                            'Abobo Gare',
+                            'Anyama Carrefour',
+                            'Adjamé Liberté',
+                            'Plateau Gare Nord',
+                        ],
+                        freq: 7,
+                        rev: 648000,
+                    },
+                    {
+                        n: '18',
+                        a: 'Koumassi',
+                        b: 'Plateau',
+                        fare: 300,
+                        bus: 30,
+                        stops: ['Koumassi Grand Marché', 'Treichville Biafra', 'Plateau Gare Sud'],
+                        freq: 9,
+                        rev: 384000,
+                    },
+                    {
+                        n: '25',
+                        a: 'Port-Bouët',
+                        b: 'Plateau',
+                        fare: 300,
+                        bus: 25,
+                        stops: [
+                            'Port-Bouët Aéroport',
+                            'Vridi Canal',
+                            'Treichville Gare',
+                            'Plateau Cathédrale',
+                        ],
+                        freq: 12,
+                        rev: 237000,
+                    },
+                ]
+                var LM = {}
+                LINES.forEach(function (l) {
+                    LM[l.n] = l
+                })
+                function trj(n) {
+                    return LM[n].a + ' → ' + LM[n].b
+                }
+                var BUSES = [
+                    ['AB-1245-CI', '12', 'En service', '17:12'],
+                    ['CD-0872-CI', '07', 'En service', '17:05'],
+                    ['EF-3310-CI', '03', 'Maintenance', '—'],
+                    ['GH-5521-CI', '21', 'Hors service', '—'],
+                    ['JK-2210-CI', '18', 'En service', '16:48'],
+                    ['LM-7734-CI', '25', 'En service', '16:30'],
+                    ['NP-1186-CI', '07', 'En service', '17:09'],
+                    ['QR-4409-CI', '12', 'En service', '16:55'],
+                    ['ST-6023-CI', '21', 'En service', '17:02'],
+                    ['UV-9917-CI', '18', 'Maintenance', '—'],
+                    ['WX-3358-CI', '03', 'En service', '16:41'],
+                    ['YZ-8142-CI', '25', 'En service', '16:58'],
+                ].map(function (b) {
+                    return {
+                        id: b[0],
+                        line: b[1],
+                        s: b[2],
+                        last: b[3],
+                        qid: 'bus_' + b[0].split('-')[0] + b[0].split('-')[1],
+                        qs: b[2] === 'Hors service' ? 'Révoqué' : 'Actif',
+                    }
+                })
+                var TICKETS = [
+                    ['TK-7F3A91', 'Koné Mariam', 'AB-1245-CI', '12', '17:12', '18:42', 'Actif'],
+                    ['TK-7F3A6E', 'Yao Serge', 'CD-0872-CI', '07', '17:05', '18:35', 'Actif'],
+                    ['TK-7F39D2', 'Traoré Aïcha', 'JK-2210-CI', '18', '16:48', '18:18', 'Actif'],
+                    ['TK-7F3977', 'Bamba Ibrahim', 'LM-7734-CI', '25', '16:30', '18:00', 'Actif'],
+                    ['TK-7F38F0', 'N’Guessan Paul', 'ST-6023-CI', '21', '15:12', '16:42', 'Expiré'],
+                    ['TK-7F38A4', 'Diabaté Fanta', 'NP-1186-CI', '07', '14:58', '16:28', 'Expiré'],
+                    ['TK-7F3811', 'Konan Éric', 'QR-4409-CI', '12', '13:20', '14:50', 'Expiré'],
+                    ['TK-7F37C5', 'Coulibaly Awa', 'WX-3358-CI', '03', '12:41', '14:11', 'Annulé'],
+                    ['TK-7F3790', 'Soro Lassina', 'YZ-8142-CI', '25', '11:09', '12:39', 'Expiré'],
+                    ['TK-7F3742', 'Ouattara Salif', 'AB-1245-CI', '12', '08:15', '09:45', 'Expiré'],
+                    ['TK-7F3701', 'Aka Estelle', 'CD-0872-CI', '07', '07:42', '09:12', 'Annulé'],
+                    ['TK-7F36B8', 'Tano Rodrigue', 'JK-2210-CI', '18', '07:20', '08:50', 'Expiré'],
+                ].map(function (t) {
+                    return {
+                        id: t[0],
+                        user: t[1],
+                        bus: t[2],
+                        line: t[3],
+                        at: t[4],
+                        exp: t[5],
+                        s: t[6],
+                        pay: 'PAY-' + t[0].slice(3),
+                    }
+                })
+                var PAYS = [
+                    ['PAY-8F21C9', 'Koné Mariam', '12', 'Orange Money', '17:12', 'Réussi', ''],
+                    ['PAY-8F21C4', 'Yao Serge', '07', 'Wave', '17:05', 'Réussi', ''],
+                    [
+                        'PAY-8F21B7',
+                        'Bamba Ibrahim',
+                        '03',
+                        'MTN MoMo',
+                        '17:01',
+                        'Échoué',
+                        'Solde insuffisant',
+                    ],
+                    ['PAY-8F21AA', 'Traoré Aïcha', '18', 'Moov Money', '16:48', 'Réussi', ''],
+                    [
+                        'PAY-8F219E',
+                        'Diabaté Fanta',
+                        '25',
+                        'MTN MoMo',
+                        '16:44',
+                        'Échoué',
+                        'Délai dépassé',
+                    ],
+                    ['PAY-8F2190', 'Konan Éric', '21', 'Orange Money', '16:31', 'En attente', ''],
+                    ['PAY-8F2182', 'Coulibaly Awa', '03', 'Wave', '12:41', 'Remboursé', ''],
+                    ['PAY-8F2171', 'Soro Lassina', '25', 'Orange Money', '11:09', 'Réussi', ''],
+                    ['PAY-8F2165', 'Ouattara Salif', '12', 'Wave', '08:15', 'Réussi', ''],
+                    ['PAY-8F2159', 'Aka Estelle', '07', 'Moov Money', '07:42', 'Remboursé', ''],
+                ].map(function (p) {
+                    return {
+                        ref: p[0],
+                        user: p[1],
+                        line: p[2],
+                        mode: p[3],
+                        at: p[4],
+                        s: p[5],
+                        why: p[6],
+                        amt: LM[p[2]].fare,
+                    }
+                })
+                var TRX = [
+                    [
+                        'TRX-0091',
+                        'Orange Money',
+                        'OM261013.1712.C94',
+                        'Paiement',
+                        300,
+                        '17:12',
+                        'Réconcilié',
+                    ],
+                    ['TRX-0090', 'Wave', 'WV-5521907', 'Paiement', 400, '17:05', 'Réconcilié'],
+                    [
+                        'TRX-0088',
+                        'Moov Money',
+                        'MV-80419233',
+                        'Paiement',
+                        300,
+                        '16:48',
+                        'Réconcilié',
+                    ],
+                    [
+                        'TRX-0085',
+                        'Orange Money',
+                        'OM261013.1631.A12',
+                        'Paiement',
+                        400,
+                        '16:31',
+                        'En attente',
+                    ],
+                    [
+                        'TRX-0079',
+                        'Wave',
+                        'WV-5519114',
+                        'Remboursement',
+                        -200,
+                        '12:44',
+                        'Réconcilié',
+                    ],
+                    ['TRX-0074', 'MTN MoMo', 'MTN-27730018', 'Paiement', 300, '11:20', 'Écart'],
+                    [
+                        'TRX-0068',
+                        'Orange Money',
+                        'OM261013.0815.B07',
+                        'Paiement',
+                        300,
+                        '08:15',
+                        'Réconcilié',
+                    ],
+                    [
+                        'TRX-0061',
+                        'Moov Money',
+                        'MV-80391020',
+                        'Remboursement',
+                        -400,
+                        '07:49',
+                        'Réconcilié',
+                    ],
+                ].map(function (t) {
+                    return {
+                        id: t[0],
+                        op: t[1],
+                        oref: t[2],
+                        type: t[3],
+                        amt: t[4],
+                        at: t[5],
+                        s: t[6],
+                    }
+                })
+                var USERS = [
+                    ['Koné Mariam', '+225 07 12 34 56 78', '02/03/2026', 48, 14400, 'Actif'],
+                    ['Yao Serge', '+225 05 44 21 90 13', '18/01/2026', 112, 44800, 'Actif'],
+                    ['Traoré Aïcha', '+225 01 03 77 41 25', '27/05/2026', 23, 6900, 'Actif'],
+                    ['Bamba Ibrahim', '+225 07 88 10 52 66', '09/08/2026', 9, 3300, 'Actif'],
+                    ['Diabaté Fanta', '+225 05 62 33 18 40', '14/04/2026', 61, 19800, 'Actif'],
+                    ['Konan Éric', '+225 07 20 45 67 01', '30/09/2026', 4, 1500, 'Actif'],
+                    ['Coulibaly Awa', '+225 01 55 08 92 37', '11/02/2026', 87, 26100, 'Suspendu'],
+                    ['Soro Lassina', '+225 05 19 66 34 82', '22/06/2026', 35, 12900, 'Actif'],
+                ].map(function (u) {
+                    return { name: u[0], tel: u[1], since: u[2], n: u[3], spent: u[4], s: u[5] }
+                })
+                var CTRL = [
+                    ['Kouadio Armand', 'CTR-014', '+225 07 33 21 08 54', '12', 186, 4, 'Valide'],
+                    ['Ehui Serge', 'CTR-021', '+225 05 90 14 37 22', '07', 241, 9, 'Valide'],
+                    ['Gnahoré Mireille', 'CTR-009', '+225 01 48 70 55 16', '21', 172, 3, 'Valide'],
+                    ['Yapi Constant', 'CTR-033', '+225 07 61 02 49 88', '18', 0, 0, 'Hors service'],
+                    ['Zadi Nathalie', 'CTR-017', '+225 05 27 83 61 30', '25', 154, 6, 'Valide'],
+                    ['Tchimou Désiré', 'CTR-040', '+225 07 14 59 72 03', '03', 0, 0, 'Suspendu'],
+                ].map(function (c) {
+                    return {
+                        name: c[0],
+                        mat: c[1],
+                        tel: c[2],
+                        line: c[3],
+                        n: c[4],
+                        ko: c[5],
+                        s: c[6] === 'Valide' ? 'En service' : c[6],
+                    }
+                })
+                var AUDIT = [
+                    [
+                        '17:08',
+                        'Adjoua Brou',
+                        'a modifié le tarif de la ligne 12',
+                        '300 F → 300 F (validité 90 min)',
+                    ],
+                    ['16:42', 'Adjoua Brou', 'a imprimé le QR du bus', 'AB-1245-CI'],
+                    [
+                        '15:30',
+                        'Moussa Diallo',
+                        'a annulé le ticket',
+                        'TK-7F37C5 (remboursement lancé)',
+                    ],
+                    ['14:12', 'Moussa Diallo', 'a suspendu l’utilisateur', 'Coulibaly Awa'],
+                    ['11:05', 'Adjoua Brou', 'a mis le bus en maintenance', 'EF-3310-CI'],
+                    [
+                        '10:20',
+                        'Système',
+                        'a signalé un écart de rapprochement',
+                        'TRX-0074 · MTN MoMo',
+                    ],
+                    ['09:47', 'Adjoua Brou', 'a ajouté un contrôleur', 'Zadi Nathalie (CTR-017)'],
+                    ['08:02', 'Adjoua Brou', 's’est connectée', 'Abidjan · Chrome'],
+                ]
+                var S = {}
+
+                /* ---------- graphiques (SVG en ligne) ---------- */
+                function bars(vals, labels, h, hi) {
+                    var max = Math.max.apply(null, vals),
+                        w = 100 / vals.length,
+                        o = ''
+                    vals.forEach(function (v, i) {
+                        var bh = Math.max(2, (v / max) * (h - 30))
+                        o +=
+                            '<g><rect x="' +
+                            (i * w + w * 0.18) +
+                            '%" y="' +
+                            (h - 22 - bh) +
+                            '" width="' +
+                            w * 0.64 +
+                            '%" height="' +
+                            bh +
+                            '" rx="5" fill="' +
+                            (i === hi
+                                ? 'var(--bl)'
+                                : 'color-mix(in srgb,var(--bl) 45%,transparent)') +
+                            '"><title>' +
+                            labels[i] +
+                            ' : ' +
+                            v.toLocaleString('fr-FR') +
+                            '</title></rect>' +
+                            (labels[i]
+                                ? '<text x="' +
+                                  (i * w + w / 2) +
+                                  '%" y="' +
+                                  (h - 6) +
+                                  '" text-anchor="middle" font-size="11" fill="var(--t2)">' +
+                                  labels[i] +
+                                  '</text>'
+                                : '') +
+                            '</g>'
+                    })
+                    return (
+                        '<svg width="100%" height="' +
+                        h +
+                        '" role="img" aria-label="Histogramme">' +
+                        o +
+                        '</svg>'
+                    )
+                }
+                function donut(seg) {
+                    var C = 2 * Math.PI * 40,
+                        off = 0,
+                        o = ''
+                    seg.forEach(function (s) {
+                        var d = (C * s.v) / 100
+                        o +=
+                            '<circle cx="60" cy="60" r="40" fill="none" stroke="' +
+                            s.c +
+                            '" stroke-width="18" stroke-dasharray="' +
+                            d +
+                            ' ' +
+                            (C - d) +
+                            '" stroke-dashoffset="' +
+                            -off +
+                            '" transform="rotate(-90 60 60)"/>'
+                        off += d
+                    })
+                    return (
+                        '<svg width="150" height="150" viewBox="0 0 120 120" role="img" aria-label="Répartition par moyen de paiement">' +
+                        o +
+                        '<text x="60" y="58" text-anchor="middle" font-family="Plus Jakarta Sans" font-weight="800" font-size="16" fill="var(--tx)">8 412</text><text x="60" y="73" text-anchor="middle" font-size="9" fill="var(--t2)">tickets</text></svg>'
+                    )
+                }
+                function area(vals, h) {
+                    var W = 600,
+                        max = 3.2,
+                        pts = vals.map(function (v, i) {
+                            return [(i / (vals.length - 1)) * W, h - 24 - (v / max) * (h - 40)]
+                        })
+                    var d = pts
+                        .map(function (p, i) {
+                            return (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1)
+                        })
+                        .join(' ')
+                    var g = ''
+                    ;[0, 1, 2, 3].forEach(function (t) {
+                        var y = h - 24 - (t / max) * (h - 40)
+                        g +=
+                            '<line x1="0" x2="' +
+                            W +
+                            '" y1="' +
+                            y +
+                            '" y2="' +
+                            y +
+                            '" stroke="var(--ln)"/><text x="0" y="' +
+                            (y - 4) +
+                            '" font-size="10" fill="var(--t2)">' +
+                            t +
+                            ' M F</text>'
+                    })
+                    return (
+                        '<svg width="100%" viewBox="0 0 ' +
+                        W +
+                        ' ' +
+                        h +
+                        '" preserveAspectRatio="none" style="height:' +
+                        h +
+                        'px" role="img" aria-label="Revenus"><defs><linearGradient id="ga" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--bl)" stop-opacity=".28"/><stop offset="1" stop-color="var(--bl)" stop-opacity="0"/></linearGradient></defs>' +
+                        g +
+                        '<path d="' +
+                        d +
+                        ' L' +
+                        W +
+                        ' ' +
+                        (h - 24) +
+                        ' L0 ' +
+                        (h - 24) +
+                        'Z" fill="url(#ga)"/><path d="' +
+                        d +
+                        '" fill="none" stroke="var(--bl)" stroke-width="2.5" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg>'
+                    )
+                }
+                function rev(n) {
+                    var o = [],
+                        s = n * 7 + 3
+                    for (var i = 0; i < n; i++) {
+                        s = (s * 1103515245 + 12345) & 0x7fffffff
+                        var wk = (n - 1 - i) % 7
+                        var v =
+                            2.35 +
+                            0.35 * Math.sin(i * 0.8) +
+                            (wk === 1 || wk === 2 ? -0.85 : 0) +
+                            (s / 0x7fffffff - 0.5) * 0.35
+                        o.push(Math.max(0.9, Math.min(3.1, v)))
+                    }
+                    return o
+                }
+
+                /* ---------- gabarits communs ---------- */
+                function head(t, sub, acts) {
+                    return (
+                        '<div class="ph"><div><h1>' +
+                        t +
+                        '</h1><p>' +
+                        sub +
+                        '</p></div><div class="acts">' +
+                        (acts || '') +
+                        '</div></div>'
+                    )
+                }
+                function kpi(l, v, d, c) {
+                    return (
+                        '<div class="card kpi"><small>' +
+                        l +
+                        '</small><span class="num">' +
+                        v +
+                        '</span><span class="dl ' +
+                        (c || 'mu') +
+                        '">' +
+                        d +
+                        '</span></div>'
+                    )
+                }
+                function btn(l, a, arg, cls, icon) {
+                    return (
+                        '<button class="btn ' +
+                        (cls || '') +
+                        '" data-a="' +
+                        a +
+                        '" data-g="' +
+                        (arg || '') +
+                        '">' +
+                        (icon ? ic(icon, 16) : '') +
+                        l +
+                        '</button>'
+                    )
+                }
+                function tbar(id, tabs, ph, extra) {
+                    var st = S[id]
+                    var t = ''
+                    if (tabs)
+                        t =
+                            '<div class="tabs" role="tablist">' +
+                            tabs
+                                .map(function (x) {
+                                    return (
+                                        '<button role="tab" class="' +
+                                        (st.t === x ? 'on' : '') +
+                                        '" data-a="tab" data-g="' +
+                                        id +
+                                        '|' +
+                                        x +
+                                        '">' +
+                                        x +
+                                        '</button>'
+                                    )
+                                })
+                                .join('') +
+                            '</div>'
+                    return (
+                        '<div class="tb">' +
+                        t +
+                        '<label class="srch">' +
+                        ic('search', 16) +
+                        '<input type="search" placeholder="' +
+                        ph +
+                        '" value="' +
+                        esc(st.q) +
+                        '" data-a="q" data-g="' +
+                        id +
+                        '" aria-label="' +
+                        ph +
+                        '"></label>' +
+                        (extra || '') +
+                        '</div>'
+                    )
+                }
+                function note(txt) {
+                    return '<div class="note">' + ic('info', 18) + '<div>' + txt + '</div></div>'
+                }
+
+                /* ---------- pages ---------- */
+                var COLS = {} /* id -> {rows(),cols:[[titre,fn,cls]],tabKey,onRow} */
+                function listPage(id) {
+                    var C = COLS[id],
+                        st = S[id],
+                        q = st.q.toLowerCase()
+                    var rows = C.rows().filter(function (r) {
+                        return (
+                            (st.t === 'Tous' || !C.tabKey || r[C.tabKey] === st.t) &&
+                            (!q || JSON.stringify(r).toLowerCase().indexOf(q) > -1)
+                        )
+                    })
+                    var h =
+                        '<table><thead><tr>' +
+                        C.cols
+                            .map(function (c) {
+                                return '<th class="' + (c[2] || '') + '">' + c[0] + '</th>'
+                            })
+                            .join('') +
+                        '</tr></thead><tbody>'
+                    if (!rows.length)
+                        h +=
+                            '<tr><td colspan="' +
+                            C.cols.length +
+                            '" style="text-align:center;padding:36px;color:var(--t2)">Aucun résultat. Modifiez la recherche ou le filtre.</td></tr>'
+                    rows.forEach(function (r) {
+                        var i = C.rows().indexOf(r)
+                        h +=
+                            '<tr class="' +
+                            (C.onRow ? 'clk' : '') +
+                            '" ' +
+                            (C.onRow
+                                ? 'data-a="row" data-g="' + id + '|' + i + '" tabindex="0"'
+                                : '') +
+                            '>' +
+                            C.cols
+                                .map(function (c) {
+                                    return '<td class="' + (c[2] || '') + '">' + c[1](r) + '</td>'
+                                })
+                                .join('') +
+                            '</tr>'
+                    })
+                    return (
+                        h +
+                        '</tbody></table><div style="color:var(--t2);font-size:12.5px;padding:10px 12px 0">' +
+                        rows.length +
+                        ' résultat' +
+                        (rows.length > 1 ? 's' : '') +
+                        '</div>'
+                    )
+                }
+                function ensure(id, t) {
+                    if (!S[id]) S[id] = { q: '', t: t || 'Tous' }
+                }
+                function table(id) {
+                    return (
+                        '<div class="card" style="padding:6px 6px 12px"><div class="tw" id="tb-' +
+                        id +
+                        '">' +
+                        listPage(id) +
+                        '</div></div>'
+                    )
+                }
+
+                COLS.bus = {
+                    rows: function () {
+                        return BUSES
+                    },
+                    tabKey: 's',
+                    onRow: 1,
+                    cols: [
+                        [
+                            'Bus',
+                            function (r) {
+                                return '<b>' + r.id + '</b>'
+                            },
+                        ],
+                        [
+                            'Ligne',
+                            function (r) {
+                                return (
+                                    '<span class="ln" style="width:30px;height:30px;font-size:12px;display:inline-grid">' +
+                                    r.line +
+                                    '</span>'
+                                )
+                            },
+                        ],
+                        [
+                            'Trajet',
+                            function (r) {
+                                return trj(r.line)
+                            },
+                        ],
+                        [
+                            'Tarif',
+                            function (r) {
+                                return F(LM[r.line].fare)
+                            },
+                        ],
+                        [
+                            'Dernière vente',
+                            function (r) {
+                                return r.last
+                            },
+                        ],
+                        [
+                            'Statut',
+                            function (r) {
+                                return chip(r.s)
+                            },
+                        ],
+                    ],
+                }
+                COLS.tickets = {
+                    rows: function () {
+                        return TICKETS
+                    },
+                    tabKey: 's',
+                    onRow: 1,
+                    cols: [
+                        [
+                            'N° ticket',
+                            function (r) {
+                                return '<b>' + r.id + '</b>'
+                            },
+                        ],
+                        [
+                            'Passager',
+                            function (r) {
+                                return r.user
+                            },
+                        ],
+                        [
+                            'Bus',
+                            function (r) {
+                                return r.bus
+                            },
+                        ],
+                        [
+                            'Ligne',
+                            function (r) {
+                                return r.line
+                            },
+                        ],
+                        [
+                            'Émis à',
+                            function (r) {
+                                return r.at
+                            },
+                        ],
+                        [
+                            'Expire à',
+                            function (r) {
+                                return r.exp
+                            },
+                        ],
+                        [
+                            'Montant',
+                            function (r) {
+                                return F(LM[r.line].fare)
+                            },
+                            'tr',
+                        ],
+                        [
+                            'Statut',
+                            function (r) {
+                                return chip(r.s)
+                            },
+                        ],
+                    ],
+                }
+                COLS.pays = {
+                    rows: function () {
+                        return PAYS
+                    },
+                    tabKey: 's',
+                    onRow: 1,
+                    cols: [
+                        [
+                            'Référence',
+                            function (r) {
+                                return '<b>' + r.ref + '</b>'
+                            },
+                        ],
+                        [
+                            'Passager',
+                            function (r) {
+                                return r.user
+                            },
+                        ],
+                        [
+                            'Ligne',
+                            function (r) {
+                                return r.line
+                            },
+                        ],
+                        [
+                            'Moyen',
+                            function (r) {
+                                return r.mode
+                            },
+                        ],
+                        [
+                            'Heure',
+                            function (r) {
+                                return r.at
+                            },
+                        ],
+                        [
+                            'Montant',
+                            function (r) {
+                                return F(r.amt)
+                            },
+                            'tr',
+                        ],
+                        [
+                            'Statut',
+                            function (r) {
+                                return chip(r.s)
+                            },
+                        ],
+                        [
+                            'Motif',
+                            function (r) {
+                                return r.why || '<span class="mu">—</span>'
+                            },
+                        ],
+                    ],
+                }
+                COLS.trx = {
+                    rows: function () {
+                        return TRX
+                    },
+                    tabKey: 's',
+                    onRow: 1,
+                    cols: [
+                        [
+                            'Transaction',
+                            function (r) {
+                                return '<b>' + r.id + '</b>'
+                            },
+                        ],
+                        [
+                            'Opérateur',
+                            function (r) {
+                                return r.op
+                            },
+                        ],
+                        [
+                            'Réf. opérateur',
+                            function (r) {
+                                return '<code>' + r.oref + '</code>'
+                            },
+                        ],
+                        [
+                            'Type',
+                            function (r) {
+                                return r.type
+                            },
+                        ],
+                        [
+                            'Heure',
+                            function (r) {
+                                return r.at
+                            },
+                        ],
+                        [
+                            'Montant',
+                            function (r) {
+                                return (
+                                    '<span class="' +
+                                    (r.amt < 0 ? 'dn' : '') +
+                                    '">' +
+                                    F(r.amt) +
+                                    '</span>'
+                                )
+                            },
+                            'tr',
+                        ],
+                        [
+                            'Rapprochement',
+                            function (r) {
+                                return chip(r.s)
+                            },
+                        ],
+                    ],
+                }
+                COLS.users = {
+                    rows: function () {
+                        return USERS
+                    },
+                    tabKey: 's',
+                    onRow: 1,
+                    cols: [
+                        [
+                            'Passager',
+                            function (r) {
+                                return '<b>' + r.name + '</b>'
+                            },
+                        ],
+                        [
+                            'Téléphone',
+                            function (r) {
+                                return r.tel
+                            },
+                        ],
+                        [
+                            'Inscrit le',
+                            function (r) {
+                                return r.since
+                            },
+                        ],
+                        [
+                            'Tickets',
+                            function (r) {
+                                return r.n
+                            },
+                            'tr',
+                        ],
+                        [
+                            'Dépensé',
+                            function (r) {
+                                return F(r.spent)
+                            },
+                            'tr',
+                        ],
+                        [
+                            'Statut',
+                            function (r) {
+                                return chip(r.s)
+                            },
+                        ],
+                    ],
+                }
+                COLS.ctrl = {
+                    rows: function () {
+                        return CTRL
+                    },
+                    tabKey: 's',
+                    onRow: 1,
+                    cols: [
+                        [
+                            'Contrôleur',
+                            function (r) {
+                                return '<b>' + r.name + '</b>'
+                            },
+                        ],
+                        [
+                            'Matricule',
+                            function (r) {
+                                return r.mat
+                            },
+                        ],
+                        [
+                            'Téléphone',
+                            function (r) {
+                                return r.tel
+                            },
+                        ],
+                        [
+                            'Ligne',
+                            function (r) {
+                                return r.line
+                            },
+                        ],
+                        [
+                            'Contrôles du jour',
+                            function (r) {
+                                return r.n
+                            },
+                            'tr',
+                        ],
+                        [
+                            'Refusés',
+                            function (r) {
+                                return r.ko
+                            },
+                            'tr',
+                        ],
+                        [
+                            'Statut',
+                            function (r) {
+                                return chip(r.s)
+                            },
+                        ],
+                    ],
+                }
+
+                var P = {}
+                P.dashboard = function () {
+                    var rows = PAYS.slice(0, 5)
+                        .map(function (p) {
+                            return (
+                                '<tr><td><b>' +
+                                p.ref +
+                                '</b></td><td>' +
+                                p.line +
+                                '</td><td>' +
+                                p.mode +
+                                '</td><td class="tr">' +
+                                F(p.amt) +
+                                '</td><td>' +
+                                chip(p.s) +
+                                '</td></tr>'
+                            )
+                        })
+                        .join('')
+                    var top = [
+                        ['Ligne 07', 2310],
+                        ['Ligne 12', 1940],
+                        ['Ligne 21', 1620],
+                        ['Ligne 18', 1280],
+                        ['Ligne 25', 790],
+                        ['Ligne 03', 472],
+                    ]
+                        .map(function (l) {
+                            return (
+                                '<div class="hb"><span>' +
+                                l[0] +
+                                '</span><div class="bar"><i style="width:' +
+                                (l[1] / 2310) * 100 +
+                                '%"></i></div><b class="tr">' +
+                                l[1].toLocaleString('fr-FR') +
+                                '</b></div>'
+                            )
+                        })
+                        .join('')
+                    var seg = [
+                        { n: 'Orange Money', v: 41, c: '#FF7900' },
+                        { n: 'Wave', v: 27, c: '#1DC8F2' },
+                        { n: 'MTN MoMo', v: 21, c: '#F5B800' },
+                        { n: 'Moov Money', v: 11, c: '#0A56A6' },
+                    ]
+                    return (
+                        head(
+                            'Tableau de bord',
+                            'Mardi 13 octobre 2026 · mis à jour à 17:42',
+                            btn(
+                                'Exporter',
+                                'toast',
+                                'Export du tableau de bord lancé',
+                                'gh',
+                                'dl',
+                            ) +
+                                btn(
+                                    'Vendre un ticket manuel',
+                                    'toast',
+                                    'Ticket manuel : fonction à valider',
+                                    '',
+                                    'plus',
+                                ),
+                        ) +
+                        '<div class="alerts"><div class="al e">' +
+                        ic('alert', 18) +
+                        '<span><b>3 paiements MTN MoMo ont échoué</b> depuis 16:40 (délai dépassé).</span><a class="go" href="#pays" data-a="go" data-g="pays">Voir les paiements</a></div>' +
+                        '<div class="al w">' +
+                        ic('bus', 18) +
+                        '<span><b>2 bus en maintenance</b> : EF-3310-CI (ligne 03) et UV-9917-CI (ligne 18).</span><a class="go" href="#bus" data-a="go" data-g="bus">Voir les bus</a></div>' +
+                        '<div class="al i">' +
+                        ic('swap', 18) +
+                        '<span><b>1 écart de rapprochement</b> à vérifier avec MTN MoMo.</span><a class="go" href="#trx" data-a="go" data-g="trx">Rapprocher</a></div></div>' +
+                        '<div class="g4">' +
+                        kpi('Tickets vendus', '8 412', '+6,2 % vs mardi dernier', 'up') +
+                        kpi('Revenus du jour', '2,64 M F', '+4,8 % vs mardi dernier', 'up') +
+                        kpi('Paiements réussis', '96,8 %', '−0,4 point vs hier', 'dn') +
+                        kpi('Bus en service', '187 / 203', '2 en maintenance, 14 hors service') +
+                        '</div>' +
+                        '<div class="g2" style="margin-top:14px"><div class="card"><h3>Tickets vendus sur 7 jours</h3><div class="hint">Mer. 7 → mar. 13 octobre</div>' +
+                        bars(
+                            [5120, 5840, 7640, 4960, 3180, 7990, 8412],
+                            ['Mer', 'Jeu', 'Ven', 'Sam', 'Dim', 'Lun', 'Auj.'],
+                            210,
+                            6,
+                        ) +
+                        '</div>' +
+                        '<div class="card"><h3>Moyens de paiement</h3><div class="hint">Part des tickets du jour</div><div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap">' +
+                        donut(seg) +
+                        '<div class="leg" style="flex:1;min-width:130px">' +
+                        seg
+                            .map(function (s) {
+                                return (
+                                    '<div><i style="background:' +
+                                    s.c +
+                                    '"></i>' +
+                                    s.n +
+                                    '<b>' +
+                                    s.v +
+                                    ' %</b></div>'
+                                )
+                            })
+                            .join('') +
+                        '</div></div></div></div>' +
+                        '<div class="g2" style="margin-top:14px"><div class="card" style="padding-bottom:6px"><h3>Derniers paiements</h3><div class="hint">En temps réel</div><div class="tw"><table><thead><tr><th>Réf.</th><th>Ligne</th><th>Moyen</th><th class="tr">Montant</th><th>Statut</th></tr></thead><tbody>' +
+                        rows +
+                        '</tbody></table></div></div>' +
+                        '<div class="card"><h3>Lignes les plus utilisées</h3><div class="hint">Tickets vendus aujourd’hui</div>' +
+                        top +
+                        '</div></div>'
+                    )
+                }
+                P.bus = function () {
+                    ensure('bus')
+                    return (
+                        head(
+                            'Bus',
+                            '203 bus enregistrés · 187 en service',
+                            btn('Imprimer les QR', 'go', 'qr', 'gh', 'pr') +
+                                btn('Ajouter un bus', 'modal', 'addBus', '', 'plus'),
+                        ) +
+                        tbar(
+                            'bus',
+                            ['Tous', 'En service', 'Maintenance', 'Hors service'],
+                            'Rechercher une plaque ou une ligne',
+                        ) +
+                        table('bus') +
+                        '<div style="margin-top:14px">' +
+                        note(
+                            'Le QR d’un bus ne contient que son identifiant (ex. <code>bus_AB1245</code>). Le serveur retrouve la ligne, le trajet en cours et le tarif applicable. Changer un bus de ligne n’oblige donc pas à réimprimer son QR.',
+                        ) +
+                        '</div>'
+                    )
+                }
+                P.lines = function () {
+                    var sel = S.lineSel || '12',
+                        L = LM[sel]
+                    var list = LINES.map(function (l) {
+                        return (
+                            '<button class="li ' +
+                            (l.n === sel ? 'on' : '') +
+                            '" data-a="line" data-g="' +
+                            l.n +
+                            '"><span class="ln">' +
+                            l.n +
+                            '</span><span class="m"><b>' +
+                            l.a +
+                            ' → ' +
+                            l.b +
+                            '</b><span>' +
+                            l.bus +
+                            ' bus · ' +
+                            F(l.fare) +
+                            '</span></span></button>'
+                        )
+                    }).join('')
+                    var tr = [
+                        [
+                            'Aller · ' + L.a + ' → ' + L.b,
+                            '05:30 – 22:00',
+                            'Toutes les ' + L.freq + ' min',
+                            'En cours',
+                        ],
+                        [
+                            'Retour · ' + L.b + ' → ' + L.a,
+                            '05:45 – 22:15',
+                            'Toutes les ' + L.freq + ' min',
+                            'En cours',
+                        ],
+                        [
+                            'Heures de pointe (aller)',
+                            '06:30 – 09:00',
+                            'Toutes les ' + Math.max(3, L.freq - 4) + ' min',
+                            'Programmé',
+                        ],
+                    ]
+                    return (
+                        head(
+                            'Lignes et trajets',
+                            '6 lignes actives',
+                            btn('Nouvelle ligne', 'modal', 'addLine', '', 'plus'),
+                        ) +
+                        '<div class="g2" style="grid-template-columns:minmax(0,340px) minmax(0,1fr)"><div class="lst">' +
+                        list +
+                        '</div><div class="stack">' +
+                        '<div class="card"><div style="display:flex;gap:12px;align-items:center;margin-bottom:12px"><span class="ln" style="width:48px;height:48px;font-size:18px">' +
+                        L.n +
+                        '</span><div style="flex:1"><h3 style="font-size:17px">' +
+                        L.a +
+                        ' → ' +
+                        L.b +
+                        '</h3><div class="mu" style="font-size:13px">' +
+                        L.bus +
+                        ' bus affectés · tarif ' +
+                        F(L.fare) +
+                        '</div></div>' +
+                        chip('Active') +
+                        '</div>' +
+                        '<div class="df" style="justify-content:flex-start;margin:0">' +
+                        btn('Modifier la ligne', 'toast', 'Ligne modifiée (maquette)', 'gh sm') +
+                        btn('Voir les bus', 'go', 'bus', 'gh sm', 'bus') +
+                        btn('Suspendre', 'toast', 'Ligne suspendue (maquette)', 'rdo sm') +
+                        '</div></div>' +
+                        '<div class="g2e"><div class="card"><h3>Arrêts</h3><div class="hint">' +
+                        L.stops.length +
+                        ' arrêts desservis</div><div class="tl">' +
+                        L.stops
+                            .map(function (s, i) {
+                                return (
+                                    '<div>' +
+                                    s +
+                                    '<small>' +
+                                    (i === 0
+                                        ? 'Départ'
+                                        : i === L.stops.length - 1
+                                          ? 'Terminus'
+                                          : '+ ' + i * 9 + ' min') +
+                                    '</small></div>'
+                                )
+                            })
+                            .join('') +
+                        '</div></div>' +
+                        '<div class="card"><h3>Trajets</h3><div class="hint">Plages horaires et fréquence</div><div class="lst">' +
+                        tr
+                            .map(function (t) {
+                                return (
+                                    '<div class="li" style="cursor:default"><div class="m"><b>' +
+                                    t[0] +
+                                    '</b><span>' +
+                                    t[1] +
+                                    ' · ' +
+                                    t[2] +
+                                    '</span></div>' +
+                                    chip(t[3], t[3] === 'En cours' ? 'ok' : 'in') +
+                                    '</div>'
+                                )
+                            })
+                            .join('') +
+                        '</div><div class="df" style="justify-content:flex-start">' +
+                        btn('Ajouter un trajet', 'modal', 'addTrip', 'gh sm', 'plus') +
+                        '</div></div></div></div></div>'
+                    )
+                }
+                P.qr = function () {
+                    ensure('qr')
+                    var q = S.qr.q.toLowerCase()
+                    var cards = BUSES.filter(function (b) {
+                        return !q || (b.id + b.qid + b.line).toLowerCase().indexOf(q) > -1
+                    })
+                        .map(function (b) {
+                            return (
+                                '<div class="card qc">' +
+                                qr(hash(b.id), 130, b.qs === 'Révoqué' ? '#94A3B8' : '#062B55') +
+                                '<b>' +
+                                b.id +
+                                '</b><code>' +
+                                b.qid +
+                                '</code><div class="mu" style="font-size:12.5px">Ligne ' +
+                                b.line +
+                                ' · ' +
+                                trj(b.line) +
+                                '</div>' +
+                                chip(b.qs) +
+                                '<div style="display:flex;gap:6px;margin-top:2px">' +
+                                btn(
+                                    'Imprimer',
+                                    'toast',
+                                    'QR de ' + b.id + ' envoyé à l’impression',
+                                    'gh sm',
+                                    'pr',
+                                ) +
+                                btn('Régénérer', 'modal', 'regen|' + b.id, 'gh sm', 'ref') +
+                                '</div></div>'
+                            )
+                        })
+                        .join('')
+                    return (
+                        head(
+                            'QR codes des bus',
+                            'Un QR par bus, à coller à l’intérieur du véhicule',
+                            btn(
+                                'Exporter en PDF',
+                                'toast',
+                                'PDF des QR en préparation',
+                                'gh',
+                                'dl',
+                            ) +
+                                btn(
+                                    'Imprimer tous les QR',
+                                    'toast',
+                                    'Impression de 203 QR lancée',
+                                    '',
+                                    'pr',
+                                ),
+                        ) +
+                        '<div class="tb"><label class="srch">' +
+                        ic('search', 16) +
+                        '<input type="search" placeholder="Plaque, identifiant ou ligne" value="' +
+                        esc(S.qr.q) +
+                        '" data-a="qrq" aria-label="Rechercher un QR"></label></div><div id="qgrid" class="qgrid">' +
+                        cards +
+                        '</div>' +
+                        '<div style="margin-top:14px">' +
+                        note(
+                            'Régénérer un QR révoque l’ancien immédiatement : le bus doit être réétiqueté. Un QR révoqué affiche « Bus non reconnu » au passager.',
+                        ) +
+                        '</div>'
+                    )
+                }
+                P.fares = function () {
+                    var rows = LINES.map(function (l) {
+                        return (
+                            '<tr><td><span class="ln" style="width:30px;height:30px;font-size:12px;display:inline-grid">' +
+                            l.n +
+                            '</span></td><td>' +
+                            l.a +
+                            ' → ' +
+                            l.b +
+                            '</td><td><b>' +
+                            F(l.fare) +
+                            '</b></td><td>90 min</td><td>01/09/2026</td><td class="tr">' +
+                            btn('Modifier', 'modal', 'fare|' + l.n, 'gh sm') +
+                            '</td></tr>'
+                        )
+                    }).join('')
+                    var hist = [
+                        ['Ligne 07', '350 F → 400 F', '01/09/2026'],
+                        ['Ligne 18', '250 F → 300 F', '01/09/2026'],
+                        ['Ligne 25', '250 F → 300 F', '01/09/2026'],
+                        ['Ligne 12', '300 F (inchangé)', '—'],
+                    ]
+                        .map(function (h) {
+                            return (
+                                '<div class="kv"><span>' +
+                                h[0] +
+                                '<br><small>' +
+                                h[2] +
+                                '</small></span><b>' +
+                                h[1] +
+                                '</b></div>'
+                            )
+                        })
+                        .join('')
+                    return (
+                        head(
+                            'Tarifs',
+                            'Prix du ticket et durée de validité par ligne',
+                            btn(
+                                'Historique complet',
+                                'toast',
+                                'Historique complet : à venir',
+                                'gh',
+                                'log',
+                            ),
+                        ) +
+                        '<div class="g2"><div class="card" style="padding:6px 6px 12px"><div class="tw"><table><thead><tr><th>Ligne</th><th>Trajet</th><th>Tarif</th><th>Validité du ticket</th><th>En vigueur depuis</th><th></th></tr></thead><tbody>' +
+                        rows +
+                        '</tbody></table></div></div>' +
+                        '<div class="stack"><div class="card"><h3>Dernières modifications</h3><div class="hint">Les 30 derniers jours</div>' +
+                        hist +
+                        '</div>' +
+                        note(
+                            'Le tarif est lu par le serveur au moment du scan du QR bus. Un nouveau tarif s’applique aux prochains achats ; les tickets déjà émis ne changent pas.',
+                        ) +
+                        '</div></div>'
+                    )
+                }
+                P.tickets = function () {
+                    ensure('tickets')
+                    return (
+                        head(
+                            'Tickets',
+                            'Tous les tickets émis après un paiement réussi',
+                            btn('Exporter', 'toast', 'Export des tickets lancé', 'gh', 'dl'),
+                        ) +
+                        '<div class="g4" style="margin-bottom:14px">' +
+                        kpi('Actifs', '4', 'valides en ce moment', 'up') +
+                        kpi('Expirés', '6', 'aujourd’hui') +
+                        kpi('Annulés', '2', 'aujourd’hui, remboursés', 'dn') +
+                        kpi('Refusés au contrôle', '87', 'sur 3 284 contrôles') +
+                        '</div>' +
+                        tbar(
+                            'tickets',
+                            ['Tous', 'Actif', 'Expiré', 'Annulé'],
+                            'Rechercher un n°, un passager, un bus',
+                        ) +
+                        table('tickets')
+                    )
+                }
+                P.pays = function () {
+                    ensure('pays')
+                    return (
+                        head(
+                            'Paiements',
+                            'Mobile Money · Orange Money, MTN MoMo, Moov Money, Wave',
+                            btn('Exporter', 'toast', 'Export des paiements lancé', 'gh', 'dl'),
+                        ) +
+                        '<div class="g4" style="margin-bottom:14px">' +
+                        kpi('Réussis', '96,8 %', '8 142 paiements', 'up') +
+                        kpi('Échoués', '2,4 %', '202 paiements', 'dn') +
+                        kpi('En attente', '0,8 %', '68 paiements, délai moyen 42 s') +
+                        kpi('Remboursés', '31', '6 200 F rendus') +
+                        '</div>' +
+                        tbar(
+                            'pays',
+                            ['Tous', 'Réussi', 'Échoué', 'En attente', 'Remboursé'],
+                            'Rechercher une référence, un passager',
+                        ) +
+                        table('pays')
+                    )
+                }
+                P.trx = function () {
+                    ensure('trx')
+                    var ops = [
+                        ['Orange Money', '#FF7900', 'OM', 1082400, 3447, 0],
+                        ['Wave', '#1DC8F2', 'W', 712800, 2271, 0],
+                        ['MTN MoMo', '#F5B800', 'MTN', 554400, 1766, 1],
+                        ['Moov Money', '#0A56A6', 'Moov', 290400, 928, 0],
+                    ]
+                    return (
+                        head(
+                            'Transactions',
+                            'Flux financiers et rapprochement avec les opérateurs',
+                            btn(
+                                'Exporter le rapprochement',
+                                'toast',
+                                'Export du rapprochement lancé',
+                                'gh',
+                                'dl',
+                            ) +
+                                btn(
+                                    'Lancer le rapprochement',
+                                    'toast',
+                                    'Rapprochement en cours…',
+                                    '',
+                                    'ref',
+                                ),
+                        ) +
+                        '<div class="g4" style="margin-bottom:14px">' +
+                        ops
+                            .map(function (o) {
+                                return (
+                                    '<div class="card kpi"><div style="display:flex;align-items:center;gap:8px"><span style="width:28px;height:28px;border-radius:8px;background:' +
+                                    o[1] +
+                                    ';color:' +
+                                    (o[2] === 'MTN' ? '#000' : '#fff') +
+                                    ';display:grid;place-items:center;font-size:10px;font-weight:800">' +
+                                    o[2] +
+                                    '</span><small>' +
+                                    o[0] +
+                                    '</small></div><span class="num" style="font-size:22px">' +
+                                    F(o[3]) +
+                                    '</span><span class="dl mu">' +
+                                    o[4].toLocaleString('fr-FR') +
+                                    ' transactions · ' +
+                                    (o[5]
+                                        ? '<span class="dn">' + o[5] + ' écart</span>'
+                                        : 'aucun écart') +
+                                    '</span></div>'
+                                )
+                            })
+                            .join('') +
+                        '</div>' +
+                        tbar(
+                            'trx',
+                            ['Tous', 'Réconcilié', 'En attente', 'Écart'],
+                            'Rechercher une transaction ou une réf. opérateur',
+                        ) +
+                        table('trx')
+                    )
+                }
+                P.users = function () {
+                    ensure('users')
+                    return (
+                        head(
+                            'Utilisateurs',
+                            'Passagers inscrits sur l’application',
+                            btn('Exporter', 'toast', 'Export des utilisateurs lancé', 'gh', 'dl'),
+                        ) +
+                        '<div class="g3" style="margin-bottom:14px">' +
+                        kpi('Passagers inscrits', '48 316', '+212 cette semaine', 'up') +
+                        kpi('Actifs sur 30 jours', '31 904', '66 % des inscrits') +
+                        kpi('Comptes suspendus', '17', 'à examiner') +
+                        '</div>' +
+                        tbar(
+                            'users',
+                            ['Tous', 'Actif', 'Suspendu'],
+                            'Rechercher un nom ou un téléphone',
+                        ) +
+                        table('users')
+                    )
+                }
+                P.ctrl = function () {
+                    ensure('ctrl')
+                    return (
+                        head(
+                            'Contrôleurs',
+                            'Agents qui scannent les tickets dans les bus',
+                            btn('Ajouter un contrôleur', 'modal', 'addCtrl', '', 'plus'),
+                        ) +
+                        '<div class="g4" style="margin-bottom:14px">' +
+                        kpi('Contrôleurs en service', '42', 'sur 51', 'up') +
+                        kpi('Contrôles du jour', '3 284', 'depuis 05:00') +
+                        kpi('Tickets valides', '97,3 %', '3 197 contrôles', 'up') +
+                        kpi('Tickets refusés', '87', '2,7 %', 'dn') +
+                        '</div>' +
+                        tbar(
+                            'ctrl',
+                            ['Tous', 'En service', 'Hors service', 'Suspendu'],
+                            'Rechercher un nom ou un matricule',
+                        ) +
+                        table('ctrl')
+                    )
+                }
+                P.stats = function () {
+                    var p = S.per || '30 jours',
+                        n = p === '7 jours' ? 7 : p === '30 jours' ? 30 : 90
+                    var hrs = [
+                        0.2, 0.1, 0.1, 0.1, 0.4, 1.8, 4.6, 7.2, 6.1, 3.4, 2.6, 2.8, 3.9, 3.1, 2.4,
+                        2.6, 3.5, 5.8, 7.6, 5.2, 2.8, 1.4, 0.7, 0.3,
+                    ]
+                    var lb = hrs.map(function (_, i) {
+                        return i % 3 === 0 ? (i < 10 ? '0' : '') + i + 'h' : ''
+                    })
+                    var ops = [
+                        ['Orange Money', 98.1],
+                        ['Wave', 97.6],
+                        ['Moov Money', 96.2],
+                        ['MTN MoMo', 93.4],
+                    ]
+                        .map(function (o) {
+                            return (
+                                '<div class="hb"><span>' +
+                                o[0] +
+                                '</span><div class="bar"><i style="width:' +
+                                o[1] +
+                                '%;background:' +
+                                (o[1] < 95 ? 'var(--rg)' : 'var(--bl)') +
+                                '"></i></div><b class="tr">' +
+                                o[1].toString().replace('.', ',') +
+                                ' %</b></div>'
+                            )
+                        })
+                        .join('')
+                    var why = [
+                        ['Solde insuffisant', 44],
+                        ['Délai dépassé', 31],
+                        ['Code secret erroné', 17],
+                        ['Opérateur indisponible', 8],
+                    ]
+                        .map(function (w) {
+                            return (
+                                '<div class="hb"><span>' +
+                                w[0] +
+                                '</span><div class="bar"><i style="width:' +
+                                w[1] +
+                                '%;background:var(--or)"></i></div><b class="tr">' +
+                                w[1] +
+                                ' %</b></div>'
+                            )
+                        })
+                        .join('')
+                    var tot =
+                        Math.round(
+                            rev(n).reduce(function (a, b) {
+                                return a + b
+                            }, 0) * 10,
+                        ) / 10
+                    return (
+                        head(
+                            'Statistiques',
+                            'Ventes, revenus et qualité du service',
+                            '<div class="tabs">' +
+                                ['7 jours', '30 jours', '90 jours']
+                                    .map(function (x) {
+                                        return (
+                                            '<button class="' +
+                                            (x === p ? 'on' : '') +
+                                            '" data-a="per" data-g="' +
+                                            x +
+                                            '">' +
+                                            x +
+                                            '</button>'
+                                        )
+                                    })
+                                    .join('') +
+                                '</div>' +
+                                btn(
+                                    'Exporter',
+                                    'toast',
+                                    'Export des statistiques lancé',
+                                    'gh',
+                                    'dl',
+                                ),
+                        ) +
+                        '<div class="g4" style="margin-bottom:14px">' +
+                        kpi(
+                            'Revenus sur la période',
+                            tot.toString().replace('.', ',') + ' M F',
+                            '+5,1 % vs période précédente',
+                            'up',
+                        ) +
+                        kpi(
+                            'Tickets vendus',
+                            Math.round((tot / 0.314) * 1000)
+                                .toLocaleString('fr-FR')
+                                .replace(/[\u202f\u00a0]/g, '\u00a0'),
+                            '+4,6 %',
+                            'up',
+                        ) +
+                        kpi('Panier moyen', '314 F', 'stable') +
+                        kpi('Tickets par bus et par jour', '45', '+2 vs période précédente', 'up') +
+                        '</div>' +
+                        '<div class="card"><h3>Revenus par jour</h3><div class="hint">En millions de FCFA · les creux correspondent aux week-ends</div>' +
+                        area(rev(n), 210) +
+                        '</div>' +
+                        '<div class="g2e" style="margin-top:14px"><div class="card"><h3>Affluence par heure</h3><div class="hint">Tickets vendus, moyenne sur la période · pointes à 7h et 18h</div>' +
+                        bars(hrs, lb, 170, 18) +
+                        '</div>' +
+                        '<div class="card"><h3>Taux de réussite par opérateur</h3><div class="hint">Paiements réussis / paiements tentés</div>' +
+                        ops +
+                        '<div class="kv" style="margin-top:8px"><span>Motifs d’échec les plus fréquents</span><b></b></div>' +
+                        why +
+                        '</div></div>'
+                    )
+                }
+                P.audit = function () {
+                    return (
+                        head(
+                            'Journal d’audit',
+                            'Actions effectuées dans le back-office',
+                            btn('Exporter', 'toast', 'Export du journal lancé', 'gh', 'dl'),
+                        ) +
+                        '<div class="card" style="padding:6px 6px 12px"><div class="tw"><table><thead><tr><th>Heure</th><th>Auteur</th><th>Action</th><th>Détail</th></tr></thead><tbody>' +
+                        AUDIT.map(function (a) {
+                            return (
+                                '<tr><td>' +
+                                a[0] +
+                                '</td><td><b>' +
+                                a[1] +
+                                '</b></td><td>' +
+                                a[2] +
+                                '</td><td class="mu">' +
+                                a[3] +
+                                '</td></tr>'
+                            )
+                        }).join('') +
+                        '</tbody></table></div></div>'
+                    )
+                }
+                P.settings = function () {
+                    var sw = S.sw || { 'Orange Money': 1, 'MTN MoMo': 1, 'Moov Money': 1, Wave: 1 }
+                    var adm = [
+                        ['Adjoua Brou', 'Super administratrice', 'Toutes les sections'],
+                        ['Moussa Diallo', 'Support', 'Tickets, utilisateurs, paiements'],
+                        ['Fatou Sangaré', 'Finance', 'Paiements, transactions, statistiques'],
+                        ['Yves Kacou', 'Exploitation', 'Bus, lignes, QR, contrôleurs'],
+                    ]
+                    return (
+                        head(
+                            'Paramètres',
+                            'Règles générales et accès',
+                            btn('Enregistrer', 'toast', 'Paramètres enregistrés', '', 'check'),
+                        ) +
+                        '<div class="g2e"><div class="stack"><div class="card"><h3>Tickets</h3><div class="hint">Règles appliquées à tous les nouveaux tickets</div>' +
+                        '<div class="fld"><label>Durée de validité par défaut</label><select><option>90 minutes</option><option>60 minutes</option><option>120 minutes</option></select></div>' +
+                        '<div class="fld"><label>Délai d’attente d’un paiement</label><select><option>120 secondes</option><option>90 secondes</option><option>180 secondes</option></select><small>Au-delà, le paiement passe en « Échoué : délai dépassé ».</small></div></div>' +
+                        '<div class="card"><h3>Moyens de paiement</h3><div class="hint">Désactivez un opérateur en cas d’incident</div>' +
+                        Object.keys(sw)
+                            .map(function (k) {
+                                return (
+                                    '<div class="kv" style="align-items:center"><b>' +
+                                    k +
+                                    '</b><button class="sw ' +
+                                    (sw[k] ? '' : 'off') +
+                                    '" data-a="sw" data-g="' +
+                                    k +
+                                    '" role="switch" aria-checked="' +
+                                    (sw[k] ? 'true' : 'false') +
+                                    '" aria-label="' +
+                                    k +
+                                    '"></button></div>'
+                                )
+                            })
+                            .join('') +
+                        '</div></div>' +
+                        '<div class="card"><h3>Administrateurs</h3><div class="hint">Chaque rôle voit uniquement ses sections</div><div class="lst">' +
+                        adm
+                            .map(function (a) {
+                                return (
+                                    '<div class="li" style="cursor:default"><span class="av">' +
+                                    a[0]
+                                        .split(' ')
+                                        .map(function (w) {
+                                            return w[0]
+                                        })
+                                        .join('') +
+                                    '</span><div class="m"><b>' +
+                                    a[0] +
+                                    '</b><span>' +
+                                    a[1] +
+                                    ' · ' +
+                                    a[2] +
+                                    '</span></div></div>'
+                                )
+                            })
+                            .join('') +
+                        '</div><div class="df" style="justify-content:flex-start">' +
+                        btn('Inviter un administrateur', 'modal', 'addAdmin', 'gh sm', 'plus') +
+                        '</div></div></div>'
+                    )
+                }
+
+                /* ---------- tiroirs & fenêtres ---------- */
+                var D = {}
+                function dh(t, sub) {
+                    return (
+                        '<div class="dh"><div><h2>' +
+                        t +
+                        '</h2><p>' +
+                        sub +
+                        '</p></div><button class="ibtn" data-a="close" aria-label="Fermer">' +
+                        ic('x', 18) +
+                        '</button></div>'
+                    )
+                }
+                D.bus = function (b) {
+                    var l = LM[b.line]
+                    return (
+                        dh(b.id, 'Ligne ' + b.line + ' · ' + trj(b.line)) +
+                        '<div style="display:flex;gap:16px;align-items:center">' +
+                        qr(hash(b.id), 120) +
+                        '<div><code>' +
+                        b.qid +
+                        '</code><div style="margin:8px 0">' +
+                        chip(b.s) +
+                        ' ' +
+                        chip('QR ' + b.qs.toLowerCase(), b.qs === 'Actif' ? 'ok' : 'ko') +
+                        '</div></div></div>' +
+                        '<div><div class="kv"><span>Ligne</span><b>' +
+                        b.line +
+                        '</b></div><div class="kv"><span>Trajet en cours</span><b>' +
+                        trj(b.line) +
+                        '</b></div><div class="kv"><span>Tarif appliqué</span><b>' +
+                        F(l.fare) +
+                        '</b></div><div class="kv"><span>Dernière vente</span><b>' +
+                        b.last +
+                        '</b></div><div class="kv"><span>Ventes aujourd’hui</span><b>' +
+                        (b.s === 'En service' ? (hash(b.id) % 90) + 60 : 0) +
+                        ' tickets</b></div></div>' +
+                        '<div class="fld"><label>Affecter à une ligne</label><select>' +
+                        LINES.map(function (x) {
+                            return (
+                                '<option ' +
+                                (x.n === b.line ? 'selected' : '') +
+                                '>Ligne ' +
+                                x.n +
+                                ' · ' +
+                                x.a +
+                                ' → ' +
+                                x.b +
+                                '</option>'
+                            )
+                        }).join('') +
+                        '</select></div>' +
+                        '<div class="df">' +
+                        btn(
+                            'Imprimer le QR',
+                            'toast',
+                            'QR de ' + b.id + ' envoyé à l’impression',
+                            'gh',
+                            'pr',
+                        ) +
+                        btn(
+                            b.s === 'Maintenance' ? 'Remettre en service' : 'Mettre en maintenance',
+                            'toast',
+                            b.id + ' : statut mis à jour',
+                            'gh',
+                        ) +
+                        btn('Enregistrer', 'toast', 'Bus ' + b.id + ' enregistré', '') +
+                        '</div>'
+                    )
+                }
+                D.tickets = function (t) {
+                    var l = LM[t.line]
+                    return (
+                        dh(t.id, 'Émis à ' + t.at + ' le 13 oct. 2026') +
+                        '<div style="display:flex;gap:16px;align-items:center">' +
+                        qr(hash(t.id), 110) +
+                        '<div>' +
+                        chip(t.s) +
+                        '<div class="mu" style="margin-top:8px;font-size:12.5px">QR de vérification unique, lié à ce ticket</div></div></div>' +
+                        '<div><div class="kv"><span>Passager</span><b>' +
+                        t.user +
+                        '</b></div><div class="kv"><span>Bus</span><b>' +
+                        t.bus +
+                        '</b></div><div class="kv"><span>Ligne et trajet</span><b>' +
+                        t.line +
+                        ' · ' +
+                        trj(t.line) +
+                        '</b></div><div class="kv"><span>Montant</span><b>' +
+                        F(l.fare) +
+                        '</b></div><div class="kv"><span>Paiement lié</span><b>' +
+                        t.pay.replace('PAY-', 'PAY-') +
+                        '</b></div><div class="kv"><span>Valide jusqu’à</span><b>' +
+                        t.exp +
+                        '</b></div><div class="kv"><span>Dernier contrôle</span><b>' +
+                        (t.s === 'Actif'
+                            ? 'Aucun'
+                            : 'Valide à ' +
+                              t.at.replace(/:(\d\d)/, function (m, x) {
+                                  return ':' + String((+x + 9) % 60).padStart(2, '0')
+                              })) +
+                        '</b></div></div>' +
+                        '<div class="df">' +
+                        (t.s === 'Actif'
+                            ? btn('Annuler et rembourser', 'modal', 'cancel|' + t.id, 'rdo')
+                            : '') +
+                        btn('Voir le paiement', 'toast', 'Ouverture du paiement ' + t.pay, 'gh') +
+                        '</div>'
+                    )
+                }
+                D.pays = function (p) {
+                    return (
+                        dh(p.ref, p.mode + ' · ' + p.at) +
+                        '<div>' +
+                        chip(p.s) +
+                        '</div><div><div class="kv"><span>Passager</span><b>' +
+                        p.user +
+                        '</b></div><div class="kv"><span>Ligne</span><b>' +
+                        p.line +
+                        ' · ' +
+                        trj(p.line) +
+                        '</b></div><div class="kv"><span>Montant</span><b>' +
+                        F(p.amt) +
+                        '</b></div><div class="kv"><span>Moyen</span><b>' +
+                        p.mode +
+                        '</b></div>' +
+                        (p.why
+                            ? '<div class="kv"><span>Motif d’échec</span><b class="dn">' +
+                              p.why +
+                              '</b></div>'
+                            : '') +
+                        '</div>' +
+                        (p.s === 'Échoué'
+                            ? note(
+                                  'Le passager voit ce motif et peut réessayer, modifier son numéro ou changer de moyen de paiement.',
+                              )
+                            : '') +
+                        '<div class="df">' +
+                        (p.s === 'En attente'
+                            ? btn(
+                                  'Vérifier auprès de l’opérateur',
+                                  'toast',
+                                  'Vérification demandée à ' + p.mode,
+                                  'gh',
+                                  'ref',
+                              )
+                            : '') +
+                        (p.s === 'Réussi'
+                            ? btn('Rembourser', 'modal', 'refund|' + p.ref, 'rdo')
+                            : '') +
+                        btn('Fermer', 'close', '', 'gh') +
+                        '</div>'
+                    )
+                }
+                D.trx = function (t) {
+                    return (
+                        dh(t.id, t.type + ' · ' + t.op) +
+                        '<div>' +
+                        chip(t.s) +
+                        '</div><div><div class="kv"><span>Référence opérateur</span><b><code>' +
+                        t.oref +
+                        '</code></b></div><div class="kv"><span>Montant</span><b>' +
+                        F(t.amt) +
+                        '</b></div><div class="kv"><span>Heure</span><b>' +
+                        t.at +
+                        '</b></div></div>' +
+                        (t.s === 'Écart'
+                            ? '<div class="al e">' +
+                              ic('alert', 18) +
+                              '<span>Le montant reçu de l’opérateur ne correspond pas à celui enregistré. Vérifiez le relevé MTN MoMo.</span></div>'
+                            : '') +
+                        '<div class="df">' +
+                        (t.s === 'Écart'
+                            ? btn(
+                                  'Marquer comme résolu',
+                                  'toast',
+                                  t.id + ' marqué comme résolu',
+                                  'gh',
+                              )
+                            : '') +
+                        btn('Fermer', 'close', '', '') +
+                        '</div>'
+                    )
+                }
+                D.users = function (u) {
+                    var ini = u.name
+                        .split(' ')
+                        .map(function (w) {
+                            return w[0]
+                        })
+                        .join('')
+                    return (
+                        dh(u.name, u.tel) +
+                        '<div style="display:flex;gap:12px;align-items:center"><span class="av" style="width:52px;height:52px;font-size:17px">' +
+                        ini +
+                        '</span>' +
+                        chip(u.s) +
+                        '</div>' +
+                        '<div><div class="kv"><span>Inscrit le</span><b>' +
+                        u.since +
+                        '</b></div><div class="kv"><span>Tickets achetés</span><b>' +
+                        u.n +
+                        '</b></div><div class="kv"><span>Total dépensé</span><b>' +
+                        F(u.spent) +
+                        '</b></div><div class="kv"><span>Moyen préféré</span><b>Orange Money</b></div></div>' +
+                        '<div><h3 style="font-size:14px;margin-bottom:6px">Derniers tickets</h3>' +
+                        TICKETS.filter(function (t) {
+                            return t.user === u.name
+                        })
+                            .slice(0, 3)
+                            .map(function (t) {
+                                return (
+                                    '<div class="kv"><span>' +
+                                    t.id +
+                                    ' · ligne ' +
+                                    t.line +
+                                    '</span><b>' +
+                                    chip(t.s) +
+                                    '</b></div>'
+                                )
+                            })
+                            .join('') +
+                        (TICKETS.some(function (t) {
+                            return t.user === u.name
+                        })
+                            ? ''
+                            : '<div class="mu" style="font-size:13px">Aucun ticket aujourd’hui.</div>') +
+                        '</div>' +
+                        '<div class="df">' +
+                        btn(
+                            u.s === 'Suspendu' ? 'Réactiver le compte' : 'Suspendre le compte',
+                            'modal',
+                            'suspend|' + u.name,
+                            u.s === 'Suspendu' ? 'gh' : 'rdo',
+                        ) +
+                        btn('Fermer', 'close', '', 'gh') +
+                        '</div>'
+                    )
+                }
+                D.ctrl = function (c) {
+                    return (
+                        dh(c.name, c.mat + ' · ' + c.tel) +
+                        '<div>' +
+                        chip(c.s) +
+                        '</div><div class="g2e" style="gap:10px"><div class="card kpi"><small>Contrôles du jour</small><span class="num">' +
+                        c.n +
+                        '</span></div><div class="card kpi"><small>Tickets refusés</small><span class="num dn">' +
+                        c.ko +
+                        '</span></div></div>' +
+                        '<div><div class="kv"><span>Ligne affectée</span><b>' +
+                        c.line +
+                        ' · ' +
+                        trj(c.line) +
+                        '</b></div><div class="kv"><span>Dernier scan</span><b>' +
+                        (c.n ? '17:09' : '—') +
+                        '</b></div></div>' +
+                        '<div class="fld"><label>Changer de ligne</label><select>' +
+                        LINES.map(function (x) {
+                            return (
+                                '<option ' +
+                                (x.n === c.line ? 'selected' : '') +
+                                '>Ligne ' +
+                                x.n +
+                                '</option>'
+                            )
+                        }).join('') +
+                        '</select></div>' +
+                        '<div class="df">' +
+                        btn(
+                            c.s === 'Suspendu' ? 'Réactiver' : 'Suspendre',
+                            'toast',
+                            c.name + ' : statut mis à jour',
+                            'rdo',
+                        ) +
+                        btn('Enregistrer', 'toast', 'Contrôleur enregistré', '') +
+                        '</div>'
+                    )
+                }
+                var M = {
+                    addBus: function () {
+                        return (
+                            dh('Ajouter un bus', 'Un QR est généré automatiquement.') +
+                            '<div class="fld"><label>Immatriculation</label><input placeholder="AB-1234-CI"></div><div class="row2"><div class="fld"><label>Ligne</label><select>' +
+                            LINES.map(function (l) {
+                                return '<option>Ligne ' + l.n + '</option>'
+                            }).join('') +
+                            '</select></div><div class="fld"><label>Capacité</label><input value="60 places"></div></div><div class="fld"><label>Statut</label><select><option>En service</option><option>Maintenance</option><option>Hors service</option></select></div>' +
+                            '<div class="df">' +
+                            btn('Annuler', 'close', '', 'gh') +
+                            btn('Ajouter le bus', 'done', 'Bus ajouté. QR prêt à imprimer.', '') +
+                            '</div>'
+                        )
+                    },
+                    addLine: function () {
+                        return (
+                            dh(
+                                'Nouvelle ligne',
+                                'Définissez les terminus, le tarif et les arrêts.',
+                            ) +
+                            '<div class="row2"><div class="fld"><label>Numéro</label><input placeholder="30"></div><div class="fld"><label>Tarif (FCFA)</label><input placeholder="300"></div></div><div class="row2"><div class="fld"><label>Départ</label><input placeholder="Abobo"></div><div class="fld"><label>Terminus</label><input placeholder="Plateau"></div></div><div class="fld"><label>Arrêts intermédiaires</label><textarea rows="3" placeholder="Un arrêt par ligne"></textarea></div>' +
+                            '<div class="df">' +
+                            btn('Annuler', 'close', '', 'gh') +
+                            btn('Créer la ligne', 'done', 'Ligne créée', '') +
+                            '</div>'
+                        )
+                    },
+                    addTrip: function () {
+                        return (
+                            dh('Ajouter un trajet', 'Plage horaire et fréquence de passage.') +
+                            '<div class="fld"><label>Sens</label><select><option>Aller</option><option>Retour</option></select></div><div class="row2"><div class="fld"><label>Premier départ</label><input value="05:30"></div><div class="fld"><label>Dernier départ</label><input value="22:00"></div></div><div class="fld"><label>Fréquence (minutes)</label><input value="8"></div>' +
+                            '<div class="df">' +
+                            btn('Annuler', 'close', '', 'gh') +
+                            btn('Ajouter', 'done', 'Trajet ajouté', '') +
+                            '</div>'
+                        )
+                    },
+                    fare: function (n) {
+                        var l = LM[n]
+                        return (
+                            dh('Modifier le tarif · ligne ' + n, l.a + ' → ' + l.b) +
+                            '<div class="row2"><div class="fld"><label>Tarif actuel</label><input value="' +
+                            F(l.fare) +
+                            '" disabled></div><div class="fld"><label>Nouveau tarif (FCFA)</label><input placeholder="' +
+                            l.fare +
+                            '"></div></div><div class="fld"><label>Date d’effet</label><input value="14/10/2026"></div><div class="fld"><label>Motif</label><input placeholder="Ex. arrêté tarifaire"><small>Le motif apparaît dans le journal d’audit.</small></div>' +
+                            '<div class="df">' +
+                            btn('Annuler', 'close', '', 'gh') +
+                            btn(
+                                'Appliquer le tarif',
+                                'done',
+                                'Tarif de la ligne ' + n + ' mis à jour',
+                                '',
+                            ) +
+                            '</div>'
+                        )
+                    },
+                    regen: function (id) {
+                        return (
+                            dh(
+                                'Régénérer le QR de ' + id,
+                                'L’ancien QR sera révoqué immédiatement.',
+                            ) +
+                            note(
+                                'Le bus devra être réétiqueté. Pendant ce temps, les passagers ne pourront plus l’identifier.',
+                            ) +
+                            '<div class="df">' +
+                            btn('Annuler', 'close', '', 'gh') +
+                            btn(
+                                'Régénérer le QR',
+                                'done',
+                                'QR de ' + id + ' régénéré. Ancien QR révoqué.',
+                                'rd',
+                            ) +
+                            '</div>'
+                        )
+                    },
+                    cancel: function (id) {
+                        return (
+                            dh(
+                                'Annuler le ticket ' + id,
+                                'Le passager sera remboursé sur son numéro Mobile Money.',
+                            ) +
+                            '<div class="fld"><label>Motif de l’annulation</label><select><option>Erreur de ligne</option><option>Double paiement</option><option>Incident à bord</option><option>Autre</option></select></div>' +
+                            '<div class="df">' +
+                            btn('Garder le ticket', 'close', '', 'gh') +
+                            btn(
+                                'Annuler et rembourser',
+                                'done',
+                                'Ticket ' + id + ' annulé. Remboursement lancé.',
+                                'rd',
+                            ) +
+                            '</div>'
+                        )
+                    },
+                    refund: function (ref) {
+                        return (
+                            dh('Rembourser ' + ref, 'Le ticket lié sera annulé.') +
+                            note(
+                                'Le remboursement est envoyé par l’opérateur utilisé pour le paiement. Il peut prendre quelques minutes.',
+                            ) +
+                            '<div class="df">' +
+                            btn('Annuler', 'close', '', 'gh') +
+                            btn('Rembourser', 'done', 'Remboursement de ' + ref + ' lancé', 'rd') +
+                            '</div>'
+                        )
+                    },
+                    suspend: function (n) {
+                        return (
+                            dh(
+                                'Modifier le compte de ' + n,
+                                'Un compte suspendu ne peut plus acheter de ticket.',
+                            ) +
+                            '<div class="fld"><label>Motif</label><input placeholder="Ex. fraude suspectée"></div><div class="df">' +
+                            btn('Annuler', 'close', '', 'gh') +
+                            btn('Confirmer', 'done', 'Statut du compte mis à jour', 'rd') +
+                            '</div>'
+                        )
+                    },
+                    addCtrl: function () {
+                        return (
+                            dh(
+                                'Ajouter un contrôleur',
+                                'Il se connectera avec son téléphone et un code.',
+                            ) +
+                            '<div class="fld"><label>Nom complet</label><input placeholder="Kouadio Armand"></div><div class="row2"><div class="fld"><label>Téléphone</label><input placeholder="+225 07 00 00 00 00"></div><div class="fld"><label>Ligne</label><select>' +
+                            LINES.map(function (l) {
+                                return '<option>Ligne ' + l.n + '</option>'
+                            }).join('') +
+                            '</select></div></div>' +
+                            '<div class="df">' +
+                            btn('Annuler', 'close', '', 'gh') +
+                            btn(
+                                'Ajouter le contrôleur',
+                                'done',
+                                'Contrôleur ajouté. Code d’accès envoyé par SMS.',
+                                '',
+                            ) +
+                            '</div>'
+                        )
+                    },
+                    addAdmin: function () {
+                        return (
+                            dh(
+                                'Inviter un administrateur',
+                                'Une invitation est envoyée par e-mail.',
+                            ) +
+                            '<div class="fld"><label>E-mail</label><input placeholder="prenom.nom@busticket.ci"></div><div class="fld"><label>Rôle</label><select><option>Exploitation</option><option>Finance</option><option>Support</option><option>Super administrateur</option></select></div>' +
+                            '<div class="df">' +
+                            btn('Annuler', 'close', '', 'gh') +
+                            btn('Envoyer l’invitation', 'done', 'Invitation envoyée', '') +
+                            '</div>'
+                        )
+                    },
+                }
+
+                /* ---------- rendu, navigation ---------- */
+                var NAV = [
+                    [
+                        'Exploitation',
+                        [
+                            ['dashboard', 'Tableau de bord', 'grid'],
+                            ['bus', 'Bus', 'bus'],
+                            ['lines', 'Lignes et trajets', 'route'],
+                            ['qr', 'QR codes des bus', 'qr'],
+                            ['fares', 'Tarifs', 'tag'],
+                        ],
+                    ],
+                    [
+                        'Ventes',
+                        [
+                            ['tickets', 'Tickets', 'ticket'],
+                            ['pays', 'Paiements', 'card'],
+                            ['trx', 'Transactions', 'swap'],
+                        ],
+                    ],
+                    [
+                        'Équipes',
+                        [
+                            ['users', 'Utilisateurs', 'users'],
+                            ['ctrl', 'Contrôleurs', 'shield'],
+                        ],
+                    ],
+                    [
+                        'Analyse et suivi',
+                        [
+                            ['stats', 'Statistiques', 'chart'],
+                            ['audit', 'Journal d’audit', 'log'],
+                            ['settings', 'Paramètres', 'set'],
+                        ],
+                    ],
+                ]
+                var TITLES = {}
+                NAV.forEach(function (g) {
+                    g[1].forEach(function (n) {
+                        TITLES[n[0]] = n[1]
+                    })
+                })
+                function shell(page, body) {
+                    var nav = NAV.map(function (g) {
+                        return (
+                            '<div class="grp">' +
+                            g[0] +
+                            '</div>' +
+                            g[1]
+                                .map(function (n) {
+                                    return (
+                                        '<a href="#' +
+                                        n[0] +
+                                        '" data-a="go" data-g="' +
+                                        n[0] +
+                                        '" class="' +
+                                        (n[0] === page ? 'on' : '') +
+                                        '" ' +
+                                        (n[0] === page ? 'aria-current="page"' : '') +
+                                        '>' +
+                                        ic(n[2], 18) +
+                                        n[1] +
+                                        (n[0] === 'pays' ? '<span class="bd">3</span>' : '') +
+                                        '</a>'
+                                    )
+                                })
+                                .join('')
+                        )
+                    }).join('')
+                    return (
+                        '<div class="app"><aside class="side" id="side"><div class="brand"><span class="lg">' +
+                        ic('bus', 20) +
+                        '</span><div><b>BusTicket CI</b><small>Back-office</small></div></div><nav class="nav" aria-label="Navigation principale">' +
+                        nav +
+                        '</nav>' +
+                        '<div class="me"><span class="av">AB</span><div><b>Adjoua Brou</b><small>Super administratrice</small></div><button data-a="go" data-g="login" aria-label="Se déconnecter">' +
+                        ic('out', 18) +
+                        '</button></div></aside>' +
+                        '<div class="main"><header class="top"><button class="ibtn menu" data-a="menu" aria-label="Ouvrir le menu">' +
+                        ic('menu', 18) +
+                        '</button>' +
+                        '<label class="srch hide">' +
+                        ic('search', 16) +
+                        '<input type="search" placeholder="Rechercher un ticket, un bus, un passager" aria-label="Recherche globale"></label><span class="sp"></span>' +
+                        '<button class="ibtn" data-a="theme" aria-label="Changer de thème">' +
+                        ic('sun', 18) +
+                        '</button><button class="ibtn" data-a="toast" data-g="3 nouvelles alertes : voir le tableau de bord" aria-label="Notifications">' +
+                        ic('bell', 18) +
+                        '<span class="dot"></span></button></header>' +
+                        '<main class="page" id="page">' +
+                        body +
+                        '</main></div></div>'
+                    )
+                }
+                function login() {
+                    return (
+                        '<div class="login"><section class="lp"><div class="brand" style="padding:0"><span class="lg">' +
+                        ic('bus', 20) +
+                        '</span><div><b>BusTicket CI</b><small style="color:#CFE4FA">Back-office</small></div></div><div><h1>Bougeons ensemble, avec des données claires.</h1><p>Suivez les ventes, les bus et les contrôles de tout le réseau d’Abidjan depuis un seul espace.</p>' +
+                        '<div class="stops" aria-hidden="true"><i></i><s></s><i></i><s></s><i></i><s></s><i></i></div></div><small style="color:#9CC3EC">Accès réservé au personnel autorisé.</small></section>' +
+                        '<section class="lf"><form data-a="login"><h2>Connexion</h2><p class="mu" style="margin-bottom:20px">Connectez-vous avec votre compte administrateur.</p><div class="fld"><label for="em">Adresse e-mail</label><input id="em" type="email" value="adjoua.brou@busticket.ci" autocomplete="username"></div><div class="fld"><label for="pw">Mot de passe</label><input id="pw" type="password" value="motdepasse" autocomplete="current-password"></div>' +
+                        '<div class="fld" style="flex-direction:row;justify-content:space-between;align-items:center;margin-bottom:18px"><span style="font-size:13px;display:flex;gap:8px;align-items:center"><input type="checkbox" checked style="width:auto"> Rester connectée</span><a href="#login" style="color:var(--bt);font-size:13px;font-weight:600">Mot de passe oublié ?</a></div>' +
+                        '<button class="btn" style="width:100%;justify-content:center;padding:12px" type="submit">Se connecter</button><p class="mu" style="font-size:12.5px;margin-top:14px">Une vérification par code SMS est demandée sur un nouvel appareil.</p></form></section></div>'
+                    )
+                }
+                function render() {
+                    var h = (location.hash || '#dashboard').slice(1)
+                    if (h === 'login') {
+                        $('#root').innerHTML = login()
+                        return
+                    }
+                    if (!P[h]) h = 'dashboard'
+                    $('#root').innerHTML = shell(h, P[h]())
+                    document.title = 'BusTicket CI — ' + TITLES[h]
+                    window.scrollTo(0, 0)
+                }
+                function openOv(html, modal) {
+                    var o = $('#ov')
+                    o.className = 'ov' + (modal ? ' mo' : '')
+                    o.innerHTML =
+                        '<div class="dr" role="dialog" aria-modal="true">' + html + '</div>'
+                    o.hidden = false
+                    var f = o.querySelector('input,select,button.btn')
+                    if (f) f.focus()
+                }
+                function closeOv() {
+                    $('#ov').hidden = true
+                    $('#ov').innerHTML = ''
+                }
+                var tt
+                function toast(m) {
+                    var t = $('#toast')
+                    t.innerHTML = ic('check', 16) + '<span>' + esc(m) + '</span>'
+                    t.hidden = false
+                    clearTimeout(tt)
+                    tt = setTimeout(function () {
+                        t.hidden = true
+                    }, 2600)
+                }
+                function setTheme() {
+                    var r = document.documentElement,
+                        cur =
+                            r.getAttribute('data-theme') ||
+                            (matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light')
+                    r.setAttribute('data-theme', cur === 'dark' ? 'light' : 'dark')
+                }
+
+                /* ---------- événements (délégation) ---------- */
+                document.addEventListener('click', function (e) {
+                    var t = e.target.closest('[data-a]')
+                    if (e.target.id === 'ov') {
+                        closeOv()
+                        return
+                    }
+                    if (!t) return
+                    var a = t.dataset.a,
+                        g = t.dataset.g || ''
+                    if (a === 'go') {
+                        e.preventDefault()
+                        location.hash = g
+                        $('#side') && $('#side').classList.remove('open')
+                        closeOv()
+                    } else if (a === 'menu') $('#side').classList.toggle('open')
+                    else if (a === 'toast') toast(g)
+                    else if (a === 'close') closeOv()
+                    else if (a === 'done') {
+                        closeOv()
+                        toast(g)
+                    } else if (a === 'theme') setTheme()
+                    else if (a === 'modal') {
+                        var p = g.split('|')
+                        openOv(M[p[0]](p[1]), true)
+                    } else if (a === 'tab') {
+                        var q = g.split('|')
+                        S[q[0]].t = q[1]
+                        render()
+                    } else if (a === 'row') {
+                        var r = g.split('|')
+                        openOv(D[r[0]](COLS[r[0]].rows()[+r[1]]), false)
+                    } else if (a === 'line') {
+                        S.lineSel = g
+                        render()
+                    } else if (a === 'per') {
+                        S.per = g
+                        render()
+                    } else if (a === 'sw') {
+                        S.sw = S.sw || {
+                            'Orange Money': 1,
+                            'MTN MoMo': 1,
+                            'Moov Money': 1,
+                            Wave: 1,
+                        }
+                        S.sw[g] = S.sw[g] ? 0 : 1
+                        render()
+                        toast(g + (S.sw[g] ? ' activé' : ' désactivé'))
+                    }
+                })
+                document.addEventListener('input', function (e) {
+                    var t = e.target
+                    if (t.dataset.a === 'q') {
+                        S[t.dataset.g].q = t.value
+                        $('#tb-' + t.dataset.g).innerHTML = listPage(t.dataset.g)
+                    }
+                    if (t.dataset.a === 'qrq') {
+                        S.qr.q = t.value
+                        var pg = P.qr()
+                        var d = document.createElement('div')
+                        d.innerHTML = pg
+                        $('#qgrid').innerHTML = d.querySelector('#qgrid').innerHTML
+                    }
+                })
+                document.addEventListener('submit', function (e) {
+                    if (e.target.dataset.a === 'login') {
+                        e.preventDefault()
+                        location.hash = 'dashboard'
+                    }
+                })
+                document.addEventListener('keydown', function (e) {
+                    if (e.key === 'Escape') closeOv()
+                    if (
+                        (e.key === 'Enter' || e.key === ' ') &&
+                        e.target.matches &&
+                        e.target.matches('tr[data-a="row"]')
+                    ) {
+                        e.preventDefault()
+                        e.target.click()
+                    }
+                })
+                window.addEventListener('hashchange', render)
+                render()
+            })()
+        </script>
+    </body>
+</html>

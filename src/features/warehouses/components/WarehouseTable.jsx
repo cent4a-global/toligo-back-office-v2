@@ -137,13 +137,6 @@ function WarehouseTable({
                     }
                     items={[
                         {
-                            label: 'Voir les détails',
-                            onClick: () =>
-                                navigate(
-                                    `/warehouses/${warehouse.id}`
-                                ),
-                        },
-                        {
                             label: 'Modifier',
                             onClick: () =>
                                 onEdit?.(
@@ -157,6 +150,14 @@ function WarehouseTable({
                                 onDelete?.(
                                     warehouse
                                 ),
+                        },
+                        {
+                            label: 'Gérer les admins',
+                            onClick: () => navigate(`/warehouses/${warehouse.id}/admins`),
+                        },
+                        {
+                            label: 'Gérer les caisses',
+                            onClick: () => navigate(`/warehouses/${warehouse.id}/boxes`),
                         },
                     ]}
                 />

@@ -1,0 +1,28 @@
+.sub-admin-toolbar { display: grid; grid-template-columns: minmax(0, 1fr) 240px; gap: 20px; padding: 20px; border: 1px solid #e5e7eb; border-radius: 16px; background: white; }
+.sub-admin-toolbar .form-field { margin: 0; }
+.sub-admin-form { display: flex; flex-direction: column; gap: 20px; }
+.sub-admin-form .form-field { margin: 0; }
+.sub-admin-form-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; padding-top: 18px; border-top: 1px solid #ededf0; }
+.sub-admin-ttlock { display: flex; align-items: flex-start; gap: 12px; padding: 16px; border: 1px solid #e4e4e7; border-radius: 12px; background: #fafafa; cursor: pointer; }
+.sub-admin-ttlock input { accent-color: #202024; width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px; }
+.sub-admin-ttlock span { display: grid; gap: 5px; font-size: 13px; }
+.sub-admin-ttlock small { color: #71717a; line-height: 1.5; }
+.sub-admin-form-confirm { line-height: 1.7; overflow-wrap: anywhere; }
+.sub-admin-selection, .sub-admin-actions { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.sub-admin-selection { font-size: 13px; color: #62626c; }
+.sub-admin-actions label { display: flex; align-items: center; gap: 8px; }
+.sub-admin-page input[type=checkbox] { accent-color: #202024; width: 16px; height: 16px; cursor: pointer; }
+.sub-admin-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.sub-admin-card { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 18px; padding: 22px; background: white; border: 1px solid #e4e4e7; border-radius: 18px; box-shadow: 0 3px 12px rgb(0 0 0 / 3%); }
+.sub-admin-card.is-selected { border-color: #27272a; box-shadow: 0 0 0 1px #27272a; }
+.sub-admin-card-heading { display: flex; width: 100%; align-items: center; gap: 12px; }
+.sub-admin-avatar { display: grid; place-items: center; flex-shrink: 0; width: 44px; height: 44px; background: #f2f2f4; border-radius: 13px; font-size: 14px; font-weight: 650; }
+.sub-admin-card-heading > div:nth-child(2) { flex: 1; min-width: 0; }
+.sub-admin-card h2 { margin: 0 0 4px; font-size: 15px; overflow-wrap: anywhere; }
+.sub-admin-card-heading span { font-size: 12px; color: #71717a; }
+.sub-admin-contact { display: grid; grid-template-columns: 78px minmax(0, 1fr); width: 100%; gap: 12px; margin: 0; font-size: 12px; }
+.sub-admin-contact dt { color: #71717a; }
+.sub-admin-contact dd { margin: 0; overflow-wrap: anywhere; }
+.sub-admin-card-footer { display: flex; gap: 8px; flex-wrap: wrap; padding-top: 16px; border-top: 1px solid #ededf0; width: 100%; margin-top: auto; }
+@media (max-width: 1200px) { .sub-admin-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 720px) { .sub-admin-grid, .sub-admin-toolbar { grid-template-columns: minmax(0, 1fr); } .sub-admin-card { padding: 18px; } }

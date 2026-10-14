@@ -1,5 +1,4 @@
 import { Warehouse, Package, PackageCheck, KeyRound } from 'lucide-react'
-import { notifyError } from '../../../lib/notifications'
 import { useState } from 'react'
 
 import Button from '../../../components/ui/Button'
@@ -9,14 +8,12 @@ import ErrorState from '../../../components/ui/ErrorState'
 
 import {
     useCreateWarehouse,
-    useDeleteWarehouse,
     useUpdateWarehouse,
     useWarehouses,
 } from '../hooks/useWarehouses'
 
-import WarehouseTable from '../components/WarehouseTable'
+import WarehouseGrid from '../components/WarehouseGrid'
 import WarehouseFormModal from '../components/WarehouseFormModal'
-import DeleteWarehouseDialog from '../components/DeleteWarehouseDialog'
 
 function WarehousesPage() {
     const { data, isLoading, isError, error, refetch } = useWarehouses()
@@ -25,14 +22,12 @@ function WarehousesPage() {
 
     const updateMutation = useUpdateWarehouse()
 
-    const deleteMutation = useDeleteWarehouse()
 
     const [formModal, setFormModal] = useState({
         open: false,
         warehouse: null,
     })
 
-    const [warehouseToDelete, setWarehouseToDelete] = useState(null)
 
     const warehouses = data?.data ?? []
 
@@ -71,21 +66,6 @@ function WarehousesPage() {
         closeFormModal()
     }
 
-    const handleDelete = async () => {
-        if (!warehouseToDelete) {
-            return
-        }
-
-
-        try {
-            await deleteMutation.mutateAsync(warehouseToDelete.id)
-            setWarehouseToDelete(null)
-        } catch (failure) {
-            notifyError(failure)
-        }
-    }
-
-
     if (isError) {
         return (
             <ErrorState
@@ -122,12 +102,11 @@ function WarehousesPage() {
                 <StatCard title="Locations actives" icon={<KeyRound size={20} strokeWidth={1.8} />} value={data?.meta?.activeRentals ?? '—'} />
             </div>
 
-            <div className="warehouses-table-section">
-                <WarehouseTable
+            <div className="warehouses-grid-section">
+                <WarehouseGrid
                     warehouses={warehouses}
                     loading={isLoading}
                     onEdit={openEditModal}
-                    onDelete={setWarehouseToDelete}
                 />
             </div>
 
@@ -141,12 +120,7 @@ function WarehousesPage() {
                 />
             )}
 
-            <DeleteWarehouseDialog
-                warehouse={warehouseToDelete}
-                loading={deleteMutation.isPending}
-                onClose={() => setWarehouseToDelete(null)}
-                onConfirm={handleDelete}
-            />
+
         </div>
     )
 }

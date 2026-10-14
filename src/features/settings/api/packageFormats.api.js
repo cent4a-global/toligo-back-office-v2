@@ -7,14 +7,21 @@ async function request(operation) {
         return response.data
     } catch (error) {
         const body = error.response?.data
-        const details = Object.values(body?.errors ?? {}).flat().filter(item => typeof item === 'string')
-        throw new Error([body?.message || error.message || 'Impossible de traiter le format.', ...details].join('\n'), { cause: error })
+        const details = Object.values(body?.errors ?? {})
+            .flat()
+            .filter(item => typeof item === 'string')
+        throw new Error(
+            [body?.message || error.message || 'Impossible de traiter le format.', ...details].join(
+                '\n',
+            ),
+            { cause: error },
+        )
     }
 }
 
 export async function getPackageFormats() {
     const body = await request(() => api.get('/api/superadmin/formats-colis'))
-    const formats = Array.isArray(body) ? body : body?.data?.data ?? body?.data
+    const formats = Array.isArray(body) ? body : (body?.data?.data ?? body?.data)
     if (!Array.isArray(formats)) throw new Error('La liste des formats reçue est invalide.')
     return formats
 }

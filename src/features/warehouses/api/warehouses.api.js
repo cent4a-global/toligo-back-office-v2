@@ -15,8 +15,16 @@ export async function assignWarehouseAdmins(id, adminIds) {
         return response.data
     } catch (error) {
         const body = error.response?.data
-        const validation = Object.values(body?.errors ?? {}).flat().join(' ')
-        throw new Error(validation || body?.message || error.message || 'Impossible de modifier les administrateurs.', { cause: error })
+        const validation = Object.values(body?.errors ?? {})
+            .flat()
+            .join(' ')
+        throw new Error(
+            validation ||
+                body?.message ||
+                error.message ||
+                'Impossible de modifier les administrateurs.',
+            { cause: error },
+        )
     }
 }
 
@@ -76,7 +84,10 @@ export async function createWarehouse(warehouseData) {
         }
         return response.data
     } catch (error) {
-        const message = error.response?.data?.message || error.message || "Erreur lors de la création de l'entrepôt"
+        const message =
+            error.response?.data?.message ||
+            error.message ||
+            "Erreur lors de la création de l'entrepôt"
 
         throw new Error(message, {
             cause: error,
@@ -95,7 +106,9 @@ export async function updateWarehouse(id, warehouseData) {
         return response.data
     } catch (error) {
         const message =
-            error.response?.data?.message || error.message || "Erreur lors de la mise à jour de l'entrepôt"
+            error.response?.data?.message ||
+            error.message ||
+            "Erreur lors de la mise à jour de l'entrepôt"
 
         throw new Error(message, {
             cause: error,
