@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
-import { MapContainer, Polygon, Popup, TileLayer, Tooltip, useMap } from 'react-leaflet'
+import { MapContainer, Polygon, Popup, TileLayer, useMap } from 'react-leaflet'
 import Button from '../../../components/ui/Button'
+import MapResize from '../../../components/ui/MapResize'
 import { communePolygon } from '../utils/communeGeometry'
 
 function FitZones({ bounds, revision }) {
@@ -12,7 +13,7 @@ function FitZones({ bounds, revision }) {
     return null
 }
 
-export default function ZonesMap({ zones, loading = false, onEdit }) {
+export default function ZonesMap({ zones, loading = false, onEdit, onDelete }) {
     const [revision, setRevision] = useState(0)
     const mappedZones = useMemo(
         () =>
@@ -60,6 +61,7 @@ export default function ZonesMap({ zones, loading = false, onEdit }) {
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         />
                         <FitZones bounds={bounds} revision={revision} />
+                        <MapResize />
                         {mappedZones.map(({ zone, positions, color }) => (
                             <Polygon
                                 key={zone.id}
@@ -71,7 +73,6 @@ export default function ZonesMap({ zones, loading = false, onEdit }) {
                                     weight: 3,
                                     dashArray: zone.est_active ? undefined : '6 5',
                                 }}>
-                                <Tooltip sticky>{zone.nom}</Tooltip>
                                 <Popup>
                                     <div className="zones-map-popup">
                                         <strong>{zone.nom}</strong>
@@ -89,6 +90,12 @@ export default function ZonesMap({ zones, loading = false, onEdit }) {
                                             variant="secondary"
                                             onClick={() => onEdit?.(zone)}>
                                             Modifier
+                                        </Button>
+                                        <Button
+                                            size="sm"
+                                            variant="danger"
+                                            onClick={() => onDelete?.(zone)}>
+                                            Supprimer
                                         </Button>
                                     </div>
                                 </Popup>

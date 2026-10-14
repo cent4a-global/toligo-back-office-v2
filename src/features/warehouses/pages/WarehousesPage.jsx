@@ -95,11 +95,11 @@ function WarehousesPage() {
                     value={data?.meta?.totalWarehouses ?? warehouses.length}
                 />
 
-                <StatCard title="Caisses" icon={<Package size={20} strokeWidth={1.8} />} value={data?.meta?.totalBoxes ?? '—'} />
+                <StatCard title="Caisses" iconColor="orange" icon={<Package size={20} strokeWidth={1.8} />} value={data?.meta?.totalBoxes ?? '—'} />
 
-                <StatCard title="Caisses occupées" icon={<PackageCheck size={20} strokeWidth={1.8} />} value={data?.meta?.occupiedBoxes ?? '—'} />
+                <StatCard title="Caisses occupées" iconColor="purple" icon={<PackageCheck size={20} strokeWidth={1.8} />} value={data?.meta?.occupiedBoxes ?? '—'} />
 
-                <StatCard title="Locations actives" icon={<KeyRound size={20} strokeWidth={1.8} />} value={data?.meta?.activeRentals ?? '—'} />
+                <StatCard title="Locations actives" iconColor="green" icon={<KeyRound size={20} strokeWidth={1.8} />} value={data?.meta?.activeRentals ?? '—'} />
             </div>
 
             <div className="warehouses-grid-section">

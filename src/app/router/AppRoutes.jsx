@@ -81,6 +81,7 @@ function AppRoutes() {
                             <Route path="/locations" element={<Locations />} />
                             <Route path="/rentals" element={<Navigate to="/locations" replace />} />
                             <Route path="/stations" element={<Stations />} />
+                            <Route path="/stations/:stationId/hubs" element={<Hubs />} />
                             <Route path="/hubs" element={<Hubs />} />
                             <Route path="/zones" element={<Zones />} />
                             <Route path="/warehouses" element={<Warehouses />} />

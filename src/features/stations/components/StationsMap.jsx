@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { CircleMarker, MapContainer, Popup, TileLayer, Tooltip, useMap } from 'react-leaflet'
 import Button from '../../../components/ui/Button'
+import MapResize from '../../../components/ui/MapResize'
 
 const statuses = {
     operationnelle: { label: 'Opérationnelle', color: '#0e7a52' },
@@ -66,6 +67,7 @@ export default function StationsMap({ stations, loading = false, onEdit }) {
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         />
                         <FitStations bounds={bounds} revision={revision} />
+                        <MapResize />
                         {located.map(station => {
                             const status = statuses[station.statut] ?? {
                                 label: station.statut || 'Statut inconnu',

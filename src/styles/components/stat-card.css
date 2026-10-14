@@ -51,8 +51,38 @@
 
     border-radius: var(--radius-md);
 
-    background: var(--color-bg-hover);
-    color: var(--color-text-primary);
+    background: var(--stat-icon-bg, #dbeafe);
+    color: var(--stat-icon-color, #1d4ed8);
+    border: 1px solid var(--stat-icon-border, #bfdbfe);
+    box-shadow: 0 2px 6px var(--stat-icon-shadow, rgb(37 99 235 / 12%));
+}
+
+.stat-card-icon-green {
+    --stat-icon-bg: #d1fae5;
+    --stat-icon-color: #047857;
+    --stat-icon-border: #a7f3d0;
+    --stat-icon-shadow: rgb(5 150 105 / 12%);
+}
+
+.stat-card-icon-orange {
+    --stat-icon-bg: #ffedd5;
+    --stat-icon-color: #c2410c;
+    --stat-icon-border: #fed7aa;
+    --stat-icon-shadow: rgb(234 88 12 / 12%);
+}
+
+.stat-card-icon-purple {
+    --stat-icon-bg: #ede9fe;
+    --stat-icon-color: #6d28d9;
+    --stat-icon-border: #ddd6fe;
+    --stat-icon-shadow: rgb(124 58 237 / 12%);
+}
+
+.stat-card-icon-red {
+    --stat-icon-bg: #fee2e2;
+    --stat-icon-color: #b91c1c;
+    --stat-icon-border: #fecaca;
+    --stat-icon-shadow: rgb(220 38 38 / 12%);
 }
 
 /* ========================================

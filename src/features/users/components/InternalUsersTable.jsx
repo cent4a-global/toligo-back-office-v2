@@ -78,7 +78,7 @@ function InternalUsersTable({ users = [], loading = false, onEdit, onReactivate 
     ]
     return (
         <div className="users-table">
-            <Table
+            <Table paginated={false}
                 columns={columns}
                 data={users}
                 loading={loading}

@@ -5,9 +5,13 @@
     gap: var(--space-6);
 }
 
+.hubs-page-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.station-hubs-back { align-self: flex-start; color: var(--color-text-secondary); font-size: var(--font-size-sm); }
+.station-hubs-back:hover { color: var(--color-text-primary); text-decoration: underline; }
+
 .hubs-stats {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
 
     gap: var(--space-4);
 }

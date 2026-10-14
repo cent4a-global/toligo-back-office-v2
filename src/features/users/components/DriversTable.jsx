@@ -15,7 +15,7 @@ function DriversTable({ drivers = [], loading = false, onView }) {
         { key: 'status', label: 'Statut', render: item => <span className={`driver-status ${item.status === 'active' ? 'driver-status-active' : 'driver-status-inactive'}`}>{item.status === 'active' ? 'Actif' : 'Suspendu'}</span> },
         { key: 'actions', label: 'Actions', render: item => <Button variant="link" disabled={!onView} onClick={() => onView?.(item)}>Voir</Button> },
     ]
-    return <div className="drivers-table"><Table columns={columns} data={drivers} loading={loading} emptyMessage="Aucun livreur" /></div>
+    return <div className="drivers-table"><Table paginated={false} columns={columns} data={drivers} loading={loading} emptyMessage="Aucun livreur" /></div>
 }
 
 export default DriversTable

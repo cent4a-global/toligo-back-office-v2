@@ -13,7 +13,7 @@ function CompaniesTable({ companies = [], loading = false, onView }) {
         { key: 'status', label: 'Statut', render: item => <span className={`company-status ${item.status === 'active' ? 'company-status-active' : 'company-status-inactive'}`}>{item.status === 'active' ? 'Active' : 'Suspendue'}</span> },
         { key: 'actions', label: 'Actions', render: item => <Button variant="link" disabled={!onView} onClick={() => onView?.(item)}>Voir</Button> },
     ]
-    return <div className="companies-table"><Table columns={columns} data={companies} loading={loading} emptyMessage="Aucune entreprise" /></div>
+    return <div className="companies-table"><Table paginated={false} columns={columns} data={companies} loading={loading} emptyMessage="Aucune entreprise" /></div>
 }
 
 export default CompaniesTable

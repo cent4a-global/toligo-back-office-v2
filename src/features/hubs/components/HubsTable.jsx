@@ -25,7 +25,7 @@ const statusConfig = {
     },
 }
 
-function HubsTable({ hubs = [], loading = false, onEdit, onDelete }) {
+function HubsTable({ hubs = [], loading = false, onEdit, onDelete, onReassign }) {
     const columns = [
         {
             key: 'code',
@@ -94,6 +94,7 @@ function HubsTable({ hubs = [], loading = false, onEdit, onDelete }) {
                         </button>
                     }
                     items={[
+                        ...(onReassign ? [{ label: 'Réaffecter', onClick: () => onReassign(hub) }] : []),
                         {
                             label: 'Modifier',
 

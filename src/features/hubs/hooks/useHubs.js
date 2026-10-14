@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { createHub, deleteHub, getHubById, getHubs, updateHub } from '../api/hubs.api'
 
 import { hubKeys } from '../queries/hubKeys'
+import { stationKeys } from '../../stations/queries/stationKeys'
 
 export function useHubs() {
     return useQuery({
@@ -28,11 +29,10 @@ export function useCreateHub() {
         meta: { successMessage: 'Hub créé.' },
         mutationFn: createHub,
 
-        onSuccess: () => {
-            queryClient.invalidateQueries({
-                queryKey: hubKeys.lists(),
-            })
-        },
+        onSuccess: () => Promise.all([
+            queryClient.invalidateQueries({ queryKey: hubKeys.lists() }),
+            queryClient.invalidateQueries({ queryKey: stationKeys.all }),
+        ]),
     })
 }
 
@@ -43,15 +43,16 @@ export function useUpdateHub() {
         meta: { successMessage: 'Hub modifié.' },
         mutationFn: ({ id, data }) => updateHub(id, data),
 
-        onSuccess: (_response, variables) => {
+        onSuccess: (_response, variables) => Promise.all([
             queryClient.invalidateQueries({
                 queryKey: hubKeys.lists(),
-            })
+            }),
 
             queryClient.invalidateQueries({
                 queryKey: hubKeys.detail(variables.id),
-            })
-        },
+            }),
+            queryClient.invalidateQueries({ queryKey: stationKeys.all }),
+        ]),
     })
 }
 
@@ -62,10 +63,9 @@ export function useDeleteHub() {
         meta: { successMessage: 'Hub supprimé.' },
         mutationFn: deleteHub,
 
-        onSuccess: () => {
-            queryClient.invalidateQueries({
-                queryKey: hubKeys.lists(),
-            })
-        },
+        onSuccess: () => Promise.all([
+            queryClient.invalidateQueries({ queryKey: hubKeys.all }),
+            queryClient.invalidateQueries({ queryKey: stationKeys.all }),
+        ]),
     })
 }

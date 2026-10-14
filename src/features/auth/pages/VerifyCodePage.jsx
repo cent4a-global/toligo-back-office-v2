@@ -3,7 +3,7 @@ import { Navigate, useNavigate } from 'react-router-dom'
 
 import { useAuth, useResendCode, useVerifyCode } from '../hooks/useAuth'
 
-import Input from '../../../components/ui/Input'
+import OtpInput from '../../../components/ui/OtpInput'
 import Button from '../../../components/ui/Button'
 
 
@@ -72,14 +72,11 @@ function VerifyCodePage() {
 
 
 
-                <Input
+                <OtpInput
                     label="Code de vérification"
                     name="code"
-                    value={code}
-                    onChange={event => setCode(event.target.value)}
-                    placeholder="000000"
-                    autoComplete="one-time-code"
-                    inputMode="numeric"
+                    onChange={setCode}
+                    disabled={isVerifying || isResending}
                     required
                 />
 

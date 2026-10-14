@@ -1,6 +1,7 @@
 import { MapPin, CircleCheck, Wrench, CircleOff } from 'lucide-react'
 import { notifyError } from '../../../lib/notifications'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import PageHeader from '../../../components/ui/PageHeader'
 import Button from '../../../components/ui/Button'
@@ -8,14 +9,18 @@ import StatCard from '../../../components/ui/StatCard'
 import ErrorState from '../../../components/ui/ErrorState'
 
 import { useCreateStation, useDeleteStation, useUpdateStation, useStations } from '../hooks/useStations'
+import { useHubs } from '../../hubs/hooks/useHubs'
 
 import StationsTable from '../components/StationsTable'
 import StationFormModal from '../components/StationFormModal'
 import DeleteStationDialog from '../components/DeleteStationDialog'
 import StationsMap from '../components/StationsMap'
+import MapViewer from '../../../components/ui/MapViewer'
 
 function StationsPage() {
+    const navigate = useNavigate()
     const { data, isLoading, isError, error, refetch } = useStations()
+    const hubsQuery = useHubs()
 
     const createMutation = useCreateStation()
 
@@ -31,6 +36,15 @@ function StationsPage() {
     const [stationToDelete, setStationToDelete] = useState(null)
 
     const stations = data?.data ?? []
+    const hubCounts = new Map()
+    for (const hub of hubsQuery.data?.data ?? []) {
+        const id = hub.station_id ?? hub.station?.id
+        if (id != null) hubCounts.set(String(id), (hubCounts.get(String(id)) ?? 0) + 1)
+    }
+    const tableStations = stations.map(station => ({
+        ...station,
+        hubs_count: hubsQuery.isSuccess ? hubCounts.get(String(station.id)) ?? 0 : station.hubs_count,
+    }))
 
     const openCreateModal = () => {
         setFormModal({
@@ -108,15 +122,22 @@ function StationsPage() {
 
             <div className="stations-stats">
                 <StatCard title="Stations" icon={<MapPin size={20} strokeWidth={1.8} />} value={isLoading ? '—' : stations.length} />
-                <StatCard title="Opérationnelles" icon={<CircleCheck size={20} strokeWidth={1.8} />} value={isLoading ? '—' : stations.filter(station => station.statut === 'operationnelle').length} />
-                <StatCard title="Maintenance" icon={<Wrench size={20} strokeWidth={1.8} />} value={isLoading ? '—' : stations.filter(station => station.statut === 'maintenance').length} />
-                <StatCard title="Indisponibles" icon={<CircleOff size={20} strokeWidth={1.8} />} value={isLoading ? '—' : stations.filter(station => station.statut === 'indisponible').length} />
+                <StatCard title="Opérationnelles" iconColor="green" icon={<CircleCheck size={20} strokeWidth={1.8} />} value={isLoading ? '—' : stations.filter(station => station.statut === 'operationnelle').length} />
+                <StatCard title="Maintenance" iconColor="orange" icon={<Wrench size={20} strokeWidth={1.8} />} value={isLoading ? '—' : stations.filter(station => station.statut === 'maintenance').length} />
+                <StatCard title="Indisponibles" iconColor="red" icon={<CircleOff size={20} strokeWidth={1.8} />} value={isLoading ? '—' : stations.filter(station => station.statut === 'indisponible').length} />
             </div>
-            <StationsMap stations={stations} loading={isLoading} onEdit={openEditModal} />
+            <MapViewer label="Carte des stations">
+                <StationsMap stations={stations} loading={isLoading} onEdit={openEditModal} />
+            </MapViewer>
+            {hubsQuery.isError && <div role="alert" className="hub-error">
+                Impossible de charger le nombre de hubs.
+                <Button variant="secondary" size="sm" onClick={() => hubsQuery.refetch()}>Réessayer</Button>
+            </div>}
             <StationsTable
-                stations={stations}
+                stations={tableStations}
                 loading={isLoading}
                 onEdit={openEditModal}
+                onManageHubs={station => navigate(`/stations/${encodeURIComponent(station.id)}/hubs`)}
                 onDelete={station => {
 
                     setStationToDelete(station)

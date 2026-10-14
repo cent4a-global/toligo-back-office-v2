@@ -7,8 +7,9 @@ import { createZonePayload } from '../utils/zoneForm'
 import ZonePolygonMap from './ZonePolygonMap'
 import { useCommunes } from '../hooks/useCommunes'
 import { communePolygon, containsPoint } from '../utils/communeGeometry'
+import { findConflictingZone } from '../utils/zoneOverlap'
 
-function ZoneFormModal({ open, zone, loading = false, onClose, onSubmit }) {
+function ZoneFormModal({ open, zone, zones = [], loading = false, onClose, onSubmit }) {
     const { data: communes = [] } = useCommunes()
     const mapCommunes = [...new Map([...(zone?.communes ?? []), ...communes].map(commune => [commune.id, commune])).values()]
     const [form, setForm] = useState(() => ({
@@ -21,6 +22,26 @@ function ZoneFormModal({ open, zone, loading = false, onClose, onSubmit }) {
             : [],
     }))
     const [polygonMode, setPolygonMode] = useState('map')
+
+    const validateContour = points => {
+        const conflict = findConflictingZone(points, zones, zone?.id)
+        if (conflict) throw new Error(`Le contour ne peut pas toucher, traverser ou englober la zone « ${conflict.nom} ».`)
+    }
+
+    const handleAddPoint = point => {
+        const polygone = [...form.polygone, point]
+        try {
+            validateContour(polygone)
+            setForm(previous => ({
+                ...previous,
+                polygone,
+                communes: [...new Set([...previous.communes, ...mapCommunes
+                    .filter(commune => containsPoint(communePolygon(commune), point)).map(commune => commune.id)])],
+            }))
+        } catch (failure) {
+            notifyError(failure)
+        }
+    }
 
     const changePolygonMode = mode => {
         setPolygonMode(mode)
@@ -50,7 +71,9 @@ function ZoneFormModal({ open, zone, loading = false, onClose, onSubmit }) {
         if (loading) return
 
         try {
-            await onSubmit?.(createZonePayload(form))
+            const payload = createZonePayload(form)
+            validateContour(payload.polygone)
+            await onSubmit?.(payload)
         } catch (failure) {
             notifyError(failure)
         }
@@ -108,15 +131,11 @@ function ZoneFormModal({ open, zone, loading = false, onClose, onSubmit }) {
                     </div>
                     {polygonMode === 'map' ? (
                         <ZonePolygonMap points={form.polygone} disabled={loading}
+                            zones={zones.filter(item => String(item.id) !== String(zone?.id))}
                             communes={mapCommunes} selectedCommunes={form.communes}
                             onToggleCommune={id => setForm(previous => ({ ...previous, communes: previous.communes.includes(id)
                                 ? previous.communes.filter(value => value !== id) : [...previous.communes, id] }))}
-                            onAdd={point => setForm(previous => ({
-                                ...previous,
-                                polygone: [...previous.polygone, point],
-                                communes: [...new Set([...previous.communes, ...mapCommunes
-                                    .filter(commune => containsPoint(communePolygon(commune), point)).map(commune => commune.id)])],
-                            }))}
+                            onAdd={handleAddPoint}
                             onUndo={() => setForm(previous => ({ ...previous, polygone: previous.polygone.slice(0, -1) }))}
                             onClear={() => setForm(previous => ({ ...previous, polygone: [] }))} />
                     ) : <>
