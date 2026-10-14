@@ -15,6 +15,10 @@
 .category-symbol img { width: 30px; height: 30px; object-fit: contain; }
 .category-form-actions { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 10px; padding-top: 18px; border-top: 1px solid #ededf0; }
 .category-card-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.btn-category-edit { background: #c2410c; border-color: #c2410c; color: #fff; }
+.btn-category-edit:hover:not(:disabled) { background: #9a3412; border-color: #9a3412; }
+.btn-category-edit:focus-visible { outline: 2px solid #c2410c; outline-offset: 3px; }
+.category-card > input[type=checkbox] { align-self: center; margin: 0; }
 .categories-toolbar { display: grid; grid-template-columns: minmax(0, 1fr) 240px; gap: 20px; }
 .categories-toolbar .form-field { margin: 0; }
 .categories-selection, .categories-actions { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }

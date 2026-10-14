@@ -13,7 +13,6 @@ function CategoryFormModal({ category, loading, onClose, onSubmit }) {
         event.preventDefault()
         const name = libelle.trim().replace(/\s+/g, ' ')
         if (!name) { setError('Renseignez le nom de la catégorie.'); return }
-        if (!category && !icon) { setError('Choisissez une icône.'); return }
         const data = new FormData()
         data.append('libelle', name)
         if (icon) data.append('icon', icon)
@@ -24,8 +23,8 @@ function CategoryFormModal({ category, loading, onClose, onSubmit }) {
         <form className="category-form" onSubmit={submit}>
             <Input name="category-libelle" label="Nom de la catégorie" value={libelle} onChange={event => setLibelle(event.target.value)} required disabled={loading} />
             <div className="category-file-field">
-                <label htmlFor="category-icon">Icône{!category && ' *'}</label>
-                <input id="category-icon" name="icon" type="file" accept="image/*" required={!category} disabled={loading} onChange={event => { const file = event.target.files?.[0] ?? null; setIcon(file); setPreview(file ? URL.createObjectURL(file) : ''); setError('') }} />
+                <label htmlFor="category-icon">Icône (facultative)</label>
+                <input id="category-icon" name="icon" type="file" accept="image/*" disabled={loading} onChange={event => { const file = event.target.files?.[0] ?? null; setIcon(file); setPreview(file ? URL.createObjectURL(file) : ''); setError('') }} />
                 {category && <p>Laissez ce champ vide pour conserver l’icône actuelle.</p>}
                 {(preview || (typeof category?.icon === 'string' && category.icon)) && <img className="category-icon-preview" src={preview || category.icon} alt="Aperçu de l’icône" />}
             </div>

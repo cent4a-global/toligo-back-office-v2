@@ -4,11 +4,11 @@ import { ttlockKeys } from '../queries/ttlockKeys'
 
 export { ttlockKeys } from '../queries/ttlockKeys'
 
-export const useTtlockCredentials = entrepotId => {
+export const useTtlockCredentials = (entrepotId, { enabled = true } = {}) => {
     const ttlockQuery = useQuery({
         queryKey: ttlockKeys.detail(entrepotId),
         queryFn: ({ signal }) => ttlockService.getTtlockCredentials(entrepotId, { signal }),
-        enabled: Boolean(entrepotId),
+        enabled: Boolean(entrepotId) && enabled,
         staleTime: 5 * 60 * 1000,
         gcTime: 10 * 60 * 1000,
         retry: 1,

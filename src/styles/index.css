@@ -49,6 +49,8 @@
 @import './pages/clients.css';
 @import './pages/locations.css';
 @import './pages/categories.css';
+@import './pages/geographie.css';
+@import './pages/push-notifications.css';
 @import './components/scrollbar.css';
 @import './pages/zones/ZonesTable.css';
 @import './pages/zones/ZoneFormModal.css';

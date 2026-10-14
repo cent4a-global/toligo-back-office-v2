@@ -3,36 +3,54 @@ import { Fragment } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useAuth } from '../../features/auth/hooks/useAuth'
 
-const navigationItems = [
-    { label: 'Tableau de bord', to: '/dashboard', icon: 'fi-rr-apps' },
-    { label: 'Supervision', to: '/supervision', icon: 'fi-rr-eye' },
-    { label: 'Commandes', to: '/orders', icon: 'fi-rr-shopping-cart' },
-    { label: 'Missions et livreurs', to: '/missions', icon: 'fi-rr-motorcycle' },
-    { label: 'Incidents', to: '/incidents', icon: 'fi-rr-triangle-warning' },
-    { label: 'Paiements', to: '/payments', icon: 'fi-rr-credit-card' },
-    { label: 'Stations', to: '/stations', icon: 'fi-rr-drone', superadminOnly: true },
-    // { label: 'Hubs', to: '/hubs', icon: 'fi-rr-building', superadminOnly: true },
-    { label: 'Zones', to: '/zones', icon: 'fi-rr-map-marker', superadminOnly: true },
-    { label: 'Sous-administrateurs', to: '/sub-admins', icon: 'fi-rr-user', superadminOnly: true },
-    { label: 'Catégories', to: '/categories', icon: 'fi-rr-apps', superadminOnly: true },
-    { label: 'Clients', to: '/clients', icon: 'fi-rr-users', superadminOnly: true },
-    { label: 'Notifications push', to: '/push-notifications', icon: 'fi-rr-bell', superadminOnly: true },
-    { label: 'Locations', to: '/locations', icon: 'fi-rr-key', superadminOnly: true },
+const navigationSections = [
     {
-        label: 'Entrepôts',
-        to: '/warehouses',
-        icon: 'fi-rr-warehouse-alt',
-        superadminOnly: true,
+        label: 'Vue d’ensemble',
+        items: [
+            { label: 'Tableau de bord', to: '/dashboard', icon: 'fi-rr-apps' },
+            { label: 'Supervision', to: '/supervision', icon: 'fi-rr-eye' },
+        ],
     },
-    { label: 'Utilisateurs et rôles', to: '/users', icon: 'fi-rr-users', superadminOnly: true },
-    { label: "Journal d'audit", to: '/audit-log', icon: 'fi-rr-document', superadminOnly: true },
     {
-        label: 'Paramètres et formats',
-        to: '/settings',
-        icon: 'fi-rr-settings',
-        superadminOnly: true,
+        label: 'Activité',
+        items: [
+            { label: 'Commandes', to: '/orders', icon: 'fi-rr-shopping-cart' },
+            { label: 'Missions et livreurs', to: '/missions', icon: 'fi-rr-motorcycle' },
+            { label: 'Locations', to: '/locations', icon: 'fi-rr-key', superadminOnly: true },
+            { label: 'Paiements', to: '/payments', icon: 'fi-rr-credit-card' },
+            { label: 'Incidents', to: '/incidents', icon: 'fi-rr-triangle-warning' },
+        ],
+    },
+    {
+        label: 'Réseau et catalogue',
+        items: [
+            { label: 'Stations', to: '/stations', icon: 'fi-rr-drone', superadminOnly: true },
+            { label: 'Entrepôts', to: '/warehouses', icon: 'fi-rr-warehouse-alt', superadminOnly: true },
+            { label: 'Zones', to: '/zones', icon: 'fi-rr-map-marker', superadminOnly: true },
+            { label: 'Localités', to: '/localites', icon: 'fi-rr-marker', superadminOnly: true },
+            { label: 'Catégories', to: '/categories', icon: 'fi-rr-apps', superadminOnly: true },
+        ],
+    },
+    {
+        label: 'Comptes et communication',
+        items: [
+            { label: 'Clients', to: '/clients', icon: 'fi-rr-users', superadminOnly: true },
+            { label: 'Sous-administrateurs', to: '/sub-admins', icon: 'fi-rr-user', superadminOnly: true },
+            { label: 'Utilisateurs et rôles', to: '/users', icon: 'fi-rr-users', superadminOnly: true },
+            { label: 'Notifications push', to: '/push-notifications', icon: 'fi-rr-bell', superadminOnly: true },
+        ],
+    },
+    {
+        label: 'Administration',
+        items: [
+            { label: "Journal d'audit", to: '/audit-log', icon: 'fi-rr-document', superadminOnly: true },
+            { label: 'Paramètres et formats', to: '/settings', icon: 'fi-rr-settings', superadminOnly: true },
+        ],
     },
 ]
+const navigationItems = navigationSections.flatMap(section =>
+    section.items.map(item => ({ ...item, section: section.label })),
+)
 
 function getInitials(name = '') {
     return name
@@ -103,10 +121,9 @@ function Sidebar({
 
                         return (
                             <Fragment key={item.to}>
-                                {(index === 0 ||
-                                    (item.superadminOnly && !items[index - 1]?.superadminOnly)) && (
+                                {(index === 0 || item.section !== items[index - 1]?.section) && (
                                     <span className="sidebar-section-label">
-                                        {item.superadminOnly ? 'Administration' : 'Opérations'}
+                                        {item.section}
                                     </span>
                                 )}
                                 <NavLink

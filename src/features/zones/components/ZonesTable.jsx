@@ -18,11 +18,6 @@ function ZonesTable({ zones = [], loading = false, onEdit, onDelete }) {
         },
 
         {
-            key: 'communes',
-            label: 'Communes',
-            render: zone => zone.communes?.map(commune => commune.nom).join(', ') || '—',
-        },
-        {
             key: 'polygone',
             label: 'Contour',
             render: zone => <span className="zone-count">{zone.polygone?.length ?? 0} points</span>,

@@ -8,21 +8,21 @@ import ProtectedRoute from './ProtectedRoute'
 import PublicRoute from './PublicRoute'
 import RoleRoute from './RoleRoute'
 
-const AuditLog = lazy(() => import('../../pages/AuditLog'))
-const Dashboard = lazy(() => import('../../pages/Dashboard'))
-const Incidents = lazy(() => import('../../pages/Incidents'))
+const AuditLog = lazy(() => import('../../features/audit-log/pages/AuditLog'))
+const Dashboard = lazy(() => import('../../features/dashboard/pages/Dashboard'))
+const Incidents = lazy(() => import('../../features/incidents/pages/Incidents'))
 const LoginPage = lazy(() => import('../../features/auth/pages/LoginPage'))
 const VerifyCodePage = lazy(() => import('../../features/auth/pages/VerifyCodePage'))
 const ForgotPasswordPage = lazy(() => import('../../features/auth/pages/ForgotPasswordPage'))
 const VerifyResetOtpPage = lazy(() => import('../../features/auth/pages/VerifyResetOtpPage'))
 const ResetPasswordPage = lazy(() => import('../../features/auth/pages/ResetPasswordPage'))
-const Missions = lazy(() => import('../../pages/Missions'))
-const Orders = lazy(() => import('../../pages/Orders'))
-const Payments = lazy(() => import('../../pages/Payments'))
+const Missions = lazy(() => import('../../features/missions/pages/Missions'))
+const Orders = lazy(() => import('../../features/orders/pages/Orders'))
+const Payments = lazy(() => import('../../features/payments/pages/Payments'))
 const Settings = lazy(() => import('../../features/settings/pages/SettingsPage'))
 const Hubs = lazy(() => import('../../features/hubs/pages/HubsPage'))
 const Stations = lazy(() => import('../../features/stations/pages/StationsPage'))
-const Supervision = lazy(() => import('../../pages/Supervision'))
+const Supervision = lazy(() => import('../../features/supervision/pages/Supervision'))
 const Users = lazy(() => import('../../features/users/pages/UsersRolesPage'))
 const Warehouses = lazy(() => import('../../features/warehouses/pages/WarehousesPage'))
 const Zones = lazy(() => import('../../features/zones/pages/ZonesPage'))
@@ -31,14 +31,15 @@ const WarehouseBoxes = lazy(() => import('../../features/warehouses/pages/Wareho
 const WarehouseDetails = lazy(() => import('../../features/warehouses/pages/WarehouseDetailsPage'))
 const NotFound = lazy(() => import('../../pages/NotFound'))
 const Unauthorized = lazy(() => import('../../pages/Unauthorized'))
-const Profile = lazy(() => import('../../pages/Profile'))
-const Map = lazy(() => import('../../pages/Map'))
-const SubAdmins = lazy(() => import('../../pages/SubAdmins'))
-const Categories = lazy(() => import('../../pages/Categories'))
-const Clients = lazy(() => import('../../pages/Clients'))
-const ClientLocations = lazy(() => import('../../pages/ClientLocations'))
-const PushNotifications = lazy(() => import('../../pages/PushNotifications'))
-const Locations = lazy(() => import('../../pages/Locations'))
+const Profile = lazy(() => import('../../features/profile/pages/Profile'))
+const Map = lazy(() => import('../../features/map/pages/Map'))
+const SubAdmins = lazy(() => import('../../features/sub-admins/pages/SubAdmins'))
+const Categories = lazy(() => import('../../features/categories/pages/Categories'))
+const Geographie = lazy(() => import('../../features/geographie/pages/Geographie'))
+const Clients = lazy(() => import('../../features/clients/pages/Clients'))
+const ClientLocations = lazy(() => import('../../features/locations/pages/ClientLocations'))
+const PushNotifications = lazy(() => import('../../features/push-notifications/pages/PushNotifications'))
+const Locations = lazy(() => import('../../features/locations/pages/Locations'))
 
 function AppRoutes() {
     return (
@@ -75,6 +76,7 @@ function AppRoutes() {
                         <Route element={<RoleRoute allowedRoles={['superadmin']} />}>
                             <Route path="/sub-admins" element={<SubAdmins />} />
                             <Route path="/categories" element={<Categories />} />
+                            <Route path="/localites" element={<Geographie />} />
                             <Route path="/clients" element={<Clients />} />
                             <Route path="/clients/:clientId/locations" element={<ClientLocations />} />
                             <Route path="/push-notifications" element={<PushNotifications />} />
