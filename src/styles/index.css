@@ -21,6 +21,7 @@
 @import './components/error-state.css';
 @import './components/page-header.css';
 @import './components/stat-card.css';
+@import './components/horizontal-stat-card.css';
 @import './components/tabs.css';
 @import './components/dropdown.css';
 @import './components/pagination.css';
@@ -44,6 +45,7 @@
 @import './pages/warehouses/WarehouseGrid.css';
 @import './pages/warehouses/WarehouseDetailsPage.css';
 @import './pages/warehouses/WarehousesPage.css';
+@import './pages/warehouses/WarehouseBoxesPage.css';
 @import './pages/profile.css';
 @import './pages/sub-admins.css';
 @import './pages/clients.css';

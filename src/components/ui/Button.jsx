@@ -2,7 +2,7 @@ const Button = ({
     children,
     type = "button",
     variant = "primary",
-    size = "md",
+    size = "sm",
     disabled = false,
     loading = false,
     onClick,

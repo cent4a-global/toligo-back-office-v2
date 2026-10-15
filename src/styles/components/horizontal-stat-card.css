@@ -1,0 +1,39 @@
+.horizontal-stat-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    min-width: 0;
+    min-height: 100px;
+    box-sizing: border-box;
+    padding: 16px 18px;
+    background: var(--color-bg-surface, #fff);
+    border: 1px solid var(--color-border, #e2e5eb);
+    border-radius: 18px;
+    box-shadow: 0 1px 2px rgb(15 23 42 / 4%);
+}
+
+.horizontal-stat-card-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    border-radius: 13px;
+    background: var(--color-bg-page, #f5f5f6);
+    color: var(--color-text-primary, #121212);
+}
+
+.horizontal-stat-card-icon > svg { width: 22px; height: 22px; stroke-width: 1.8; }
+.horizontal-stat-card-icon > .app-icon { --icon-size: 22px; }
+.flaticon { display: inline-flex; align-items: center; justify-content: center; line-height: 1; flex-shrink: 0; }
+.flaticon::before { display: block; }
+.horizontal-stat-card-content { display: grid; gap: 4px; min-width: 0; }
+.horizontal-stat-card-title { color: var(--color-text-secondary, #66666d); font-size: 15px; line-height: 1.4; overflow-wrap: anywhere; }
+.horizontal-stat-card-value { color: var(--color-text-primary, #121212); font-size: 30px; font-weight: 700; line-height: 1.15; letter-spacing: -0.8px; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.horizontal-stat-card-description { color: var(--color-text-muted, #99999f); font-size: 14px; line-height: 1.4; overflow-wrap: anywhere; }
+
+@media (max-width: 480px) {
+    .horizontal-stat-card { padding: 14px 16px; gap: 12px; border-radius: 16px; }
+}

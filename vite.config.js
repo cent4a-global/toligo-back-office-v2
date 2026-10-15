@@ -4,6 +4,14 @@ import { defineConfig } from 'vite'
 // https://vite.dev/config/
 export default defineConfig({
     plugins: [react()],
+    server: {
+        watch: {
+            awaitWriteFinish: {
+                stabilityThreshold: 300,
+                pollInterval: 100,
+            },
+        },
+    },
     resolve: {
         alias: {
             // Utilisation de import.meta.dirname à la place de path.resolve et __dirname

@@ -1,10 +1,9 @@
-import Icon from '../../../components/ui/Icon'
-import { Warehouse, Package, PackageCheck, KeyRound } from 'lucide-react'
+import Flaticon from '../../../components/ui/Flaticon'
 import { useState } from 'react'
 
 import Button from '../../../components/ui/Button'
 import PageHeader from '../../../components/ui/PageHeader'
-import StatCard from '../../../components/ui/StatCard'
+import HorizontalStatCard from '../../../components/ui/HorizontalStatCard'
 import ErrorState from '../../../components/ui/ErrorState'
 
 import {
@@ -15,9 +14,12 @@ import {
 
 import WarehouseGrid from '../components/WarehouseGrid'
 import WarehouseFormModal from '../components/WarehouseFormModal'
+import { useBoxes } from '../hooks/useBoxes'
+import Skeleton from '../../../components/ui/Skeleton'
 
 function WarehousesPage() {
     const { data, isLoading, isError, error, refetch } = useWarehouses()
+    const boxesQuery = useBoxes()
 
     const createMutation = useCreateWarehouse()
 
@@ -31,6 +33,10 @@ function WarehousesPage() {
 
 
     const warehouses = data?.data ?? []
+    const totalBoxes = boxesQuery.data?.length ?? 0
+    const availableBoxes = boxesQuery.data?.filter(box => box.statut === 'libre').length ?? 0
+    const availablePercent = totalBoxes ? Math.round(availableBoxes / totalBoxes * 100) : 0
+    const boxStatValue = value => boxesQuery.isPending ? <Skeleton width={48} height={30} /> : boxesQuery.isError ? '—' : value
 
     const openCreateModal = () => {
         setFormModal({
@@ -83,25 +89,27 @@ function WarehousesPage() {
                 title="Entrepôts"
                 description="Gérez les sites de stockage, leurs capacités et leurs affectations."
                 actions={
-                    <Button onClick={openCreateModal}>
-                        <Icon name="add" className="add-icon" />
+                    <Button onClick={openCreateModal} size="sm">
+                        <Flaticon name="plus" size={16} />
                         Ajouter un entrepôt
                     </Button>
                 }
             />
 
             <div className="warehouses-stats">
-                <StatCard
-                    title="Entrepôts" icon={<Warehouse size={20} strokeWidth={1.8} />}
-                    value={data?.meta?.totalWarehouses ?? warehouses.length}
+                <HorizontalStatCard
+                    title="Entrepôts" icon={<Flaticon name="warehouse" size={22} />}
+                    value={isLoading ? <Skeleton width={48} height={30} /> : data?.meta?.totalWarehouses ?? warehouses.length}
+                    description="Sites de stockage"
                 />
 
-                <StatCard title="Caisses" iconColor="orange" icon={<Package size={20} strokeWidth={1.8} />} value={data?.meta?.totalBoxes ?? '—'} />
+                <HorizontalStatCard title="Caisses" icon={<Flaticon name="box" size={22} />} value={boxStatValue(totalBoxes)} description={boxesQuery.isSuccess ? 'Total du parc' : boxesQuery.isError ? 'Données indisponibles' : 'Chargement…'} />
 
-                <StatCard title="Caisses occupées" iconColor="purple" icon={<PackageCheck size={20} strokeWidth={1.8} />} value={data?.meta?.occupiedBoxes ?? '—'} />
+                <HorizontalStatCard title="Disponibles" icon={<Flaticon name="check-circle" size={22} />} value={boxStatValue(availableBoxes)} description={boxesQuery.isSuccess ? `${availablePercent}% du parc` : boxesQuery.isError ? 'Données indisponibles' : 'Chargement…'} />
 
-                <StatCard title="Locations actives" iconColor="green" icon={<KeyRound size={20} strokeWidth={1.8} />} value={data?.meta?.activeRentals ?? '—'} />
+                <HorizontalStatCard title="Locations actives" icon={<Flaticon name="key" size={22} />} value={isLoading ? <Skeleton width={48} height={30} /> : data?.meta?.activeRentals ?? '—'} description={data?.meta?.activeRentals == null ? 'Données indisponibles' : 'En cours'} />
             </div>
+            {boxesQuery.isError && <ErrorState title="Statistiques des caisses indisponibles" description={boxesQuery.error.message} action={<Button onClick={() => boxesQuery.refetch()}>Réessayer</Button>} />}
 
             <div className="warehouses-grid-section">
                 <WarehouseGrid

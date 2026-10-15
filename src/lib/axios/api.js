@@ -2,7 +2,7 @@
 import axios from 'axios'
 import { clearAuthStorage, getToken } from '../../features/auth/storage/auth.storage'
 
-const API_URL = 'http://192.168.1.73:8000'
+const API_URL = 'http://192.168.1.83:8000'
 
 const isAuthRequest = config =>
     config.url?.startsWith('/api/admin/login') ||
