@@ -1,3 +1,4 @@
+import Icon from '../../../components/ui/Icon'
 import { Link, useParams } from 'react-router-dom'
 import { useWarehouse } from '../hooks/useWarehouses'
 import PageHeader from '../../../components/ui/PageHeader'
@@ -15,7 +16,7 @@ export default function WarehouseManagementLayout({ title, description, children
     if (!warehouse) return <ErrorState title="Entrepôt introuvable" />
     return (
         <section className="warehouse-management-page">
-            <Link className="warehouse-back" to="/warehouses"><i className="fi fi-rr-arrow-left" aria-hidden="true" /> Entrepôts</Link>
+            <Link className="warehouse-back" to="/warehouses"><Icon name="arrow_back" /> Entrepôts</Link>
             <PageHeader title={title} description={`${warehouse.name ?? warehouse.nom ?? 'Entrepôt'} — ${description}`} />
             {children(warehouse)}
         </section>

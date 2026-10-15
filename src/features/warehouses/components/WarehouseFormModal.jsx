@@ -1,3 +1,4 @@
+import Icon from '../../../components/ui/Icon'
 import { notifyError } from '../../../lib/notifications'
 import { useState } from 'react'
 
@@ -167,14 +168,14 @@ function WarehouseFormModal({ open, warehouse, loading = false, onClose, onSubmi
                             aria-pressed={coordinateMode === 'manual'}
                             onClick={() => setCoordinateMode('manual')}
                             disabled={loading}>
-                            <i className="fi fi-rr-pencil" aria-hidden="true" /> Manuel
+                            <Icon name="edit" /> Manuel
                         </button>
                         <button
                             type="button"
                             aria-pressed={coordinateMode === 'map'}
                             onClick={() => setCoordinateMode('map')}
                             disabled={loading}>
-                            <i className="fi fi-rr-marker" aria-hidden="true" /> Carte
+                            <Icon name="location_on" /> Carte
                         </button>
                     </div>
                     {coordinateMode === 'map' && (

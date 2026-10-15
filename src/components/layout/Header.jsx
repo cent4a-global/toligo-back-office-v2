@@ -29,7 +29,7 @@ function Header({
         },
         {
             label: 'Déconnexion',
-            icon: <Icon name="sign-out-alt" size={18} />,
+            icon: <Icon name="logout" size={18} />,
             danger: true,
             onClick: () => setConfirmLogoutOpen(true),
         },
@@ -47,13 +47,13 @@ function Header({
                     aria-controls="main-sidebar"
                     aria-expanded={mobileOpen}
                     aria-label={mobileOpen ? 'Fermer le menu' : 'Ouvrir le menu'}>
-                    <i className="fi fi-rr-menu-burger" aria-hidden="true" />
+                    <Icon name="menu" />
                 </button>
             </div>
 
             <div className="header-actions">
                 <button type="button" className="header-action-button" aria-label="Notifications">
-                    <i className="fi fi-rr-bell" aria-hidden="true" />
+                    <Icon name="notifications" />
                 </button>
 
                 <div className="header-divider" />

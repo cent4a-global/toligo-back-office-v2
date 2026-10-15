@@ -82,7 +82,7 @@ function LoginPage() {
                         aria-label={showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'}
                         aria-controls="password"
                         title={showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'}>
-                        {showPassword ? <Icon name="eye-crossed" size={20} /> : <Icon name="eye" size={20} />}
+                        {showPassword ? <Icon name="visibility_off" size={20} /> : <Icon name="visibility" size={20} />}
                     </button>
                 </div>
 

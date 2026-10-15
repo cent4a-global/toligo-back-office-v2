@@ -30,7 +30,7 @@ function AuthLayout() {
 
                     <div className="auth-preview" aria-hidden="true">
                         <div className="auth-preview-top">
-                            <Icon name="chart-histogram" size={16} />
+                            <Icon name="bar_chart" size={16} />
                             <span className="auth-preview-title">Vue d’ensemble</span>
                         </div>
                         <div className="auth-preview-body">
@@ -53,7 +53,7 @@ function AuthLayout() {
                 </div>
 
                 <p className="auth-aside-footer">
-                    <Icon name="shield-check" size={16} />
+                    <Icon name="verified_user" size={16} />
                     La simplicité au service de votre réseau.
                 </p>
             </aside>

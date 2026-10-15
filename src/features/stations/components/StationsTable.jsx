@@ -1,3 +1,4 @@
+import Icon from '../../../components/ui/Icon'
 import Table from '../../../components/ui/Table'
 import Badge from '../../../components/ui/Badge'
 import Dropdown from '../../../components/ui/Dropdown'
@@ -83,7 +84,7 @@ function StationsTable({ stations = [], loading = false, onEdit, onDelete, onMan
                             type="button"
                             className="station-actions-trigger"
                             aria-label={`Actions pour ${station.nom}`}>
-                            <i className="fi fi-rr-menu-dots"></i>
+                            <Icon name="more_vert" />
                         </button>
                     }
                     items={[

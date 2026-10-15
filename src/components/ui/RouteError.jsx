@@ -20,9 +20,9 @@ function RouteError({ code, title, description, icon, standalone = false }) {
                 <h1 id="route-error-title">{title}</h1>
                 <p className="route-error-description">{description}</p>
                 <Link className="btn btn-primary btn-md route-error-link" to={isAuthenticated ? '/dashboard' : '/login'} replace>
-                    {isAuthenticated ? <Icon name="apps" size={18} /> : <Icon name="sign-in-alt" size={18} />}
+                    {isAuthenticated ? <Icon name="dashboard" size={18} /> : <Icon name="login" size={18} />}
                     {isAuthenticated ? 'Retour au tableau de bord' : 'Retour à la connexion'}
-                    <Icon name="arrow-right" size={18} />
+                    <Icon name="arrow_forward" size={18} />
                 </Link>
                 <p className="route-error-footnote">{code === '404' ? 'Vérifiez l’adresse ou retrouvez votre espace de travail.' : 'Si vous avez besoin de cet accès, contactez votre administrateur.'}</p>
             </div>

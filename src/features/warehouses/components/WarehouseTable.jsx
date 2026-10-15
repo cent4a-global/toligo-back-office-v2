@@ -1,3 +1,4 @@
+import Icon from '../../../components/ui/Icon'
 import {
     useNavigate,
 } from 'react-router-dom'
@@ -132,7 +133,7 @@ function WarehouseTable({
                             className="warehouse-actions-trigger"
                             aria-label="Actions de l’entrepôt"
                         >
-                            <i aria-hidden="true" className="fi fi-rr-menu-dots"></i>
+                            <Icon name="more_vert" />
                         </button>
                     }
                     items={[

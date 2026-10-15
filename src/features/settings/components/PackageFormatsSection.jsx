@@ -1,3 +1,4 @@
+import Icon from '../../../components/ui/Icon'
 import { useState } from 'react'
 import { usePackageFormats } from '../hooks/usePackageFormats'
 import PackageFormatFormModal from './PackageFormatFormModal'
@@ -16,7 +17,7 @@ function PackageFormatsSection() {
                 <div className="package-format-image">
                     {format.icone ||
                         (format.est_actif ? (
-                            <i className="fi fi-rr-box-open" aria-hidden="true" />
+                            <Icon name="inventory_2" />
                         ) : (
                             <span className="package-format-image-empty" />
                         ))}
@@ -103,7 +104,7 @@ function PackageFormatsSection() {
                 </div>
 
                 <Button className="package-format-add" onClick={() => setEditor({ format: null })}>
-                    <i className="fi fi-rr-plus"></i>
+                    <Icon name="add" />
                     Nouveau format
                 </Button>
             </div>

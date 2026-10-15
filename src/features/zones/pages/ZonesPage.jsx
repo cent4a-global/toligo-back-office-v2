@@ -1,3 +1,4 @@
+import Icon from '../../../components/ui/Icon'
 import { notifyError } from '../../../lib/notifications'
 import { useState } from 'react'
 
@@ -98,7 +99,7 @@ function ZonesPage() {
                 description="Gérez les zones géographiques couvertes par Tôligo."
                 actions={
                     <Button onClick={openCreateModal}>
-                        <i className="fi fi-rr-plus"></i>
+                        <Icon name="add" />
                         Ajouter une zone
                     </Button>
                 }

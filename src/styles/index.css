@@ -68,14 +68,37 @@
 @import './components/form-refinement.css';
 @import './motion.css';
 
-.flaticon-icon {
+.app-icon {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-size: var(--icon-size, 20px);
+    letter-spacing: normal;
+    text-transform: none;
+    white-space: nowrap;
+    direction: ltr;
+    font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
     line-height: 1;
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
 }
 
-header .flaticon-icon {
+.btn .app-icon { --icon-size: 18px; }
+.btn-sm .app-icon { --icon-size: 16px; }
+.app-icon.sidebar-link-icon { --icon-size: 22px; width: 22px; height: 22px; }
+.sidebar-close .app-icon, .dashboard-menu-button .app-icon { --icon-size: 24px; }
+.header .app-icon, .header-menu-button .app-icon { --icon-size: 22px; }
+.modal-close .app-icon { --icon-size: 24px; }
+.category-symbol .app-icon, .push-preview-icon .app-icon { --icon-size: 22px; }
+.geo-card h2 .app-icon { --icon-size: 22px; }
+.warehouse-coordinate-modes .app-icon { --icon-size: 18px; }
+
+header .app-icon {
     margin-top: 0;
 }

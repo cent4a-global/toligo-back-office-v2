@@ -1,3 +1,4 @@
+import Icon from '../../../components/ui/Icon'
 import { useEffect, useRef, useState } from 'react'
 import { CircleMarker, MapContainer, TileLayer, useMap, useMapEvents } from 'react-leaflet'
 import Input from '../../../components/ui/Input'
@@ -96,7 +97,7 @@ export default function WarehouseLocationPicker({ city, latitude, longitude, onS
                     {results.map(place => (
                         <li key={place.place_id}>
                             <button type="button" disabled={disabled} onClick={() => selectPlace(place)}>
-                                <i className="fi fi-rr-marker" aria-hidden="true" />
+                                <Icon name="location_on" />
                                 <span>{place.display_name}</span>
                             </button>
                         </li>

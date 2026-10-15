@@ -1,3 +1,4 @@
+import Icon from '../../../components/ui/Icon'
 import { Network, CircleCheck, Wrench, PackageCheck } from 'lucide-react'
 import { notifyError } from '../../../lib/notifications'
 import { useState } from 'react'
@@ -120,7 +121,7 @@ function HubsPage() {
                 actions={
                     <div className="hubs-page-actions">
                     <Button onClick={openCreateModal} disabled={Boolean(stationId) && !station}>
-                        <i className="fi fi-rr-plus"></i>
+                        <Icon name="add" />
                         Ajouter un hub
                     </Button>
                     </div>

@@ -17,7 +17,7 @@ function Profile() {
             <p className="profile-description">Retrouvez les informations de votre compte.</p>
             <div className="profile-card">
                 <div className="profile-identity">
-                    <span className="profile-avatar" aria-hidden="true"><Icon name="user" size={28} /></span>
+                    <span className="profile-avatar" aria-hidden="true"><Icon name="person" size={28} /></span>
                     <div>
                         <h2>{userName}</h2>
                         {roleLabel && <span className="profile-role">{roleLabel}</span>}

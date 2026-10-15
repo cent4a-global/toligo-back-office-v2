@@ -1,3 +1,4 @@
+import Icon from '../../../components/ui/Icon'
 import { Warehouse, Package, PackageCheck, KeyRound } from 'lucide-react'
 import { useState } from 'react'
 
@@ -83,7 +84,7 @@ function WarehousesPage() {
                 description="Gérez les sites de stockage, leurs capacités et leurs affectations."
                 actions={
                     <Button onClick={openCreateModal}>
-                        <i aria-hidden="true" className="fi fi-rr-plus add-icon"></i>
+                        <Icon name="add" className="add-icon" />
                         Ajouter un entrepôt
                     </Button>
                 }

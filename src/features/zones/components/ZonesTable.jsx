@@ -1,3 +1,4 @@
+import Icon from '../../../components/ui/Icon'
 import Table from '../../../components/ui/Table'
 import Badge from '../../../components/ui/Badge'
 import Dropdown from '../../../components/ui/Dropdown'
@@ -45,7 +46,7 @@ function ZonesTable({ zones = [], loading = false, onEdit, onDelete }) {
                             type="button"
                             className="zone-actions-trigger"
                             aria-label={`Actions pour ${zone.nom}`}>
-                            <i className="fi fi-rr-menu-dots" aria-hidden="true"></i>
+                            <Icon name="more_vert" />
                         </button>
                     }
                     items={[

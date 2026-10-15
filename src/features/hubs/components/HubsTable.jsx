@@ -1,3 +1,4 @@
+import Icon from '../../../components/ui/Icon'
 import Table from '../../../components/ui/Table'
 import Badge from '../../../components/ui/Badge'
 import Dropdown from '../../../components/ui/Dropdown'
@@ -90,7 +91,7 @@ function HubsTable({ hubs = [], loading = false, onEdit, onDelete, onReassign })
                 <Dropdown
                     trigger={
                         <button type="button" className="hub-actions-trigger" aria-label={`Actions pour ${hub.code}`}>
-                            <i className="fi fi-rr-menu-dots"></i>
+                            <Icon name="more_vert" />
                         </button>
                     }
                     items={[

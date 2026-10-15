@@ -1,3 +1,4 @@
+import Icon from '../../../components/ui/Icon'
 import { MapPin, CircleCheck, Wrench, CircleOff } from 'lucide-react'
 import { notifyError } from '../../../lib/notifications'
 import { useState } from 'react'
@@ -113,7 +114,7 @@ function StationsPage() {
                 description="Gérez les stations accueillant les hubs automatisés de Tôligo."
                 actions={
                     <Button onClick={openCreateModal}>
-                        <i className="fi fi-rr-plus"></i>
+                        <Icon name="add" />
                         Ajouter une station
                     </Button>
                 }

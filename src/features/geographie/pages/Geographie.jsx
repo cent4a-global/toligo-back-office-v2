@@ -1,3 +1,4 @@
+import Icon from '../../../components/ui/Icon'
 import CommunesModal from '../components/CommunesModal'
 import { nameOf, idOf } from '../utils/geographie'
 import { useEffect, useMemo, useState } from 'react'
@@ -143,7 +144,7 @@ function Geographie() {
                     {filtered.slice((currentPage - 1) * 12, currentPage * 12).map((row, index) => (
                         <article className="geo-card" key={idOf(row) ?? index}>
                             <h2>
-                                <i className="fi fi-rr-marker" aria-hidden="true" />
+                                <Icon name="location_on" />
                                 {nameOf(row)}
                             </h2>
                             <Button

@@ -1,3 +1,4 @@
+import Icon from '../components/ui/Icon'
 import { Suspense } from 'react'
 import PageSkeleton from '../components/ui/PageSkeleton'
 import { useEffect, useRef, useState } from 'react'
@@ -94,7 +95,7 @@ function DashboardLayout() {
                         animateToggle()
                         setMobileOpen(open => !open)
                     }}>
-                    <i className="fi fi-rr-menu-burger" aria-hidden="true" />
+                    <Icon name="menu" />
                 </button>
                 <main key={pathname} className="dashboard-main">
                     <Suspense fallback={<PageSkeleton variant="page" />}>

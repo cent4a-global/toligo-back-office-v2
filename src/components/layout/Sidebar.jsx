@@ -7,44 +7,44 @@ const navigationSections = [
     {
         label: 'Vue d’ensemble',
         items: [
-            { label: 'Tableau de bord', to: '/dashboard', icon: 'fi-rr-apps' },
-            { label: 'Supervision', to: '/supervision', icon: 'fi-rr-eye' },
+            { label: 'Tableau de bord', to: '/dashboard', icon: 'grid_view' },
+            { label: 'Supervision', to: '/supervision', icon: 'visibility' },
         ],
     },
     {
         label: 'Activité',
         items: [
-            { label: 'Commandes', to: '/orders', icon: 'fi-rr-shopping-cart' },
-            { label: 'Missions et livreurs', to: '/missions', icon: 'fi-rr-motorcycle' },
-            { label: 'Locations', to: '/locations', icon: 'fi-rr-key', superadminOnly: true },
-            { label: 'Paiements', to: '/payments', icon: 'fi-rr-credit-card' },
-            { label: 'Incidents', to: '/incidents', icon: 'fi-rr-triangle-warning' },
+            { label: 'Commandes', to: '/orders', icon: 'shopping_cart' },
+            { label: 'Missions et livreurs', to: '/missions', icon: 'two_wheeler' },
+            { label: 'Locations', to: '/locations', icon: 'key', superadminOnly: true },
+            { label: 'Paiements', to: '/payments', icon: 'credit_card' },
+            { label: 'Incidents', to: '/incidents', icon: 'warning' },
         ],
     },
     {
         label: 'Réseau et catalogue',
         items: [
-            { label: 'Stations', to: '/stations', icon: 'fi-rr-drone', superadminOnly: true },
-            { label: 'Entrepôts', to: '/warehouses', icon: 'fi-rr-warehouse-alt', superadminOnly: true },
-            { label: 'Zones', to: '/zones', icon: 'fi-rr-map-marker', superadminOnly: true },
-            { label: 'Localités', to: '/localites', icon: 'fi-rr-marker', superadminOnly: true },
-            { label: 'Catégories', to: '/categories', icon: 'fi-rr-apps', superadminOnly: true },
+            { label: 'Stations', to: '/stations', icon: 'flight', superadminOnly: true },
+            { label: 'Entrepôts', to: '/warehouses', icon: 'warehouse', superadminOnly: true },
+            { label: 'Zones', to: '/zones', icon: 'map', superadminOnly: true },
+            { label: 'Localités', to: '/localites', icon: 'location_on', superadminOnly: true },
+            { label: 'Catégories', to: '/categories', icon: 'dashboard', superadminOnly: true },
         ],
     },
     {
         label: 'Comptes et communication',
         items: [
-            { label: 'Clients', to: '/clients', icon: 'fi-rr-users', superadminOnly: true },
-            { label: 'Sous-administrateurs', to: '/sub-admins', icon: 'fi-rr-user', superadminOnly: true },
-            { label: 'Utilisateurs et rôles', to: '/users', icon: 'fi-rr-users', superadminOnly: true },
-            { label: 'Notifications push', to: '/push-notifications', icon: 'fi-rr-bell', superadminOnly: true },
+            { label: 'Clients', to: '/clients', icon: 'group', superadminOnly: true },
+            { label: 'Sous-administrateurs', to: '/sub-admins', icon: 'person', superadminOnly: true },
+            { label: 'Utilisateurs et rôles', to: '/users', icon: 'group', superadminOnly: true },
+            { label: 'Notifications push', to: '/push-notifications', icon: 'notifications', superadminOnly: true },
         ],
     },
     {
         label: 'Administration',
         items: [
-            { label: "Journal d'audit", to: '/audit-log', icon: 'fi-rr-document', superadminOnly: true },
-            { label: 'Paramètres et formats', to: '/settings', icon: 'fi-rr-settings', superadminOnly: true },
+            { label: "Journal d'audit", to: '/audit-log', icon: 'description', superadminOnly: true },
+            { label: 'Paramètres et formats', to: '/settings', icon: 'settings', superadminOnly: true },
         ],
     },
 ]
@@ -90,7 +90,7 @@ function Sidebar({
                 className="sidebar-close"
                 onClick={onClose}
                 aria-label="Fermer le menu">
-                <i className="fi fi-rr-cross" aria-hidden="true" />
+                <Icon name="close" />
             </button>
             <div className="sidebar-brand">
                 <div className="sidebar-brand-identity">
@@ -106,9 +106,9 @@ function Sidebar({
                     aria-label={collapsed ? 'Développer la sidebar' : 'Réduire la sidebar'}
                     title={collapsed ? 'Développer la sidebar' : 'Réduire la sidebar'}>
                     {collapsed ? (
-                        <Icon name="angle-square-right" size={15} />
+                        <Icon name="chevron_right" size={20} />
                     ) : (
-                        <Icon name="angle-square-left" size={15} />
+                        <Icon name="chevron_left" size={20} />
                     )}
                 </button>
             </div>
@@ -134,10 +134,7 @@ function Sidebar({
                                     title={item.label}
                                     className={`sidebar-link${isActive ? ' sidebar-link-active' : ''}`}
                                     aria-current={isActive ? 'page' : undefined}>
-                                    <i
-                                        className={`fi ${item.icon} sidebar-link-icon`}
-                                        aria-hidden="true"
-                                    />
+                                    <Icon name={item.icon} className="sidebar-link-icon" />
 
                                     <span className="sidebar-link-label">{item.label}</span>
                                 </NavLink>

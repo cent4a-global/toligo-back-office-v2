@@ -1,3 +1,4 @@
+import Icon from '../../../components/ui/Icon'
 import { useEffect, useMemo, useState } from 'react'
 import PageHeader from '../../../components/ui/PageHeader'
 import Input from '../../../components/ui/Input'
@@ -72,7 +73,7 @@ function Categories() {
             <div className="categories-grid" aria-label="Chargement des catégories" aria-busy="true">{Array.from({ length: 12 }, (_, index) => <div className="category-card" key={index}><Skeleton height={42} width={42} /><Skeleton height={22} width="65%" /></div>)}</div>
         ) : !filtered.length ? <EmptyState title={search ? 'Aucun résultat' : 'Aucune catégorie'} description={search ? 'Essayez un autre nom.' : 'Les catégories apparaîtront ici une fois disponibles.'} /> : (
             <div className="categories-grid">{visible.map((category, index) => <article className={`category-card${validSelection.includes(idOf(category)) ? ' is-selected' : ''}`} key={category.uuid ?? category.id ?? index} onClick={event => { if (!event.target.closest('button, input, a')) toggleCategory(category) }}>
-                <span className="category-symbol" aria-hidden="true">{typeof category.icon === 'string' && category.icon ? <img src={category.icon} alt="" onError={event => { event.currentTarget.style.display = 'none' }} /> : <i className="fi fi-rr-apps" />}</span>
+                <span className="category-symbol" aria-hidden="true">{typeof category.icon === 'string' && category.icon ? <img src={category.icon} alt="" onError={event => { event.currentTarget.style.display = 'none' }} /> : <Icon name="dashboard" />}</span>
                 <div className="category-card-content"><h2>{labelOf(category)}</h2>{typeof category.description === 'string' && category.description && <p>{category.description}</p>}<p>Créée le {category.created_at && !Number.isNaN(Date.parse(category.created_at)) ? new Date(category.created_at).toLocaleDateString('fr-FR') : '—'}</p>
                     {canManage && <div className="category-card-actions"><Button variant="category-edit" size="sm" disabled={query.isDeletingMany || idOf(category) == null} onClick={() => setForm({ category })}>Modifier</Button></div>}
                 </div>
