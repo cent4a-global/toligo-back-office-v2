@@ -1,0 +1,89 @@
+/* Table finish and mobile layout from the network/admin reference. */
+.table-container {
+    --table-line: #dce2ea;
+    --table-text: #142033;
+    --table-muted: #5b6879;
+    border: 1px solid var(--table-line);
+    border-radius: 12px;
+    background: #fff;
+}
+.table-container .table { line-height: 1.5; color: var(--table-text); }
+.table-container .table thead { background: #fff; }
+.table-container .table th {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--table-line);
+    color: var(--table-muted);
+    font-size: 12px;
+    font-weight: 600;
+}
+.table-container .table td {
+    padding: 12px 14px;
+    border-bottom-color: var(--table-line);
+    color: var(--table-text);
+    font-size: 14px;
+    vertical-align: middle;
+}
+.table-container .table tbody tr:hover { background: #edf1f5; }
+.table-container .table tbody tr:has(.table-message):hover { background: #fff; }
+.table-container .table .table-message { color: var(--table-muted); }
+.table-container .table td strong { font-weight: 600; }
+.table-container .table .btn { border-radius: 9px; }
+.table-container .table .btn-link { color: #0b7a87; }
+.table-container .badge { min-height: 22px; padding: 2px 9px; gap: 6px; line-height: 1.5; }
+.table-container .badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: currentColor;
+}
+.table-container .badge-success { background: #ddf3e5; color: #1b7f47; }
+.table-container .badge-warning { background: #fcefd2; color: #8f5b00; }
+.table-container .badge-danger { background: #fbe1de; color: #b4322a; }
+.table-container .badge-default { background: #edf1f5; color: #5b6879; }
+.table-pagination { color: #5b6879; font-size: 12px; }
+.table-pagination .pagination-page-active { background: #0b7a87; border-color: #0b7a87; }
+.table-pagination .pagination-page-active:hover { background: #086671; }
+
+@media (max-width: 700px) {
+    .table-container .table-responsive { min-width: 0; }
+    .table-responsive thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+    }
+    .table-container .table-responsive,
+    .table-responsive tbody, .table-responsive tr { display: block; width: 100%; }
+    .table-responsive tbody tr { padding: 12px 14px; border-bottom: 1px solid var(--table-line); }
+    .table-responsive tbody tr:last-child { border-bottom: 0; }
+    .table-container .table-responsive td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        min-width: 0;
+        max-width: none;
+        padding: 3px 0;
+        border: 0;
+        text-align: right;
+        overflow-wrap: anywhere;
+        white-space: normal;
+    }
+    .table-responsive td[data-label]::before {
+        content: attr(data-label);
+        flex-shrink: 0;
+        color: var(--table-muted);
+        font-size: 12px;
+        font-weight: 600;
+        text-align: left;
+    }
+    .table-container .table-responsive .table-cell-main { display: block; padding-bottom: 6px; text-align: left; }
+    .table-responsive .table-cell-main::before,
+    .table-responsive .table-cell-actions::before { display: none; }
+    .table-container .table-responsive .table-cell-actions { justify-content: flex-start; flex-wrap: wrap; padding-top: 8px; }
+    .table-container .table-responsive .table-message { justify-content: center; height: 140px; text-align: center; }
+}

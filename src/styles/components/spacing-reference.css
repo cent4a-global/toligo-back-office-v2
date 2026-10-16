@@ -1,0 +1,159 @@
+/* Exact paddings and gaps from the back-office reference mockups. */
+
+/* Page and content structure */
+.dashboard-main { padding: 26px 32px 60px; }
+.page-scaffold { gap: 20px; }
+.card-padding-md,
+.warehouse-detail-content,
+.warehouse-management-content { padding: 18px; }
+
+.categories-toolbar,
+.client-toolbar,
+.geo-toolbar,
+.location-toolbar,
+.sub-admin-toolbar,
+.warehouse-boxes-toolbar { padding: 12px 14px; }
+
+.stations-map-legend,
+.zones-map-legend { padding: 10px 14px; }
+
+.empty-state,
+.error-state { padding: 48px 20px; }
+.table-message { padding: 36px 20px; }
+
+/* Sidebar */
+.sidebar { padding: 0; }
+.sidebar-brand {
+    min-height: 0;
+    padding: 20px 20px 14px;
+}
+.sidebar-session {
+    margin: 8px 18px 10px;
+    padding: 10px 12px;
+}
+.sidebar-navigation { padding: 0; }
+.sidebar-links { padding: 4px 10px; }
+.sidebar-section-label,
+.sidebar-section-label:first-child { padding: 10px 14px 2px; }
+.sidebar-link {
+    min-height: 0;
+    padding: 9px 10px;
+}
+.sidebar-footer {
+    margin: 0;
+    padding: 14px;
+}
+.sidebar-footer-user { padding: 0; }
+
+/* Tables, controls and compact labels */
+.table-container .table th { padding: 10px 14px; }
+.table-container .table td { padding: 12px 14px; }
+.table-pagination { padding: 12px 16px; }
+.chip,
+.warehouse-boxes-filters button { padding: 4px 12px; }
+.badge,
+.client-status,
+.company-status,
+.driver-status,
+.internal-user-status,
+.package-formats-section .package-format-status,
+.sub-admin-status,
+.warehouse-box-status { padding: 2px 9px; }
+.badge-pending-validation { padding: 1px 7px; }
+
+.station-location-modes button,
+.warehouse-coordinate-modes button,
+.zone-polygon-modes button { padding: 5px 12px; }
+
+.tabs-list { padding: 0 12px; }
+.tab { padding: 12px 14px; }
+.package-formats-section .tabs-list { padding: 0 12px; }
+.package-formats-section .tab { padding: 12px 14px; }
+.warehouse-detail-tabs { padding: 0 12px; }
+.warehouse-detail-tabs a { padding: 12px 14px; }
+
+.settings-feedback,
+.warehouse-admins-notice,
+.warehouse-detail-inline-error { padding: 10px 14px; }
+
+/* Drawers, dialogs, notifications and action menus */
+.modal-header { padding: 18px 22px; }
+.modal-content { padding: 20px 22px 0; }
+.modal form [class$='form-actions'] {
+    margin-right: -22px;
+    margin-left: -22px;
+    padding: 14px 22px;
+}
+.modal-content > form,
+.box-form,
+.category-form,
+.client-action-form,
+.hub-form,
+.package-format-form-grid,
+.push-form,
+.station-form,
+.sub-admin-form,
+.warehouse-admins-form,
+.warehouse-form,
+.zone-form { gap: 14px; }
+.confirm-dialog-panel { padding: 22px; }
+.app-toast { padding: 14px 12px 17px 14px; }
+.warehouse-admin-savebar { padding: 12px 16px; }
+.business-settings-footer { padding: 12px 18px; }
+.dropdown-menu { padding: 6px; }
+.dropdown-item { padding: 9px 12px; }
+
+/* Cards and grids */
+.warehouse-grid {
+    gap: 18px;
+    padding: 18px;
+}
+.warehouse-tile-header { padding: 20px 20px 14px; }
+.warehouse-tile-badges {
+    margin-top: 0;
+    padding: 0 20px 16px;
+}
+.warehouse-tile-body,
+.warehouse-tile-footer { padding: 14px 20px; }
+
+.sub-admin-grid {
+    gap: 16px;
+    padding: 16px;
+}
+.sub-admin-card-heading { padding: 16px 16px 12px; }
+.sub-admin-contact { padding: 0 16px 12px; }
+.sub-admin-card-footer { padding: 12px 16px 16px; }
+
+.stat-card,
+.horizontal-stat-card,
+.warehouse-detail-kpis article { padding: 14px 16px; }
+.warehouse-overview-card-heading,
+.warehouse-admin-management-heading { padding: 14px 18px; }
+.warehouse-admin-row,
+.warehouse-admin-management-row { padding: 11px 16px; }
+.business-settings-form,
+.settings-card-header { padding: 16px 18px; }
+.package-formats-section .table th { padding: 10px 14px; }
+.package-formats-section .table td { padding: 12px 14px; }
+
+@media (min-width: 701px) {
+    .sidebar-brand {
+        height: auto;
+        min-height: 76px;
+    }
+    .sidebar-collapsed .sidebar-brand { height: 87px; }
+}
+
+@media (max-width: 700px) {
+    .dashboard-main { padding: 18px 14px; }
+    .sidebar-brand { padding-right: 44px; }
+    .warehouse-grid { padding: 14px; }
+    .sub-admin-grid { padding: 14px; }
+    .modal-header { padding: 18px 22px; }
+    .modal-content { padding: 20px 22px 0; }
+    .modal form [class$='form-actions'] {
+        margin-right: -22px;
+        margin-left: -22px;
+        padding: 14px 22px max(14px, env(safe-area-inset-bottom));
+    }
+}

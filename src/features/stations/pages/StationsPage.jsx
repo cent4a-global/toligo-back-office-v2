@@ -113,7 +113,7 @@ function StationsPage() {
                 title="Stations"
                 description="Gérez les stations accueillant les hubs automatisés de Tôligo."
                 actions={
-                    <Button onClick={openCreateModal}>
+                    <Button size="md" onClick={openCreateModal}>
                         <Icon name="add" />
                         Ajouter une station
                     </Button>

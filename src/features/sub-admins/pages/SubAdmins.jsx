@@ -3,12 +3,13 @@ import PageHeader from '../../../components/ui/PageHeader'
 import Button from '../../../components/ui/Button'
 import Input from '../../../components/ui/Input'
 import Select from '../../../components/ui/Select'
-import Badge from '../../../components/ui/Badge'
 import Pagination from '../../../components/ui/Pagination'
 import ConfirmDialog from '../../../components/ui/ConfirmDialog'
 import ErrorState from '../../../components/ui/ErrorState'
 import EmptyState from '../../../components/ui/EmptyState'
 import Skeleton from '../../../components/ui/Skeleton'
+import Dropdown from '../../../components/ui/Dropdown'
+import { KeyRound, Mail, MoreVertical, Phone, ShieldBan, UserRoundCheck } from 'lucide-react'
 import { useAddAdmin } from '../hooks/useAddAdmin'
 import AdminFormModal from '../components/AdminFormModal'
 
@@ -94,18 +95,31 @@ function SubAdmins() {
                     const id = idOf(admin)
                     const blocked = admin.status === 'blocked'
                     const active = admin.status === 'active'
+                    const station = admin.station?.nom ?? admin.station?.name ?? admin.station_name
+                    const role = roleLabels[admin.role] ?? admin.role ?? 'Rôle non renseigné'
                     return <article className={`sub-admin-card${validSelection.includes(id) ? ' is-selected' : ''}`} key={id ?? index}>
                         <div className="sub-admin-card-heading">
-                            <div className="sub-admin-avatar" aria-hidden="true">{(admin.name ?? admin.email ?? '?').slice(0, 2).toUpperCase()}</div>
-                            <div><h2>{admin.name || 'Administrateur'}</h2><span>{roleLabels[admin.role] ?? admin.role ?? 'Rôle non renseigné'}</span></div>
                             <input type="checkbox" aria-label={`Sélectionner ${admin.name ?? admin.email ?? 'cet administrateur'}`} checked={validSelection.includes(id)} disabled={busy || id == null} onChange={() => toggle(id)} />
+                            <div className="sub-admin-avatar" aria-hidden="true">{(admin.name ?? admin.email ?? '?').split(' ').filter(Boolean).slice(0, 2).map(part => part[0]).join('').toUpperCase()}</div>
+                            <div className="sub-admin-card-identity"><h2>{admin.name || 'Administrateur'}</h2><span>{[role, station].filter(Boolean).join(' · ')}</span></div>
+                            <Dropdown
+                                trigger={open => <button type="button" className="sub-admin-card-menu" aria-label={`Actions de ${admin.name ?? admin.email ?? 'cet administrateur'}`} aria-expanded={open}><MoreVertical size={21} aria-hidden="true" /></button>}
+                                items={[
+                                    ...(blocked || active ? [{ label: blocked ? 'Débloquer' : 'Bloquer', icon: blocked ? <UserRoundCheck size={16} /> : <ShieldBan size={16} />, disabled: busy || id == null, onClick: () => setConfirmation({ action: blocked ? 'unblock' : 'block', id, name: admin.name ?? admin.email }) }] : []),
+                                    { label: 'Réinitialiser le mot de passe', icon: <KeyRound size={16} />, disabled: busy || id == null, onClick: () => setConfirmation({ action: 'reset', id, name: admin.name ?? admin.email }) },
+                                ]}
+                            />
                         </div>
-                        <Badge variant={active ? 'success' : blocked ? 'danger' : 'default'}>{active ? 'Actif' : blocked ? 'Bloqué' : 'Statut non renseigné'}</Badge>
-                        <dl className="sub-admin-contact"><dt>E-mail</dt><dd>{admin.email || '—'}</dd><dt>Téléphone</dt><dd>{admin.phone || '—'}</dd><dt>Ajouté le</dt><dd>{admin.createdAt && dateOf(admin.createdAt) ? new Date(admin.createdAt).toLocaleDateString('fr-FR') : '—'}</dd></dl>
+                        <dl className="sub-admin-contact">
+                            <div><Mail size={16} aria-hidden="true" /><dt className="sr-only">E-mail</dt><dd>{admin.email || '—'}</dd></div>
+                            <div><Phone size={16} aria-hidden="true" /><dt className="sr-only">Téléphone</dt><dd>{admin.phone || '—'}</dd></div>
+                        </dl>
                         <div className="sub-admin-card-footer">
-                            <Button variant="secondary" size="sm" disabled={busy || id == null} onClick={() => setFormModal({ mode: 'role', admin })}>Modifier le rôle</Button>
-                            {(blocked || active) && <Button variant="secondary" size="sm" disabled={busy || id == null} onClick={() => setConfirmation({ action: blocked ? 'unblock' : 'block', id, name: admin.name ?? admin.email })}>{blocked ? 'Débloquer' : 'Bloquer'}</Button>}
-                            <Button variant="secondary" size="sm" disabled={busy || id == null} onClick={() => setConfirmation({ action: 'reset', id, name: admin.name ?? admin.email })}>Réinitialiser le mot de passe</Button>
+                            <div className="sub-admin-card-meta">
+                                <span className={`sub-admin-status${active ? ' is-active' : blocked ? ' is-blocked' : ''}`}><span />{active ? 'Actif' : blocked ? 'Bloqué' : 'Statut non renseigné'}</span>
+                                <span>Ajouté le {admin.createdAt && dateOf(admin.createdAt) ? new Date(admin.createdAt).toLocaleDateString('fr-FR') : '—'}</span>
+                            </div>
+                            <Button variant="secondary" size="md" disabled={busy || id == null} onClick={() => setFormModal({ mode: 'role', admin })}>Modifier le rôle</Button>
                         </div>
                     </article>
                 })}</div>

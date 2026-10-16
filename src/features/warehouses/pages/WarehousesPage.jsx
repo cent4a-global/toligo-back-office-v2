@@ -89,7 +89,7 @@ function WarehousesPage() {
                 title="Entrepôts"
                 description="Gérez les sites de stockage, leurs capacités et leurs affectations."
                 actions={
-                    <Button onClick={openCreateModal} size="sm">
+                    <Button onClick={openCreateModal} size="md">
                         <Flaticon name="plus" size={16} />
                         Ajouter un entrepôt
                     </Button>

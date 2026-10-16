@@ -29,7 +29,7 @@ export default function MapViewer({ label, children }) {
     return (
         <section className={`map-viewer${fullscreen ? ' map-viewer-fullscreen' : ''}`} aria-label={label}>
             <div className="map-viewer-toolbar">
-                <Button variant="secondary" aria-expanded={visible} aria-controls={id} onClick={() => {
+                <Button variant="secondary" size="md" aria-expanded={visible} aria-controls={id} onClick={() => {
                     setVisible(previous => !previous)
                     setFullscreen(false)
                 }}>

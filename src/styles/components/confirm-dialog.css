@@ -1,15 +1,73 @@
-.confirm-dialog-description {
-    color: var(--color-text-secondary);
-
-    font-size: var(--font-size-sm);
-    line-height: 1.6;
+.confirm-dialog-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1100;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    background: rgb(14 26 43 / 52%);
+    animation: confirm-overlay-in 150ms ease-out;
 }
+
+.confirm-dialog-panel {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 16px;
+    width: min(440px, 100%);
+    padding: 22px;
+    border: 1px solid #dce2ea;
+    border-radius: 16px;
+    outline: 0;
+    background: #fff;
+    color: #142033;
+    box-shadow: 0 24px 70px rgb(14 26 43 / 24%);
+    animation: confirm-panel-in 190ms cubic-bezier(.22, 1, .36, 1);
+}
+
+.confirm-dialog-icon {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: #fbe1de;
+    color: #b4322a;
+}
+
+.confirm-dialog-content { min-width: 0; }
+.confirm-dialog-title { margin: 1px 0 0; font-size: 18px; font-weight: 700; line-height: 1.4; }
+.confirm-dialog-description { margin-top: 7px; color: #5b6879; font-size: 14px; line-height: 1.6; overflow-wrap: anywhere; }
 
 .confirm-dialog-actions {
     display: flex;
     justify-content: flex-end;
+    gap: 10px;
+    grid-column: 1 / -1;
+    margin-top: 6px;
+    padding-top: 16px;
+    border-top: 1px solid #dce2ea;
+}
 
-    gap: var(--space-3);
+.confirm-dialog-panel:focus-visible { box-shadow: 0 0 0 3px rgb(11 122 135 / 24%), 0 24px 70px rgb(14 26 43 / 24%); }
 
-    margin-top: var(--space-6);
+@keyframes confirm-overlay-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes confirm-panel-in {
+    from { opacity: 0; transform: translateY(8px) scale(.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (max-width: 520px) {
+    .confirm-dialog-overlay { padding: 16px; }
+    .confirm-dialog-panel { grid-template-columns: 1fr; padding: 20px; }
+    .confirm-dialog-icon { width: 40px; height: 40px; }
+    .confirm-dialog-actions { flex-direction: column-reverse; }
+    .confirm-dialog-actions .btn { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .confirm-dialog-overlay, .confirm-dialog-panel { animation: none; }
 }

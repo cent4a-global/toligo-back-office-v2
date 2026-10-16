@@ -51,6 +51,7 @@ export default function AppToaster() {
                                 <span className="app-toast-close" aria-hidden="true">
                                     <X size={16} aria-hidden="true" />
                                 </span>
+                                <span className="app-toast-progress" aria-hidden="true" />
                             </div>
                         )}
                     </ToastBar>

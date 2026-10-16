@@ -120,7 +120,7 @@ function HubsPage() {
                 description={stationId ? 'Créez, modifiez, supprimez et réaffectez les hubs de cette station.' : 'Gérez les plateformes automatisées de décollage, d’atterrissage et de recharge des drones.'}
                 actions={
                     <div className="hubs-page-actions">
-                    <Button onClick={openCreateModal} disabled={Boolean(stationId) && !station}>
+                    <Button size="md" onClick={openCreateModal} disabled={Boolean(stationId) && !station}>
                         <Icon name="add" />
                         Ajouter un hub
                     </Button>

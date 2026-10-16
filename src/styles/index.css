@@ -71,6 +71,10 @@
 @import './motion.css';
 @import './components/modal-drawer.css';
 @import './components/design-scale.css';
+@import './components/table-reference.css';
+@import './components/stats-reference.css';
+@import './components/spacing-reference.css';
+@import './theme.css';
 
 .app-icon {
     font-family: 'Material Symbols Outlined';

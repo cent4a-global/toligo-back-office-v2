@@ -4,28 +4,32 @@
        BRAND
     ======================================== */
 
-    --color-brand: #121212;
-    --color-brand-hover: #202020;
+    --color-brand: #11b85c;
+    --color-brand-hover: #0e984c;
+    --color-brand-active: #0b7a3d;
+    --color-brand-soft: #e7f8ee;
+    --color-brand-ring: rgb(17 184 92 / 18%);
+    --color-text-on-brand: #000000;
 
     /* ========================================
        BACKGROUNDS
     ======================================== */
 
-    --color-bg-page: #f5f5f6;
+    --color-bg-page: #ffffff;
     --color-bg-surface: #ffffff;
 
-    --color-bg-sidebar: #121212;
+    --color-bg-sidebar: #000000;
 
     --color-bg-hover: #f2f2f3;
-    --color-bg-active: #2f2f2f;
+    --color-bg-active: #111111;
 
     /* ========================================
        TEXT
     ======================================== */
 
-    --color-text-primary: #121212;
-    --color-text-secondary: #66666d;
-    --color-text-muted: #99999f;
+    --color-text-primary: #111111;
+    --color-text-secondary: #5f5f63;
+    --color-text-muted: #8b8b90;
 
     --color-text-inverse: #ffffff;
 
@@ -40,8 +44,8 @@
        SUCCESS
     ======================================== */
 
-    --color-success: #0e7a52;
-    --color-success-bg: #e3f4ec;
+    --color-success: #11b85c;
+    --color-success-bg: #e7f8ee;
 
     /* ========================================
        DANGER
@@ -98,7 +102,7 @@
        TYPOGRAPHY
     ======================================== */
 
-    --font-family-base: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-family-base: 'Sora', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
     /* Font sizes */
 

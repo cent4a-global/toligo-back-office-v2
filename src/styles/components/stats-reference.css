@@ -1,0 +1,45 @@
+/* Compact KPI cards from the network/admin mockup. */
+.stat-card, .horizontal-stat-card {
+    display: block;
+    min-width: 0;
+    min-height: 0;
+    padding: 14px 16px;
+    border: 1px solid #dce2ea;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: none;
+    line-height: 1.5;
+}
+.stat-card-header { margin-bottom: 2px; }
+.stat-card-title, .horizontal-stat-card-title {
+    color: #5b6879;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.5;
+}
+.stat-card-icon, .horizontal-stat-card-icon { display: none; }
+.horizontal-stat-card-content { display: block; }
+.stat-card .stat-card-value,
+.horizontal-stat-card .horizontal-stat-card-value {
+    margin: 2px 0 0;
+    color: #142033;
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 1.5;
+    letter-spacing: normal;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+}
+.stat-card-footer { margin-top: 4px; font-size: 12px; }
+.stat-card-description, .horizontal-stat-card-description {
+    color: #5b6879;
+    font-size: 12px;
+    line-height: 1.5;
+}
+.horizontal-stat-card-description { margin-top: 4px; }
+.warehouses-stats, .stations-stats, .hubs-stats,
+.geo-stats, .location-stats, .location-balance {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(170px, 100%), 1fr));
+    gap: 12px;
+}

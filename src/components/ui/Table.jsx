@@ -23,11 +23,11 @@ const Table = ({
     return (
         <>
             <div className={classes} aria-busy={loading}>
-                <table className="table">
+                <table className="table table-responsive">
                     <thead>
                         <tr>
                             {columns.map(column => (
-                                <th key={column.key}>{column.label}</th>
+                                <th key={column.key} scope="col">{column.label}</th>
                             ))}
                         </tr>
                     </thead>
@@ -37,7 +37,7 @@ const Table = ({
                             Array.from({ length: 6 }, (_, rowIndex) => (
                                 <tr key={rowIndex}>
                                     {columns.map(column => (
-                                        <td key={column.key}>
+                                        <td key={column.key} data-label={column.label}>
                                             <Skeleton height={18} />
                                         </td>
                                     ))}
@@ -52,8 +52,11 @@ const Table = ({
                         ) : (
                             rows.map((row, rowIndex) => (
                                 <tr key={row.id ?? (paginated ? start : 0) + rowIndex}>
-                                    {columns.map(column => (
-                                        <td key={column.key}>
+                                    {columns.map((column, columnIndex) => (
+                                        <td
+                                            key={column.key}
+                                            data-label={column.label}
+                                            className={column.key === 'actions' ? 'table-cell-actions' : columnIndex === 0 ? 'table-cell-main' : undefined}>
                                             {column.render ? column.render(row) : row[column.key]}
                                         </td>
                                     ))}

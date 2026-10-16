@@ -98,7 +98,7 @@ function ZonesPage() {
                 title="Zones"
                 description="Gérez les zones géographiques couvertes par Tôligo."
                 actions={
-                    <Button onClick={openCreateModal}>
+                    <Button size="md" onClick={openCreateModal}>
                         <Icon name="add" />
                         Ajouter une zone
                     </Button>

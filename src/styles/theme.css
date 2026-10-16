@@ -1,0 +1,245 @@
+/* Toligo application theme: green, white and black. */
+:root {
+    color-scheme: light;
+    accent-color: var(--color-brand);
+}
+
+::selection {
+    background: var(--color-brand);
+    color: var(--color-text-on-brand);
+}
+
+body,
+.dashboard-layout { background: var(--color-bg-page); }
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline-color: var(--color-brand);
+}
+
+/* Navigation */
+.sidebar {
+    background: #000;
+    color: #d4d4d4;
+    border-right-color: #242424;
+}
+.sidebar-logo { background: var(--color-brand); color: var(--color-text-on-brand); }
+.sidebar-brand-badge {
+    border-color: #303030;
+    color: var(--color-brand);
+}
+.sidebar-collapse-button {
+    background: #000;
+    border-color: #303030;
+    color: #b5b5b5;
+}
+.sidebar-collapse-button:hover {
+    background: #171717;
+    border-color: #464646;
+    color: #fff;
+}
+.sidebar-session {
+    border-color: #292929;
+    color: #a3a3a3;
+}
+.sidebar-session strong,
+.sidebar-brand-name,
+.sidebar-user-name { color: #fff; }
+.sidebar-navigation { scrollbar-color: #393939 transparent; }
+.sidebar-section-label,
+.sidebar-user-role { color: #919191; }
+.sidebar-link,
+.sidebar-link .sidebar-link-icon { color: #d0d0d0; }
+.sidebar-link:hover,
+.sidebar-footer-user:hover,
+.sidebar-footer-user.active {
+    background: #171717;
+    color: #fff;
+}
+.sidebar-link:hover .sidebar-link-icon { color: #fff; }
+.sidebar-link-active,
+.sidebar-link-active:hover {
+    background: var(--color-brand);
+    color: var(--color-text-on-brand);
+}
+.sidebar-link-active .sidebar-link-icon,
+.sidebar-link-active:hover .sidebar-link-icon { color: var(--color-text-on-brand); }
+.sidebar-footer { border-color: #242424; }
+.sidebar-user-avatar { background: #202020; color: #fff; }
+.sidebar-link:focus-visible,
+.sidebar-footer-user:focus-visible,
+.sidebar-collapse-button:focus-visible,
+.sidebar-close:focus-visible { outline-color: var(--color-brand); }
+.sidebar-close { background: #000; color: #d0d0d0; }
+.sidebar-close:hover { background: #171717; }
+
+/* Main actions and form focus */
+.btn-primary,
+.modal .btn-primary {
+    background: var(--color-brand);
+    border-color: var(--color-brand);
+    color: var(--color-text-on-brand);
+}
+.btn-primary:hover:not(:disabled),
+.modal .btn-primary:hover:not(:disabled) {
+    background: var(--color-brand-hover);
+    border-color: var(--color-brand-hover);
+}
+.form-input:focus,
+.form-select:focus,
+.modal .form-input:focus,
+.modal .form-select:focus {
+    border-color: var(--color-brand);
+    box-shadow: 0 0 0 3px var(--color-brand-ring);
+}
+.modal,
+.modal-title,
+.modal-content,
+.modal .form-label,
+.modal .btn-secondary,
+.confirm-dialog-panel { color: var(--color-text-primary); }
+.header-action-button:focus-visible,
+.header-menu-button:focus-visible,
+.header-user-button:focus-visible { outline-color: var(--color-brand); }
+.auth-eyebrow,
+.login-kicker { color: var(--color-brand); }
+.btn-category-edit,
+.package-formats-section .package-format-add {
+    background: var(--color-brand);
+    border-color: var(--color-brand);
+    color: var(--color-text-on-brand);
+}
+.btn-category-edit:hover:not(:disabled),
+.package-formats-section .package-format-add:hover {
+    background: var(--color-brand-hover);
+    border-color: var(--color-brand-hover);
+}
+.btn-category-edit:focus-visible { outline-color: var(--color-brand); }
+
+/* Tabs, pagination and tables */
+.tab-active::after,
+.package-formats-section .tab-active::after { background: var(--color-brand); }
+.warehouse-detail-tabs a.active {
+    color: var(--color-brand);
+    border-bottom-color: var(--color-brand);
+}
+.table-container { --table-text: var(--color-text-primary); }
+.table-container .table .btn-link,
+.warehouse-details-breadcrumb a:hover { color: var(--color-brand); }
+.table-pagination .pagination-page-active,
+.pagination-page-active {
+    background: var(--color-brand);
+    border-color: var(--color-brand);
+    color: var(--color-text-on-brand);
+}
+.table-pagination .pagination-page-active:hover,
+.pagination-page-active:hover { background: var(--color-brand-hover); }
+
+/* Cards and warehouse screens */
+.sub-admin-card.is-selected {
+    border-color: var(--color-brand);
+    box-shadow: 0 0 0 1px var(--color-brand);
+}
+.sub-admin-card-menu:focus-visible,
+.warehouse-tile:focus-visible { outline-color: var(--color-brand); }
+.sub-admin-avatar,
+.sub-admin-card h2,
+.sub-admin-contact > div,
+.warehouse-tile-symbol,
+.warehouse-tile-info p,
+.warehouse-details-page,
+.warehouse-details-heading h1,
+.warehouse-detail-kpis strong,
+.warehouse-overview-card-heading h2,
+.warehouse-detail-field dd,
+.warehouse-map-popup strong,
+.warehouse-management-page,
+.warehouse-admin-management-heading h2,
+.warehouse-admin-management-identity strong,
+.warehouse-admin-management-search input,
+.warehouse-boxes-search input { color: var(--color-text-primary); }
+.warehouse-tile-badge-admin {
+    background: var(--color-brand-soft);
+    color: var(--color-brand-active);
+}
+.warehouse-tile-badge-box {
+    background: #f0f0f0;
+    color: #111;
+}
+.warehouse-boxes-search:focus-within,
+.warehouse-admin-management-search input:focus {
+    border-color: var(--color-brand);
+    box-shadow: 0 0 0 3px var(--color-brand-ring);
+}
+.warehouse-admin-management-search:focus-within,
+.warehouse-box-lock svg,
+.warehouse-location-caption > svg,
+.warehouse-admins-empty a { color: var(--color-brand); }
+.warehouse-boxes-filters button:hover {
+    border-color: var(--color-brand);
+    color: var(--color-brand);
+}
+.warehouse-boxes-filters button.is-active {
+    border-color: var(--color-brand);
+    background: var(--color-brand-soft);
+    color: var(--color-brand-active);
+}
+.warehouse-admin-avatar {
+    background: var(--color-brand-soft);
+    color: var(--color-brand-active);
+}
+.warehouse-assigned-symbol,
+.warehouse-assigned-empty > span {
+    background: var(--color-brand-soft);
+    color: var(--color-brand-active);
+}
+.warehouse-assigned-total,
+.warehouse-assigned-tag { color: var(--color-brand-active); }
+.package-formats-section .package-format-image {
+    background: var(--color-brand-soft);
+    color: var(--color-brand-active);
+}
+.push-preview-icon {
+    background: var(--color-brand);
+    color: var(--color-text-on-brand);
+}
+
+.stat-card .stat-card-value,
+.horizontal-stat-card .horizontal-stat-card-value { color: var(--color-text-primary); }
+
+/* Success surfaces use the brand green. */
+.table-container .badge-success,
+.sub-admin-status.is-active,
+.warehouse-box-status-success,
+.warehouse-tile-status.is-active,
+.package-formats-section .package-format-status-active {
+    background: var(--color-brand-soft);
+    color: var(--color-brand-active);
+}
+
+/* Notifications */
+.app-toast {
+    --toast-accent: var(--color-brand);
+    --toast-tint: var(--color-brand-soft);
+    color: var(--color-text-primary);
+}
+.app-toast--success {
+    --toast-accent: var(--color-brand);
+    --toast-tint: var(--color-brand-soft);
+}
+.app-toast--loading {
+    --toast-accent: #111;
+    --toast-tint: #f0f0f0;
+}
+.app-toast-title { color: var(--color-text-primary); }
+.confirm-dialog-panel:focus-visible {
+    box-shadow: 0 0 0 3px var(--color-brand-ring), 0 24px 70px rgb(0 0 0 / 24%);
+}
+
+@media (max-width: 700px) {
+    .sidebar-close { background: #000; color: #d0d0d0; }
+    .sidebar-close:hover { background: #171717; }
+}
