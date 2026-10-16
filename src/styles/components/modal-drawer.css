@@ -1,0 +1,96 @@
+.modal-overlay {
+    justify-content: flex-end;
+    align-items: stretch;
+    padding: 0;
+    background: rgb(12 22 33 / 50%);
+    backdrop-filter: none;
+}
+
+.modal {
+    height: 100dvh;
+    max-height: 100dvh;
+    border: 0;
+    border-left: 1px solid #d8e1ec;
+    border-radius: 0;
+    background: #fff;
+    box-shadow: -12px 0 40px rgb(12 22 33 / 10%);
+    animation: modal-slide-in 220ms ease-out;
+}
+
+.modal-md { max-width: 610px; }
+.modal-header {
+    align-items: center;
+    min-height: 83px;
+    padding: 23px 28px;
+    background: #fff;
+    border-bottom-color: #d8e1ec;
+}
+.modal-title { color: #0d1b2c; font-size: 23px; letter-spacing: -.3px; }
+.modal-close {
+    width: auto;
+    height: 37px;
+    padding: 0 13px;
+    border: 1px solid #d8e1ec;
+    border-radius: 12px;
+    color: #0d1b2c;
+    font-size: 14px;
+    line-height: 1.2;
+    box-shadow: none;
+}
+.modal-content {
+    flex: 1;
+    padding: 28px 28px 0;
+    color: #0d1b2c;
+}
+.modal-content > form {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    gap: 22px;
+}
+.modal .form-label { color: #0d1b2c; font-size: 16px; font-weight: 500; }
+.modal .form-input, .modal .form-select {
+    background: #fff;
+    border-color: #d8e1ec;
+    border-radius: 12px;
+    box-shadow: none;
+    font-size: 16px;
+}
+.modal .form-input:focus, .modal .form-select:focus {
+    border-color: #098393;
+    box-shadow: 0 0 0 3px rgb(9 131 147 / 12%);
+}
+.modal form [class$='form-actions'], .modal .confirm-dialog-actions {
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+    flex-shrink: 0;
+    margin: auto -28px 0;
+    padding: 17px 28px;
+    border-top: 1px solid #d8e1ec;
+    background: #fff;
+}
+.modal .btn-primary { background: #098393; border-color: #098393; color: #fff; box-shadow: none; }
+.modal .btn-primary:hover:not(:disabled) { background: #076c79; border-color: #076c79; }
+.modal .btn-secondary { background: #fff; border-color: #d8e1ec; color: #0d1b2c; }
+
+@keyframes modal-slide-in {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+}
+
+@media (max-width: 650px) {
+    .modal { max-width: 100%; }
+    .modal-header { padding: 20px; }
+    .modal-title { font-size: 20px; }
+    .modal-content { padding: 24px 20px 0; }
+    .modal form [class$='form-actions'], .modal .confirm-dialog-actions {
+        margin-left: -20px;
+        margin-right: -20px;
+        padding: 16px 20px;
+        padding-bottom: max(16px, env(safe-area-inset-bottom));
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .modal { animation: none; }
+}

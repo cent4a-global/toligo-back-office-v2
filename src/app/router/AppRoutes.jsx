@@ -40,6 +40,7 @@ const Clients = lazy(() => import('../../features/clients/pages/Clients'))
 const ClientLocations = lazy(() => import('../../features/locations/pages/ClientLocations'))
 const PushNotifications = lazy(() => import('../../features/push-notifications/pages/PushNotifications'))
 const Locations = lazy(() => import('../../features/locations/pages/Locations'))
+const TestPage = lazy(() => import('../../features/test/pages/TestPage'))
 
 function AppRoutes() {
     return (
@@ -65,6 +66,7 @@ function AppRoutes() {
 
                         <Route path="/" element={<Navigate to="/dashboard" replace />} />
                         <Route path="/dashboard" element={<Dashboard />} />
+                        <Route path="/test" element={<TestPage />} />
                         <Route path="/profile" element={<Profile />} />
                         <Route path="/supervision" element={<Supervision />} />
                         <Route path="/orders" element={<Orders />} />

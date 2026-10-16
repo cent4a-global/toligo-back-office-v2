@@ -14,10 +14,9 @@ const navigationSections = [
     {
         label: 'Activité',
         items: [
-            { label: 'Commandes', to: '/orders', icon: 'shopping_cart' },
+            { label: 'Livraisons', to: '/orders', icon: 'shopping_cart' },
             { label: 'Missions et livreurs', to: '/missions', icon: 'two_wheeler' },
             { label: 'Locations', to: '/locations', icon: 'key', superadminOnly: true },
-            { label: 'Paiements', to: '/payments', icon: 'credit_card' },
             { label: 'Incidents', to: '/incidents', icon: 'warning' },
         ],
     },
@@ -73,12 +72,12 @@ function Sidebar({
 }) {
     const { admin } = useAuth()
     const currentUser = user ?? admin ?? {}
-    const userName = currentUser.name || currentUser.email || 'Mon compte'
+    const userName = currentUser.nom_complet || currentUser.name || currentUser.email || 'Mon compte'
     const items = navigationItems.filter(
         item => !item.superadminOnly || currentUser.role === 'superadmin',
     )
 
-    const roleLabel = currentUser.role === 'superadmin' ? 'Superadmin' : currentUser.role
+    const roleLabel = currentUser.role === 'superadmin' ? 'Super Admin' : currentUser.role || 'Administrateur'
 
     return (
         <aside
@@ -93,10 +92,13 @@ function Sidebar({
                 <Icon name="close" />
             </button>
             <div className="sidebar-brand">
+                <div className="sidebar-brand-main">
+                    <span className="sidebar-logo" aria-hidden="true">T</span>
                 <div className="sidebar-brand-identity">
                     <span className="sidebar-brand-name">Tôligo</span>
-                    <span className="sidebar-brand-caption">Espace de gestion</span>
                 </div>
+                </div>
+                <span className="sidebar-brand-badge">BACK-OFFICE</span>
                 <button
                     type="button"
                     className="sidebar-collapse-button"
@@ -111,6 +113,10 @@ function Sidebar({
                         <Icon name="chevron_left" size={20} />
                     )}
                 </button>
+            </div>
+            <div className="sidebar-session">
+                <span>Connecté en tant que</span>
+                <strong>{roleLabel}</strong>
             </div>
             {/* NAVIGATION */}
             <nav className="sidebar-navigation" aria-label="Navigation principale">
@@ -159,7 +165,7 @@ function Sidebar({
                     <div className="sidebar-user-info">
                         <span className="sidebar-user-name">{userName}</span>
 
-                        <span className="sidebar-user-role">{roleLabel}</span>
+                        <span className="sidebar-user-role">{currentUser.email || roleLabel}</span>
                     </div>
                 </NavLink>
             </div>

@@ -1,4 +1,3 @@
-
 const tabs = [
     {
         key: 'internal',

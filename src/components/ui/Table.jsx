@@ -22,62 +22,75 @@ const Table = ({
 
     return (
         <>
-        <div className={classes} aria-busy={loading}>
-            <table className="table">
-                <thead>
-                    <tr>
-                        {columns.map(column => (
-                            <th key={column.key}>{column.label}</th>
-                        ))}
-                    </tr>
-                </thead>
-
-                <tbody>
-                    {loading ? (
-                        Array.from({ length: 6 }, (_, rowIndex) => (
-                            <tr key={rowIndex}>
-                                {columns.map(column => (
-                                    <td key={column.key}><Skeleton height={18} /></td>
-                                ))}
-                            </tr>
-                        ))
-                    ) : data.length === 0 ? (
+            <div className={classes} aria-busy={loading}>
+                <table className="table">
+                    <thead>
                         <tr>
-                            <td colSpan={columns.length} className="table-message">
-                                {emptyMessage}
-                            </td>
+                            {columns.map(column => (
+                                <th key={column.key}>{column.label}</th>
+                            ))}
                         </tr>
-                    ) : (
-                        rows.map((row, rowIndex) => (
-                            <tr key={row.id ?? (paginated ? start : 0) + rowIndex}>
-                                {columns.map(column => (
-                                    <td key={column.key}>
-                                        {column.render ? column.render(row) : row[column.key]}
-                                    </td>
-                                ))}
+                    </thead>
+
+                    <tbody>
+                        {loading ? (
+                            Array.from({ length: 6 }, (_, rowIndex) => (
+                                <tr key={rowIndex}>
+                                    {columns.map(column => (
+                                        <td key={column.key}>
+                                            <Skeleton height={18} />
+                                        </td>
+                                    ))}
+                                </tr>
+                            ))
+                        ) : data.length === 0 ? (
+                            <tr>
+                                <td colSpan={columns.length} className="table-message">
+                                    {emptyMessage}
+                                </td>
                             </tr>
-                        ))
-                    )}
-                </tbody>
-            </table>
-        </div>
-        {paginated && !loading && data.length > 0 && (
-            <div className="table-pagination">
-                <span className="table-pagination-count" role="status">
-                    {start + 1}–{Math.min(start + pageSize, data.length)} sur {data.length}
-                </span>
-                <label className="table-pagination-size" htmlFor={pageSizeId}>
-                    Lignes par page
-                    <select id={pageSizeId} value={pageSize} onChange={event => {
-                        setPageSize(Number(event.target.value))
-                        setPage(1)
-                    }}>
-                        {[10, 25, 50, 100].map(size => <option key={size} value={size}>{size}</option>)}
-                    </select>
-                </label>
-                <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setPage} />
+                        ) : (
+                            rows.map((row, rowIndex) => (
+                                <tr key={row.id ?? (paginated ? start : 0) + rowIndex}>
+                                    {columns.map(column => (
+                                        <td key={column.key}>
+                                            {column.render ? column.render(row) : row[column.key]}
+                                        </td>
+                                    ))}
+                                </tr>
+                            ))
+                        )}
+                    </tbody>
+                </table>
             </div>
-        )}
+            {paginated && !loading && data.length > 0 && (
+                <div className="table-pagination">
+                    <span className="table-pagination-count" role="status">
+                        {start + 1}–{Math.min(start + pageSize, data.length)} sur {data.length}
+                    </span>
+                    <label className="table-pagination-size" htmlFor={pageSizeId}>
+                        Lignes par page
+                        <select
+                            id={pageSizeId}
+                            value={pageSize}
+                            onChange={event => {
+                                setPageSize(Number(event.target.value))
+                                setPage(1)
+                            }}>
+                            {[10, 25, 50, 100].map(size => (
+                                <option key={size} value={size}>
+                                    {size}
+                                </option>
+                            ))}
+                        </select>
+                    </label>
+                    <Pagination
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onPageChange={setPage}
+                    />
+                </div>
+            )}
         </>
     )
 }

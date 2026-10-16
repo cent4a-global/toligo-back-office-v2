@@ -1,7 +1,7 @@
 import PageScaffold from '../../../components/ui/PageScaffold'
 
 function Orders() {
-    return <PageScaffold title="Commandes" description="Consultez les commandes." />
+    return <PageScaffold title="Livraisons" description="Consultez les livraisons." />
 }
 
 export default Orders

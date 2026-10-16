@@ -69,6 +69,8 @@
 @import './pages/settings/SettingsPage.css';
 @import './components/form-refinement.css';
 @import './motion.css';
+@import './components/modal-drawer.css';
+@import './components/design-scale.css';
 
 .app-icon {
     font-family: 'Material Symbols Outlined';

@@ -17,7 +17,7 @@
 
 .dashboard-main h1,
 .dashboard-main h1 * {
-    font-family: 'Sora', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: var(--font-family-base);
 }
 
 .dashboard-menu-button { display: none; }

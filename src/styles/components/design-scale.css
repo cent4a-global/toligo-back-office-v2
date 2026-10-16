@@ -1,0 +1,57 @@
+/* Shared measurements from the reference mockups. */
+body { font-size: 14px; line-height: 1.5; }
+button, input, select, textarea { font-family: var(--font-family-base); line-height: 1.5; }
+
+.form-field { gap: 5px; }
+.form-label, .modal .form-label { font-size: 14px; font-weight: 600; line-height: 1.5; }
+.form-input, .form-select, .modal .form-input, .modal .form-select {
+    height: 39px;
+    padding: 8px 11px;
+    border-width: 1px;
+    border-radius: 9px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+textarea.form-input, .modal textarea.form-input {
+    height: auto;
+    min-height: 100px;
+    padding: 8px 11px;
+}
+input::placeholder, textarea::placeholder,
+.form-input::placeholder, .modal .form-input::placeholder,
+.hub-form-group textarea::placeholder {
+    color: revert;
+    opacity: revert;
+    font-size: 14px;
+}
+.form-error, .form-help, .form-hint, .form-helper,
+.modal-subtitle { font-size: 12px; }
+.form-input[name='latitude'], .form-input[name='longitude'],
+.modal .form-input[name='latitude'], .modal .form-input[name='longitude'],
+.ttlock-credential-value > span, .technical-field {
+    font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+    font-size: 13px;
+}
+
+.btn, .modal .btn { min-height: 39px; padding: 8px 14px; font-size: 14px; font-weight: 600; line-height: 1.5; }
+.btn-sm, .modal .btn-sm { min-height: 30px; padding: 5px 10px; font-size: 12px; }
+.btn-icon, .modal .btn-icon { padding: 0; }
+.btn-link, .modal .btn-link { min-height: auto; padding: 0; }
+.chip { font-size: 12px; font-weight: 600; }
+.tab { font-size: 14px; font-weight: 600; }
+.badge { font-size: 12px; font-weight: 600; }
+.badge-pending-validation { font-size: 11px; }
+
+h1, .page-header-title, .dashboard-main h1 { font-size: 24px; font-weight: 800; }
+.page-header-description { font-size: 14px; color: var(--color-text-secondary); }
+.modal-title, .panel-title { font-size: 18px; }
+.card h3 { font-size: 16px; }
+.stat-card-value, .horizontal-stat-card-value { font-size: 24px; font-weight: 800; }
+.stat-card-title, .horizontal-stat-card-title { font-size: 12px; }
+.horizontal-stat-card-description, .breadcrumb { font-size: 12px; }
+.table th { font-size: 12px; font-weight: 600; }
+.table td { font-size: 14px; padding: 12px 14px; }
+.sidebar-link { font-size: 14px; }
+.sidebar-section-label { font-size: 11px; }
+.sidebar-brand-name { font-size: 17px; }
+.app-toast-title, .app-toast-message { font-size: 14px; font-weight: 600; line-height: 1.5; }

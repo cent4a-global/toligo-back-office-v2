@@ -6,7 +6,11 @@ function ProtectedRoute() {
     const { isAuthenticated, isLoading } = useAuth()
 
     if (isLoading) {
-        return <div className="route-skeleton"><PageSkeleton /></div>
+        return (
+            <div className="route-skeleton">
+                <PageSkeleton />
+            </div>
+        )
     }
 
     if (!isAuthenticated) return <Navigate to="/login" replace />

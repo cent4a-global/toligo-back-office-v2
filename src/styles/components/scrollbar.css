@@ -10,9 +10,25 @@
 }
 
 .sidebar {
-    --scrollbar-size: 6px;
-    --scrollbar-thumb: #515158;
-    --scrollbar-thumb-hover: #777780;
+    --scrollbar-size: 4px;
+    --scrollbar-thumb: #dedede;
+    --scrollbar-thumb-hover: #b5b5b5;
+}
+
+.sidebar-navigation {
+    scrollbar-gutter: stable;
+    overscroll-behavior-y: contain;
+}
+
+@media (min-width: 701px) {
+    .sidebar-collapsed .sidebar-navigation {
+        scrollbar-width: none;
+    }
+
+    .sidebar-collapsed .sidebar-navigation::-webkit-scrollbar {
+        display: none;
+        width: 0;
+    }
 }
 
 /* Use pixel sizing and hover feedback where pseudo-elements are supported. */
@@ -46,6 +62,10 @@
 
     *::-webkit-scrollbar-corner {
         background: transparent;
+    }
+
+    .sidebar-navigation::-webkit-scrollbar-thumb {
+        border: 0;
     }
 }
 

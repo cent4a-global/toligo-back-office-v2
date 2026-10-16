@@ -1,4 +1,3 @@
-import Icon from './Icon'
 import { useId } from 'react'
 
 const Modal = ({ open, onClose, title, subtitle, children, size = 'md', className = '', closeOnOverlayClick = true }) => {
@@ -25,7 +24,7 @@ const Modal = ({ open, onClose, title, subtitle, children, size = 'md', classNam
                         onClick={onClose}
                         disabled={!onClose}
                         aria-label="Fermer">
-                        <Icon name="close" />
+                        Fermer
                     </button>
                 </div>
 

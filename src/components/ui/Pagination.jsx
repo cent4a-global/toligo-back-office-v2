@@ -5,7 +5,8 @@ const Pagination = ({ currentPage, totalPages, onPageChange, className = '' }) =
 
     const visible = new Set([1, totalPages, currentPage - 1, currentPage, currentPage + 1])
     if (currentPage <= 3) [2, 3, 4].forEach(page => visible.add(page))
-    if (currentPage >= totalPages - 2) [totalPages - 3, totalPages - 2, totalPages - 1].forEach(page => visible.add(page))
+    if (currentPage >= totalPages - 2)
+        [totalPages - 3, totalPages - 2, totalPages - 1].forEach(page => visible.add(page))
     const pages = [...visible].filter(page => page >= 1 && page <= totalPages).sort((a, b) => a - b)
 
     return (
@@ -21,7 +22,15 @@ const Pagination = ({ currentPage, totalPages, onPageChange, className = '' }) =
             <div className="pagination-pages">
                 {pages.flatMap((page, index) => [
                     ...(index > 0 && page - pages[index - 1] > 1
-                        ? [<span key={`gap-${page}`} className="pagination-ellipsis" aria-hidden="true">…</span>] : []),
+                        ? [
+                              <span
+                                  key={`gap-${page}`}
+                                  className="pagination-ellipsis"
+                                  aria-hidden="true">
+                                  …
+                              </span>,
+                          ]
+                        : []),
                     <button
                         key={page}
                         type="button"
