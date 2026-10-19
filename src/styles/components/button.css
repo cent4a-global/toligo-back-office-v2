@@ -67,11 +67,6 @@
     background: var(--color-brand);
     color: var(--color-text-inverse);
 }
-.btn-danger {
-    background: var(--color-danger);
-    color: var(--color-text-inverse);
-}
-
 .btn-primary:hover:not(:disabled) {
     background: var(--color-brand-hover);
 }
@@ -169,12 +164,15 @@
 ======================================== */
 
 .btn-danger {
-    background: var(--color-danger);
-    color: var(--color-text-inverse);
+    border-color: #dc2626;
+    background: transparent;
+    color: #dc2626;
 }
 
 .btn-danger:hover:not(:disabled) {
-    filter: brightness(0.92);
+    background: #fef2f2;
+    border-color: #b91c1c;
+    color: #b91c1c;
 }
 
 /* ========================================

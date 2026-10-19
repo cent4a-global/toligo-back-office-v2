@@ -12,6 +12,6 @@ export function useSavePackageFormat() {
     return useMutation({
         meta: { successMessage: 'Format de colis enregistré.' },
         mutationFn: ({ id, payload }) => id ? updatePackageFormat(id, payload) : createPackageFormat(payload),
-        onSuccess: () => client.invalidateQueries({ queryKey: formatKeys }),
+        onSuccess: () => { void client.invalidateQueries({ queryKey: formatKeys }) },
     })
 }

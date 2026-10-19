@@ -1,3 +1,5 @@
+import { flushSync } from 'react-dom'
+import { notifySuccess } from '../../../lib/notifications'
 import { useState } from 'react'
 import Modal from '../../../components/ui/Modal'
 import Input from '../../../components/ui/Input'
@@ -33,7 +35,8 @@ function EditForm({ box, warehouseId, mutation, onClose, onUpdated }) {
             const response = await mutation.mutateAsync({ id: box.id, payload })
             const updated = { ...box, ...response?.data, dimensions: { ...box.dimensions, ...response?.data?.dimensions } }
             onUpdated?.(updated, payload.entrepot_id)
-            onClose()
+            flushSync(() => onClose())
+            notifySuccess('Caisse mise à jour.')
         } catch {
             // The global mutation handler displays API errors and the form stays open.
         }

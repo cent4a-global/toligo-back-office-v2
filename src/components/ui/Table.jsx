@@ -9,6 +9,7 @@ const Table = ({
     loading = false,
     className = '',
     paginated = true,
+    getRowProps,
 }) => {
     const classes = ['table-container', className].filter(Boolean).join(' ')
     const pageSizeId = useId()
@@ -51,7 +52,9 @@ const Table = ({
                             </tr>
                         ) : (
                             rows.map((row, rowIndex) => (
-                                <tr key={row.id ?? (paginated ? start : 0) + rowIndex}>
+                                <tr
+                                    {...getRowProps?.(row)}
+                                    key={row.id ?? (paginated ? start : 0) + rowIndex}>
                                     {columns.map((column, columnIndex) => (
                                         <td
                                             key={column.key}

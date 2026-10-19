@@ -2,11 +2,8 @@
 .warehouse-boxes-search { display: flex; align-items: center; gap: 8px; width: min(330px, 100%); height: 39px; padding: 0 11px; border: 1px solid #dce2ea; border-radius: 9px; background: #fff; color: #5b6879; }
 .warehouse-boxes-search:focus-within { border-color: #0b7a87; box-shadow: 0 0 0 3px rgb(11 122 135 / 10%); }
 .warehouse-boxes-search input { width: 100%; min-width: 0; border: 0; outline: 0; background: transparent; color: #142033; font-size: 14px; }
-.warehouse-boxes-filters { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-.warehouse-boxes-filters button { min-height: 30px; padding: 4px 12px; border: 1px solid #dce2ea; border-radius: 999px; background: #fff; color: #5b6879; font-size: 12px; font-weight: 600; cursor: pointer; }
-.warehouse-boxes-filters button:hover { border-color: #0b7a87; color: #0b7a87; }
-.warehouse-boxes-filters button.is-active { border-color: #0b7a87; background: #ddf1f3; color: #0b7a87; }
-.warehouse-boxes-toolbar > .btn { margin-left: auto; }
+.warehouse-boxes-toolbar > .btn { margin-left: 0; }
+.warehouse-boxes-toolbar > .btn:first-of-type { margin-left: auto; }
 .warehouse-box-row-actions { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 .warehouse-box-lock { display: inline-flex; align-items: center; gap: 6px; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 13px; }
 .warehouse-box-lock svg { color: #0b7a87; }
@@ -17,8 +14,45 @@
 .warehouse-box-status-warning { background: #fcefd2; color: #8f5b00; }
 .warehouse-box-status-danger { background: #fbe1de; color: #b4322a; }
 .warehouse-box-status-muted { background: #edf1f5; color: #5b6879; }
-.warehouse-boxes-result-count { padding: 12px 16px; border: 1px solid #dce2ea; border-top: 0; border-radius: 0 0 12px 12px; color: #5b6879; font-size: 12px; }
-.warehouse-management-content .table-container:has(+ .warehouse-boxes-result-count) { border-radius: 12px 12px 0 0; }
+.warehouse-boxes-result-count { margin: 12px 0 0; color: #5b6879; font-size: 12px; }
+.warehouse-boxes-select-all { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; color: #5b6879; font-size: 12px; }
+.warehouse-boxes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 350px), 1fr)); gap: 16px; }
+.warehouse-box-card {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-width: 0;
+    padding: 18px;
+    border: 1px solid #dce2ea;
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 3px 0 #e2e8ec, 0 7px 14px rgb(20 32 51 / 7%);
+    transition: transform 180ms ease, box-shadow 180ms ease;
+}
+.warehouse-box-card.is-selected { border-color: #0b7a87; box-shadow: 0 3px 0 #b8dadd, 0 7px 14px rgb(11 122 135 / 10%), 0 0 0 1px #0b7a87; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .warehouse-box-card:hover { transform: translateY(-3px); box-shadow: 0 5px 0 #e2e8ec, 0 12px 22px rgb(20 32 51 / 10%); }
+    .warehouse-box-card.is-selected:hover { box-shadow: 0 5px 0 #b8dadd, 0 12px 22px rgb(11 122 135 / 12%), 0 0 0 1px #0b7a87; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .warehouse-box-card { transition: none; }
+}
+.warehouse-box-card-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.warehouse-box-card-title { display: flex; align-items: center; gap: 12px; min-width: 0; font-size: 15px; }
+.warehouse-box-card-title strong { overflow-wrap: anywhere; }
+.warehouse-box-card input[type='checkbox'], .warehouse-boxes-select-all input { width: 17px; height: 17px; flex-shrink: 0; cursor: pointer; }
+.warehouse-box-card-statuses { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; padding-left: 29px; font-size: 12px; }
+.warehouse-box-card-statuses .warehouse-box-status { padding: 0; background: transparent; font-weight: 400; }
+.warehouse-box-sync { display: inline-flex; align-items: center; gap: 6px; }
+.warehouse-box-sync::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #94a3b8; }
+.warehouse-box-sync.is-synced::before { background: #22c55e; }
+.warehouse-box-sync.is-unsynced::before { background: #ef4444; }
+.warehouse-box-card-values { margin: 0; border-top: 1px solid #e5e7eb; }
+.warehouse-box-card-values > div { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 10px 0; border-bottom: 1px solid #e5e7eb; font-size: 13px; }
+.warehouse-box-card-values dt { color: #64748b; flex-shrink: 0; }
+.warehouse-box-card-values dd { margin: 0; text-align: right; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.warehouse-box-card-actions { display: flex; gap: 8px; margin-top: auto; flex-wrap: wrap; }
+.warehouse-box-card-actions > .btn { flex: 1; white-space: nowrap; justify-content: center; }
 .warehouse-boxes-info { padding: 24px; border: 1px solid #e5e7eb; border-radius: 16px; color: #6b7280; line-height: 1.7; }
 .box-form { display: grid; gap: 24px; }
 .box-row-actions { display: flex; gap: 8px; flex-wrap: wrap; }

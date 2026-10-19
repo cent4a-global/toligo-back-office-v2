@@ -1,4 +1,4 @@
-import toast from 'react-hot-toast'
+import { notifySuccess } from '../../../lib/notifications'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { login, verifyCode, resendCode } from '../api/auth.api'
 
@@ -92,7 +92,7 @@ export function useLogout() {
     function logout() {
         clearAuthStorage()
         queryClient.clear()
-        toast.success('Déconnexion réussie.')
+        notifySuccess('Déconnexion réussie.')
     }
 
     return {

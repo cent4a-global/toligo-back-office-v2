@@ -1,3 +1,5 @@
+import { flushSync } from 'react-dom'
+import { notifySuccess } from '../../../lib/notifications'
 import { useState } from 'react'
 import Modal from '../../../components/ui/Modal'
 import Input from '../../../components/ui/Input'
@@ -31,7 +33,8 @@ export default function BoxFormModal({ warehouseId, onClose, onCreated }) {
         try {
             const response = await mutation.mutateAsync({ entrepot_id: warehouseId, ...Object.fromEntries(Object.entries(form).map(([key, value]) => [key, value.trim()])) })
             if (response?.data?.id) onCreated?.(response.data, warehouseId)
-            onClose()
+            flushSync(() => onClose())
+            notifySuccess('Caisse créée.')
         } catch {
             // API errors are displayed by the global mutation handler.
         }

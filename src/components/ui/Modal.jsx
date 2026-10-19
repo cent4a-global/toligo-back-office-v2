@@ -1,6 +1,17 @@
 import { useId } from 'react'
 
-const Modal = ({ open, onClose, title, subtitle, children, size = 'md', className = '', closeOnOverlayClick = true }) => {
+import Button from './Button'
+
+const Modal = ({
+    open,
+    onClose,
+    title,
+    subtitle,
+    children,
+    size = 'md',
+    className = '',
+    closeOnOverlayClick = true,
+}) => {
     const titleId = useId()
 
     if (!open) {
@@ -11,21 +22,30 @@ const Modal = ({ open, onClose, title, subtitle, children, size = 'md', classNam
 
     return (
         <div className="modal-overlay" onClick={closeOnOverlayClick ? onClose : undefined}>
-            <div className={classes} role="dialog" aria-modal="true" aria-labelledby={titleId} onClick={event => event.stopPropagation()}>
+            <div
+                className={classes}
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby={titleId}
+                onClick={event => event.stopPropagation()}>
                 <div className="modal-header">
                     <div className="modal-heading">
-                        <h2 id={titleId} className="modal-title">{title}</h2>
+                        <h2 id={titleId} className="modal-title">
+                            {title}
+                        </h2>
                         {subtitle && <p className="modal-subtitle">{subtitle}</p>}
                     </div>
 
-                    <button
+                    <Button
                         type="button"
+                        variant="secondary"
+                        size="sm"
                         className="modal-close"
                         onClick={onClose}
                         disabled={!onClose}
                         aria-label="Fermer">
                         Fermer
-                    </button>
+                    </Button>
                 </div>
 
                 <div className="modal-content">{children}</div>

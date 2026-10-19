@@ -14,7 +14,7 @@ export function useUpdateProfile() {
                 saveAdmin(admin)
                 client.setQueryData(['adminProfile'], admin)
             }
-            return client.invalidateQueries({ queryKey: ['adminProfile'] })
+            void client.invalidateQueries({ queryKey: ['adminProfile'] })
         },
     })
 }

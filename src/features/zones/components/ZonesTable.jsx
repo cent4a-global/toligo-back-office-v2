@@ -1,9 +1,7 @@
-import Icon from '../../../components/ui/Icon'
 import Table from '../../../components/ui/Table'
 import Badge from '../../../components/ui/Badge'
-import Dropdown from '../../../components/ui/Dropdown'
 
-function ZonesTable({ zones = [], loading = false, onEdit, onDelete }) {
+function ZonesTable({ zones = [], loading = false, selectedZoneId, onSelect }) {
     const columns = [
         {
             key: 'nom',
@@ -19,48 +17,31 @@ function ZonesTable({ zones = [], loading = false, onEdit, onDelete }) {
         },
 
         {
+            key: 'communes',
+            label: 'Communes',
+            render: zone => (
+                <span className="zone-communes-cell">
+                    {zone.communes?.map(commune => commune.nom).filter(Boolean).join(', ') || '—'}
+                </span>
+            ),
+        },
+        {
+            key: 'stations',
+            label: 'Stations',
+            render: zone => zone.stations_count ?? zone.stations?.length ?? '—',
+        },
+        {
             key: 'polygone',
             label: 'Contour',
             render: zone => <span className="zone-count">{zone.polygone?.length ?? 0} points</span>,
         },
-
         {
             key: 'est_active',
-            label: 'Statut',
-
+            label: 'État',
             render: zone => (
                 <Badge variant={zone.est_active ? 'success' : 'default'} size="sm">
                     {zone.est_active ? 'Active' : 'Inactive'}
                 </Badge>
-            ),
-        },
-
-        {
-            key: 'actions',
-            label: 'Actions',
-
-            render: zone => (
-                <Dropdown
-                    trigger={
-                        <button
-                            type="button"
-                            className="zone-actions-trigger"
-                            aria-label={`Actions pour ${zone.nom}`}>
-                            <Icon name="more_vert" />
-                        </button>
-                    }
-                    items={[
-                        {
-                            label: 'Modifier',
-                            onClick: () => onEdit?.(zone),
-                        },
-                        {
-                            label: 'Supprimer',
-                            danger: true,
-                            onClick: () => onDelete?.(zone),
-                        },
-                    ]}
-                />
             ),
         },
     ]
@@ -73,6 +54,18 @@ function ZonesTable({ zones = [], loading = false, onEdit, onDelete }) {
                     data={zones}
                     loading={loading}
                     emptyMessage="Aucune zone disponible"
+                    getRowProps={zone => ({
+                        className: `zone-table-row${String(zone.id) === String(selectedZoneId) ? ' is-selected' : ''}`,
+                        tabIndex: 0,
+                        'aria-selected': String(zone.id) === String(selectedZoneId),
+                        onClick: () => onSelect?.(zone),
+                        onKeyDown: event => {
+                            if (event.key === 'Enter' || event.key === ' ') {
+                                event.preventDefault()
+                                onSelect?.(zone)
+                            }
+                        },
+                    })}
                 />
             </div>
         </div>

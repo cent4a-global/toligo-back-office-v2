@@ -53,7 +53,7 @@ export function useClients(filters = {}) {
         retry: 2,
         select: response => normalizeUsersResponse(response, 'clients', options.all ? { perPage: Number.MAX_SAFE_INTEGER } : options),
     })
-    const invalidate = () => queryClient.invalidateQueries({ queryKey: clientKeys.all })
+    const invalidate = () => { void queryClient.invalidateQueries({ queryKey: clientKeys.all }) }
     const block = useMutation({ mutationFn: ({ id, motif }) => clientService.blockClient(id, motif), onSuccess: invalidate })
     const unblock = useMutation({ mutationFn: clientService.unblockClient, onSuccess: invalidate })
     return {

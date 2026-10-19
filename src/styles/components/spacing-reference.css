@@ -141,7 +141,7 @@
         height: auto;
         min-height: 76px;
     }
-    .sidebar-collapsed .sidebar-brand { height: 87px; }
+    .sidebar-collapsed .sidebar-brand { height: 87px; min-height: 87px; }
 }
 
 @media (max-width: 700px) {

@@ -28,12 +28,13 @@
 .modal-title { color: #0d1b2c; font-size: 23px; letter-spacing: -.3px; }
 .modal-close {
     width: auto;
-    height: 37px;
-    padding: 0 13px;
+    height: auto;
+    min-height: 30px;
+    padding: 5px 10px;
     border: 1px solid #d8e1ec;
     border-radius: 12px;
     color: #0d1b2c;
-    font-size: 14px;
+    font-size: 12px;
     line-height: 1.2;
     box-shadow: none;
 }

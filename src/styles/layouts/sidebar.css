@@ -1,4 +1,4 @@
-﻿.sidebar {
+.sidebar {
     width: var(--sidebar-width);
     height: 100dvh;
     position: sticky;
@@ -250,20 +250,6 @@
         visibility: hidden;
         pointer-events: none;
     }
-    .sidebar-collapsed .sidebar-collapse-button {
-        top: 52px;
-        left: 10px;
-        right: auto;
-    }
-    .sidebar-collapsed .sidebar-section-label {
-        visibility: hidden;
-    }
-    .sidebar-collapsed .sidebar-link {
-        justify-content: flex-start;
-    }
-    .sidebar-collapsed .sidebar-footer-user {
-        justify-content: flex-start;
-    }
     .sidebar.sidebar-animating {
         transition: width 180ms ease;
     }
@@ -280,29 +266,6 @@
     .sidebar-open {
         visibility: visible;
         transform: translateX(0);
-    }
-    .sidebar-brand {
-        padding-right: 36px;
-    }
-    .sidebar-collapse-button {
-        display: none;
-    }
-    .sidebar-close {
-        display: grid;
-        place-items: center;
-        position: absolute;
-        top: 22px;
-        right: 12px;
-        width: 32px;
-        height: 32px;
-        border: 0;
-        border-radius: 9px;
-        background: #fff;
-        color: #737373;
-        cursor: pointer;
-    }
-    .sidebar-close:hover {
-        background: #f7f7f7;
     }
     .sidebar-backdrop {
         display: block;
@@ -337,16 +300,6 @@
 .sidebar-brand-name {
     color: #fff;
     font-size: 21px;
-}
-.sidebar-brand-badge {
-    padding: 5px 8px;
-    border: 1px solid #20334a;
-    border-radius: 7px;
-    color: #67def0;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    white-space: nowrap;
 }
 .sidebar-collapse-button {
     width: 24px;
@@ -466,36 +419,84 @@
         min-height: 69px;
         align-items: flex-start;
     }
-    .sidebar-brand-badge {
-        margin: 8px 0 0 auto;
-    }
     .sidebar-collapse-button {
-        top: 49px;
+        top: 9px;
         right: 5px;
-    }
-    .sidebar-collapsed .sidebar-brand-badge {
-        visibility: hidden;
-        pointer-events: none;
     }
     .sidebar-collapsed .sidebar-session {
         display: none;
     }
     .sidebar-collapsed .sidebar-brand {
-        height: 87px;
+        height: 92px;
+        min-height: 92px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 6px;
+        padding: 2px 5px 8px;
+    }
+    .sidebar-collapsed .sidebar-brand-main {
+        width: 100%;
+        justify-content: center;
+    }
+    .sidebar-collapsed .sidebar-brand-identity {
+        display: none;
+    }
+    .sidebar-collapsed .sidebar-collapse-button {
+        position: static;
+        width: 34px;
+        height: 28px;
+        margin: 0;
+    }
+    .sidebar-collapsed .sidebar-section-label {
+        display: none;
+    }
+    .sidebar-collapsed .sidebar-navigation {
+        padding-right: 0;
+    }
+    .sidebar-collapsed .sidebar-links {
+        gap: 6px;
+    }
+    .sidebar-collapsed .sidebar-link {
+        width: 100%;
+        min-height: 44px;
+        justify-content: center;
+        gap: 0;
+        padding: 0;
+    }
+    .sidebar-collapsed .sidebar-link-label {
+        display: none;
+    }
+    .sidebar-collapsed .sidebar-footer-user {
+        width: 100%;
+        min-height: 52px;
+        justify-content: center;
+        padding: 5px;
+    }
+    .sidebar-collapsed .sidebar-user-info,
+    .sidebar-collapsed .sidebar-user-more {
+        display: none;
     }
 }
 @media (max-width: 700px) {
     .sidebar-brand {
-        flex-wrap: wrap;
-        padding-right: 24px;
+        min-height: 69px;
+        height: auto;
+        flex-wrap: nowrap;
+        align-items: center;
+        padding: 4px 12px 14px 6px;
     }
-    .sidebar-brand-badge {
-        font-size: 9px;
+    .sidebar-brand-main {
+        flex: 1;
+        min-width: 0;
     }
     .sidebar-close {
-        background: #0d1b2c;
-        color: #b8c8dc;
-        right: 5px;
+        position: static;
+        flex: 0 0 36px;
+        width: 36px;
+        height: 36px;
+        margin-left: auto;
     }
     .sidebar-close:hover {
         background: #19334c;

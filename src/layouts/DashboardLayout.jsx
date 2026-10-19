@@ -73,7 +73,6 @@ function DashboardLayout() {
                 <button className="sidebar-backdrop" onClick={closeMenu} aria-label="Fermer le menu" />
             )}
             <Sidebar
-                currentPath={pathname}
                 collapsed={collapsed}
                 animating={animating}
                 mobileOpen={mobileOpen}

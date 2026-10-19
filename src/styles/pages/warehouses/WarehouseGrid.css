@@ -2,8 +2,8 @@
 .warehouse-tile { min-width: 0; overflow: hidden; border: 1px solid #dce2ea; border-radius: 17px; background: #fff; box-shadow: 0 1px 3px rgb(20 32 51 / 3%); cursor: pointer; transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease; }
 .warehouse-tile:hover { border-color: #9fc7cc; box-shadow: 0 10px 26px rgb(20 32 51 / 9%); transform: translateY(-2px); }
 .warehouse-tile:focus-visible { outline: 2px solid #0b7a87; outline-offset: 3px; }
-.warehouse-tile-header { padding: 22px 22px 18px; }
-.warehouse-tile-heading { display: flex; align-items: center; gap: 15px; }
+.warehouse-tile-header { padding: 20px 20px 14px; }
+.warehouse-tile-heading { display: flex; align-items: center; gap: 12px; }
 .warehouse-tile-symbol { display: grid; place-items: center; width: 54px; height: 54px; flex-shrink: 0; border-radius: 15px; background: #edf1f5; color: #142033; }
 .warehouse-tile-name { flex: 1; min-width: 0; }
 .warehouse-tile-name h2 { font-size: 17px; font-weight: 700; line-height: 1.35; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: -.25px; }
@@ -12,19 +12,19 @@
 .warehouse-tile-badge { display: inline-flex; align-items: center; gap: 7px; padding: 7px 11px; border-radius: 9px; font-size: 12px; font-weight: 600; }
 .warehouse-tile-badge-admin { background: #e5ecff; color: #2958c7; }
 .warehouse-tile-badge-box { background: #eee7fb; color: #7446c7; }
-.warehouse-tile-body { display: flex; flex-direction: column; gap: 12px; padding: 15px 22px; border-top: 1px solid #dce2ea; }
+.warehouse-tile-body { display: flex; flex-direction: column; gap: 12px; padding: 14px 20px; border-top: 1px solid #dce2ea; }
 .warehouse-tile-info { display: flex; align-items: flex-start; gap: 12px; min-width: 0; }
 .warehouse-tile-info-icon { display: inline-flex; flex-shrink: 0; padding-top: 2px; color: #718096; }
 .warehouse-tile-info > div { display: grid; grid-template-columns: 78px minmax(0, 1fr); align-items: baseline; gap: 10px; min-width: 0; width: 100%; }
 .warehouse-tile-info > div > span { color: #718096; font-size: 14px; }
 .warehouse-tile-info p { min-width: 0; color: #142033; font-size: 14px; font-weight: 600; line-height: 1.5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.warehouse-tile-footer { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 22px; border-top: 1px solid #dce2ea; }
+.warehouse-tile-footer { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 20px; border-top: 1px solid #dce2ea; }
 .warehouse-tile-footer .btn { min-height: 32px; padding: 0 10px; border-radius: 8px; font-size: 12px; gap: 6px; }
 .warehouse-tile-footer .btn svg { width: 14px; height: 14px; }
 .warehouse-tile-status { display: inline-flex; align-items: center; gap: 8px; color: #5b6879; font-size: 12px; font-weight: 500; }
 .warehouse-tile-status > span { width: 8px; height: 8px; flex-shrink: 0; border-radius: 50%; background: currentColor; }
 .warehouse-tile-status.is-active { color: #1b7f47; }
-.warehouse-tile-skeleton { display: flex; flex-direction: column; gap: 16px; padding: 22px; cursor: default; }
+.warehouse-tile-skeleton { display: flex; flex-direction: column; gap: 16px; padding: 20px; cursor: default; }
 .warehouse-tile-skeleton:hover { border-color: #dce2ea; box-shadow: none; transform: none; }
 .warehouse-grid-empty { padding: 64px 24px; color: var(--color-text-secondary); text-align: center; }
 @media (min-width: 1800px) { .warehouse-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }

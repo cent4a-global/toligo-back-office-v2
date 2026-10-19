@@ -1,4 +1,13 @@
 import toast from 'react-hot-toast'
+import { flushSync } from 'react-dom'
+
+export function notifySuccess(message) {
+    // Run after mutation callers have closed/reset their UI, then commit pending renders.
+    setTimeout(() => {
+        flushSync(() => {})
+        toast.success(message)
+    }, 0)
+}
 
 const reportedErrors = new WeakSet()
 

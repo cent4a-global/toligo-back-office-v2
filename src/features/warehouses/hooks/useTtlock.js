@@ -29,9 +29,9 @@ export const useTtlockResetPassword = () => {
     const resetMutation = useMutation({
         mutationFn: entrepotId => ttlockService.resetTtlockPassword(entrepotId),
         meta: { successMessage: 'Mot de passe TTLock réinitialisé.' },
-        onSuccess: (_data, entrepotId) => queryClient.invalidateQueries({
+        onSuccess: (_data, entrepotId) => { void queryClient.invalidateQueries({
             queryKey: ttlockKeys.detail(entrepotId),
-        }),
+        }) },
     })
 
     return {

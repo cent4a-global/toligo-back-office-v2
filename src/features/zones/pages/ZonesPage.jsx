@@ -1,10 +1,10 @@
-import Icon from '../../../components/ui/Icon'
 import { notifyError } from '../../../lib/notifications'
 import { useState } from 'react'
 
 import PageHeader from '../../../components/ui/PageHeader'
 import Button from '../../../components/ui/Button'
 import ErrorState from '../../../components/ui/ErrorState'
+import Icon from '../../../components/ui/Icon'
 
 import { useCreateZone, useDeleteZone, useUpdateZone, useZones } from '../hooks/useZones'
 
@@ -12,7 +12,7 @@ import ZonesTable from '../components/ZonesTable'
 import ZoneFormModal from '../components/ZoneFormModal'
 import DeleteZoneDialog from '../components/DeleteZoneDialog'
 import ZonesMap from '../components/ZonesMap'
-import MapViewer from '../../../components/ui/MapViewer'
+import ZoneDetailsPanel from '../components/ZoneDetailsPanel'
 
 function ZonesPage() {
     const { data, isLoading, isError, error, refetch } = useZones()
@@ -29,8 +29,11 @@ function ZonesPage() {
     })
 
     const [zoneToDelete, setZoneToDelete] = useState(null)
+    const [selectedZoneId, setSelectedZoneId] = useState(null)
 
     const zones = data?.data ?? []
+    const selectedZone =
+        zones.find(zone => String(zone.id) === String(selectedZoneId)) ?? zones[0] ?? null
 
     const openCreateModal = () => {
         setFormModal({
@@ -96,7 +99,7 @@ function ZonesPage() {
         <div className="zones-page">
             <PageHeader
                 title="Zones"
-                description="Gérez les zones géographiques couvertes par Tôligo."
+                description="Périmètres opérationnels utilisés pour organiser la couverture du réseau Tôligo."
                 actions={
                     <Button size="md" onClick={openCreateModal}>
                         <Icon name="add" />
@@ -105,18 +108,26 @@ function ZonesPage() {
                 }
             />
 
-            <MapViewer label="Carte des zones">
-                <ZonesMap zones={zones} loading={isLoading} onEdit={openEditModal} onDelete={setZoneToDelete} />
-            </MapViewer>
+            <div className="zones-workspace">
+                <ZonesMap
+                    zones={zones}
+                    loading={isLoading}
+                    selectedZoneId={selectedZone?.id}
+                    onSelect={zone => setSelectedZoneId(zone.id)}
+                />
+                <ZoneDetailsPanel
+                    zone={selectedZone}
+                    loading={isLoading}
+                    onEdit={openEditModal}
+                    onDelete={setZoneToDelete}
+                />
+            </div>
 
             <ZonesTable
                 zones={zones}
                 loading={isLoading}
-                onEdit={openEditModal}
-                onDelete={zone => {
-
-                    setZoneToDelete(zone)
-                }}
+                selectedZoneId={selectedZone?.id}
+                onSelect={zone => setSelectedZoneId(zone.id)}
             />
 
             {formModal.open && (

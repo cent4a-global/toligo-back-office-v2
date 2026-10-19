@@ -47,10 +47,6 @@ const navigationSections = [
         ],
     },
 ]
-const navigationItems = navigationSections.flatMap(section =>
-    section.items.map(item => ({ ...item, section: section.label })),
-)
-
 function getInitials(name = '') {
     return name
         .split(' ')
@@ -62,8 +58,6 @@ function getInitials(name = '') {
 
 function Sidebar({
     user,
-
-    currentPath = window.location.pathname,
     collapsed = false,
     animating = false,
     mobileOpen = false,
@@ -73,32 +67,28 @@ function Sidebar({
     const { admin } = useAuth()
     const currentUser = user ?? admin ?? {}
     const userName = currentUser.nom_complet || currentUser.name || currentUser.email || 'Mon compte'
-    const items = navigationItems.filter(
-        item => !item.superadminOnly || currentUser.role === 'superadmin',
-    )
-
-    const roleLabel = currentUser.role === 'superadmin' ? 'Super Admin' : currentUser.role || 'Administrateur'
+    const visibleSections = navigationSections
+        .map(section => ({
+            ...section,
+            items: section.items.filter(
+                item => !item.superadminOnly || currentUser.role === 'superadmin',
+            ),
+        }))
+        .filter(section => section.items.length > 0)
+    const roleLabel =
+        currentUser.role === 'superadmin' ? 'Super Admin' : currentUser.role || 'Administrateur'
 
     return (
         <aside
             id="main-sidebar"
             className={`sidebar${animating ? ' sidebar-animating' : ''}${collapsed ? ' sidebar-collapsed' : ''}${mobileOpen ? ' sidebar-open' : ''}`}>
-            {/* BRAND */}
-            <button
-                type="button"
-                className="sidebar-close"
-                onClick={onClose}
-                aria-label="Fermer le menu">
-                <Icon name="close" />
-            </button>
             <div className="sidebar-brand">
                 <div className="sidebar-brand-main">
                     <span className="sidebar-logo" aria-hidden="true">T</span>
-                <div className="sidebar-brand-identity">
-                    <span className="sidebar-brand-name">Tôligo</span>
+                    <div className="sidebar-brand-identity">
+                        <span className="sidebar-brand-name">Tôligo</span>
+                    </div>
                 </div>
-                </div>
-                <span className="sidebar-brand-badge">BACK-OFFICE</span>
                 <button
                     type="button"
                     className="sidebar-collapse-button"
@@ -107,50 +97,39 @@ function Sidebar({
                     aria-expanded={!collapsed}
                     aria-label={collapsed ? 'Développer la sidebar' : 'Réduire la sidebar'}
                     title={collapsed ? 'Développer la sidebar' : 'Réduire la sidebar'}>
-                    {collapsed ? (
-                        <Icon name="chevron_right" size={20} />
-                    ) : (
-                        <Icon name="chevron_left" size={20} />
-                    )}
+                    <Icon name={collapsed ? 'left_panel_open' : 'left_panel_close'} size={18} />
+                </button>
+                <button
+                    type="button"
+                    className="sidebar-close"
+                    onClick={onClose}
+                    aria-label="Fermer le menu">
+                    <Icon name="close" />
                 </button>
             </div>
-            <div className="sidebar-session">
-                <span>Connecté en tant que</span>
-                <strong>{roleLabel}</strong>
-            </div>
-            {/* NAVIGATION */}
             <nav className="sidebar-navigation" aria-label="Navigation principale">
                 <div className="sidebar-links">
-                    {items.map((item, index) => {
-                        const isActive =
-                            currentPath === item.to || currentPath.startsWith(`${item.to}/`)
-
-                        return (
-                            <Fragment key={item.to}>
-                                {(index === 0 || item.section !== items[index - 1]?.section) && (
-                                    <span className="sidebar-section-label">
-                                        {item.section}
-                                    </span>
-                                )}
+                    {visibleSections.map(section => (
+                        <Fragment key={section.label}>
+                            <span className="sidebar-section-label">{section.label}</span>
+                            {section.items.map(item => (
                                 <NavLink
                                     key={item.to}
                                     to={item.to}
                                     onClick={onClose}
                                     aria-label={item.label}
                                     title={item.label}
-                                    className={`sidebar-link${isActive ? ' sidebar-link-active' : ''}`}
-                                    aria-current={isActive ? 'page' : undefined}>
+                                    className={({ isActive }) =>
+                                        `sidebar-link${isActive ? ' sidebar-link-active' : ''}`
+                                    }>
                                     <Icon name={item.icon} className="sidebar-link-icon" />
-
                                     <span className="sidebar-link-label">{item.label}</span>
                                 </NavLink>
-                            </Fragment>
-                        )
-                    })}
+                            ))}
+                        </Fragment>
+                    ))}
                 </div>
             </nav>
-
-            {/* USER */}
             <div className="sidebar-footer">
                 <NavLink
                     to="/profile"
@@ -161,11 +140,11 @@ function Sidebar({
                     <div className="sidebar-user-avatar" title={userName}>
                         {getInitials(userName)}
                     </div>
-
                     <div className="sidebar-user-info">
                         <span className="sidebar-user-name">{userName}</span>
-
-                        <span className="sidebar-user-role">{currentUser.email || roleLabel}</span>
+                        <span className="sidebar-user-role">
+                            {currentUser.email || roleLabel}
+                        </span>
                     </div>
                 </NavLink>
             </div>

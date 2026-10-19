@@ -1,5 +1,5 @@
 import Flaticon from '../../../components/ui/Flaticon'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import Button from '../../../components/ui/Button'
 import PageHeader from '../../../components/ui/PageHeader'
@@ -37,6 +37,22 @@ function WarehousesPage() {
     const availableBoxes = boxesQuery.data?.filter(box => box.statut === 'libre').length ?? 0
     const availablePercent = totalBoxes ? Math.round(availableBoxes / totalBoxes * 100) : 0
     const boxStatValue = value => boxesQuery.isPending ? <Skeleton width={48} height={30} /> : boxesQuery.isError ? '—' : value
+    const boxCountsByWarehouse = useMemo(() => {
+        const counts = new Map()
+        for (const box of boxesQuery.data ?? []) {
+            const warehouseId = box.entrepot?.id ?? box.entrepot_id ?? box.warehouse_id
+            if (warehouseId == null) continue
+            const key = String(warehouseId)
+            counts.set(key, (counts.get(key) ?? 0) + 1)
+        }
+        return counts
+    }, [boxesQuery.data])
+    const warehousesWithBoxCounts = warehouses.map(warehouse => ({
+        ...warehouse,
+        boxesCount: boxesQuery.isSuccess
+            ? boxCountsByWarehouse.get(String(warehouse.id)) ?? 0
+            : warehouse.boxesCount ?? warehouse.caisses_count ?? warehouse.boxes?.length,
+    }))
 
     const openCreateModal = () => {
         setFormModal({
@@ -70,7 +86,7 @@ function WarehousesPage() {
             await createMutation.mutateAsync(formData)
         }
 
-        closeFormModal()
+        setFormModal({ open: false, warehouse: null })
     }
 
     if (isError) {
@@ -113,7 +129,7 @@ function WarehousesPage() {
 
             <div className="warehouses-grid-section">
                 <WarehouseGrid
-                    warehouses={warehouses}
+                    warehouses={warehousesWithBoxCounts}
                     loading={isLoading}
                     onEdit={openEditModal}
                 />

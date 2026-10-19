@@ -164,6 +164,7 @@ function PushNotifications() {
                     )}
                     <div className="push-form-footer">
                         <Button
+                            size="md"
                             type="submit"
                             loading={mutation.isSending}
                             disabled={role !== 'superadmin'}>

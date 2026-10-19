@@ -22,7 +22,7 @@ export function useSaveSettings() {
         mutationFn: saveSettings,
 
         onSettled: () => {
-            return queryClient.invalidateQueries({
+            void queryClient.invalidateQueries({
                 queryKey: settingKeys.lists(),
             })
         },

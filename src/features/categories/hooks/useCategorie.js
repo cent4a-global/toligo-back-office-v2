@@ -33,14 +33,14 @@ export function useCategories(filters = {}) {
             return rows
         },
     })
-    const invalidate = () => queryClient.invalidateQueries({ queryKey: categorieKeys.all })
+    const invalidate = () => { void queryClient.invalidateQueries({ queryKey: categorieKeys.all }) }
     const createMutation = useMutation({ mutationFn: categorieService.createCategorie, onSuccess: invalidate })
     const updateMutation = useMutation({ mutationFn: ({ id, data }) => categorieService.updateCategorie(id, data), onSuccess: invalidate })
     const deleteMutation = useMutation({
         mutationFn: categorieService.deleteCategorie,
-        onSuccess: async (_data, id) => {
+        onSuccess: (_data, id) => {
             queryClient.removeQueries({ queryKey: categorieKeys.detail(id), exact: true })
-            await invalidate()
+            invalidate()
         },
     })
     const deleteManyMutation = useMutation({

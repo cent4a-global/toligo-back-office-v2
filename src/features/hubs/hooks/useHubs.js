@@ -29,10 +29,12 @@ export function useCreateHub() {
         meta: { successMessage: 'Hub créé.' },
         mutationFn: createHub,
 
-        onSuccess: () => Promise.all([
+        onSuccess: () => {
+            void Promise.all([
             queryClient.invalidateQueries({ queryKey: hubKeys.lists() }),
             queryClient.invalidateQueries({ queryKey: stationKeys.all }),
-        ]),
+        ])
+        },
     })
 }
 
@@ -43,7 +45,8 @@ export function useUpdateHub() {
         meta: { successMessage: 'Hub modifié.' },
         mutationFn: ({ id, data }) => updateHub(id, data),
 
-        onSuccess: (_response, variables) => Promise.all([
+        onSuccess: (_response, variables) => {
+            void Promise.all([
             queryClient.invalidateQueries({
                 queryKey: hubKeys.lists(),
             }),
@@ -52,7 +55,8 @@ export function useUpdateHub() {
                 queryKey: hubKeys.detail(variables.id),
             }),
             queryClient.invalidateQueries({ queryKey: stationKeys.all }),
-        ]),
+        ])
+        },
     })
 }
 
@@ -63,9 +67,11 @@ export function useDeleteHub() {
         meta: { successMessage: 'Hub supprimé.' },
         mutationFn: deleteHub,
 
-        onSuccess: () => Promise.all([
+        onSuccess: () => {
+            void Promise.all([
             queryClient.invalidateQueries({ queryKey: hubKeys.all }),
             queryClient.invalidateQueries({ queryKey: stationKeys.all }),
-        ]),
+        ])
+        },
     })
 }

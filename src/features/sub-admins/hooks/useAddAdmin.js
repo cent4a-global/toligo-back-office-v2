@@ -50,8 +50,8 @@ export function useAddAdmin(filters = {}) {
         retry: 2,
         select: response => normalizeUsersResponse(response, 'admins', filters.all ? { page: 1, perPage: Number.MAX_SAFE_INTEGER } : filters),
     })
-    const invalidate = async () => {
-        await Promise.all([
+    const invalidate = () => {
+        void Promise.all([
             queryClient.invalidateQueries({ queryKey: adminsKeys.all }),
             queryClient.invalidateQueries({ queryKey: ['internal-users'] }),
         ])
@@ -69,9 +69,9 @@ export function useAddAdmin(filters = {}) {
     const resetPasswordMutation = useMutation({ mutationFn: addAdminService.resetPassword, onSuccess: invalidate })
     const deleteAdminMutation = useMutation({
         mutationFn: addAdminService.deleteAdmin,
-        onSuccess: async (_data, id) => {
+        onSuccess: (_data, id) => {
             queryClient.removeQueries({ queryKey: adminsKeys.detail(id), exact: true })
-            await invalidate()
+            invalidate()
         },
     })
     const deleteManyMutation = useMutation({

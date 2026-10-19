@@ -14,10 +14,10 @@ export function useDeleteBox() {
     const client = useQueryClient()
     return useMutation({
         mutationFn: ({ id }) => deleteBox(id),
-        meta: { successMessage: 'Caisse supprimée avec succès.' },
+        meta: { silentSuccess: true, successMessage: 'Caisse supprimée avec succès.' },
         onSuccess: (_response, { id, warehouseId }) => {
             client.removeQueries({ queryKey: ['boxes', 'detail', id], exact: true })
-            return Promise.all([
+            void Promise.all([
                 client.invalidateQueries({ queryKey: ['boxes', 'list'] }),
                 client.invalidateQueries({ queryKey: warehouseKeys.detail(warehouseId) }),
                 client.invalidateQueries({ queryKey: warehouseKeys.lists() }),
@@ -30,13 +30,13 @@ export function useUpdateBox() {
     const client = useQueryClient()
     return useMutation({
         mutationFn: ({ id, payload }) => updateBox(id, payload),
-        meta: { successMessage: 'Caisse mise à jour.' },
-        onSuccess: (_response, { id, payload }) => Promise.all([
+        meta: { silentSuccess: true, successMessage: 'Caisse mise à jour.' },
+        onSuccess: (_response, { id, payload }) => { void Promise.all([
             client.invalidateQueries({ queryKey: ['boxes', 'list'] }),
             client.invalidateQueries({ queryKey: ['boxes', 'detail', id] }),
             client.invalidateQueries({ queryKey: warehouseKeys.detail(payload.entrepot_id) }),
             client.invalidateQueries({ queryKey: warehouseKeys.lists() }),
-        ]),
+        ]) },
     })
 }
 
@@ -52,11 +52,11 @@ export function useCreateBox() {
     const client = useQueryClient()
     return useMutation({
         mutationFn: createBox,
-        meta: { successMessage: 'Caisse créée.' },
-        onSuccess: (_data, payload) => Promise.all([
+        meta: { silentSuccess: true, successMessage: 'Caisse créée.' },
+        onSuccess: (_data, payload) => { void Promise.all([
             client.invalidateQueries({ queryKey: ['boxes', 'list'] }),
             client.invalidateQueries({ queryKey: warehouseKeys.detail(payload.entrepot_id) }),
             client.invalidateQueries({ queryKey: warehouseKeys.lists() }),
-        ]),
+        ]) },
     })
 }

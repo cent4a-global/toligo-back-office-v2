@@ -1,5 +1,13 @@
-.zones-table {
-    width: 100%;
+.zones-table,
+.zones-table-section { width: 100%; min-width: 0; }
+
+.zone-table-row { cursor: pointer; }
+.zone-table-row.is-selected,
+.zone-table-row.is-selected:hover { background: var(--color-brand-soft); }
+
+.zone-table-row:focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: -2px;
 }
 
 .zone-identity {
@@ -10,64 +18,31 @@
 
 .zone-identity strong {
     color: var(--color-text-primary);
-
     font-weight: var(--font-weight-semibold);
 }
 
 .zone-identity span {
     color: var(--color-text-secondary);
-
     font-size: var(--font-size-xs);
 }
 
-.zone-description {
-    display: inline-block;
-
-    max-width: 280px;
-
-    overflow: hidden;
-
-    color: var(--color-text-secondary);
-
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
 .zone-count {
-    min-width: 30px;
-
     display: inline-flex;
     align-items: center;
     justify-content: center;
-
+    min-width: 30px;
     padding: var(--space-1) var(--space-2);
-
     border-radius: var(--radius-md);
-
     background: var(--color-bg-hover);
     color: var(--color-text-primary);
-
     font-weight: var(--font-weight-semibold);
 }
 
-.zone-actions-trigger {
-    width: 36px;
-    height: 36px;
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    border: 0;
-    border-radius: var(--radius-md);
-
-    background: transparent;
+.zone-communes-cell {
+    display: inline-block;
+    max-width: 300px;
+    overflow: hidden;
     color: var(--color-text-secondary);
-
-    cursor: pointer;
-}
-
-.zone-actions-trigger:hover {
-    background: var(--color-bg-hover);
-    color: var(--color-text-primary);
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }

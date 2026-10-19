@@ -31,6 +31,7 @@ export async function assignWarehouseAdmins(id, adminIds) {
 function normalizeWarehouse(warehouse) {
     return {
         ...warehouse,
+        id: warehouse.uuid ?? warehouse.id,
         name: warehouse.nom ?? warehouse.name,
         address: warehouse.adresse ?? warehouse.address,
         locality: warehouse.commune?.nom ?? warehouse.commune?.name ?? warehouse.locality,
@@ -97,13 +98,18 @@ export async function createWarehouse(warehouseData) {
 
 // Mettre à jour un entrepôt
 export async function updateWarehouse(id, warehouseData) {
+    if (id == null || String(id).trim() === '' || id === 'undefined' || id === 'null') {
+        throw new Error("Identifiant de l'entrepôt manquant ou invalide.")
+    }
     try {
         const response = await api.put(`/api/superadmin/entrepots/${id}`, warehouseData)
 
         if (response.data?.success === false) {
             throw new Error(response.data.message || "Impossible d'enregistrer cet entrepôt.")
         }
-        return response.data
+        return response.data?.data
+            ? { ...response.data, data: normalizeWarehouse(response.data.data) }
+            : response.data
     } catch (error) {
         const message =
             error.response?.data?.message ||

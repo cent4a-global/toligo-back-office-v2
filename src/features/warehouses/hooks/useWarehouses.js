@@ -16,11 +16,13 @@ export function useAssignWarehouseAdmins() {
     return useMutation({
         mutationFn: ({ id, adminIds }) => assignWarehouseAdmins(id, adminIds),
         meta: { successMessage: 'Administrateurs enregistrés.' },
-        onSuccess: (_response, { id }) => Promise.all([
+        onSuccess: (_response, { id }) => {
+            void Promise.all([
             queryClient.invalidateQueries({ queryKey: warehouseKeys.detail(id) }),
             queryClient.invalidateQueries({ queryKey: warehouseKeys.lists() }),
             queryClient.invalidateQueries({ queryKey: ['internal-users'] }),
-        ]),
+        ])
+        },
     })
 }
 
@@ -61,7 +63,31 @@ export function useUpdateWarehouse() {
         meta: { successMessage: 'Entrepôt modifié.' },
         mutationFn: ({ id, data }) => updateWarehouse(id, data),
 
-        onSuccess: (_response, variables) => {
+        onSuccess: (response, variables) => {
+            const updated = response?.data
+            const canonicalId = updated?.id ?? variables.id
+            if (updated) {
+                const updateDetail = previous => ({
+                    ...previous,
+                    ...response,
+                    data: { ...previous?.data, ...updated },
+                })
+                queryClient.setQueryData(warehouseKeys.detail(variables.id), updateDetail)
+                if (canonicalId !== variables.id) {
+                    queryClient.setQueryData(warehouseKeys.detail(canonicalId), updateDetail)
+                }
+                queryClient.setQueriesData({ queryKey: warehouseKeys.lists() }, previous => {
+                    if (!Array.isArray(previous?.data)) return previous
+                    return {
+                        ...previous,
+                        data: previous.data.map(warehouse =>
+                            [warehouse.id, warehouse.uuid].some(value =>
+                                value != null && [variables.id, canonicalId].includes(value),
+                            ) ? { ...warehouse, ...updated } : warehouse,
+                        ),
+                    }
+                })
+            }
             queryClient.invalidateQueries({
                 queryKey: warehouseKeys.lists(),
             })
@@ -69,6 +95,9 @@ export function useUpdateWarehouse() {
             queryClient.invalidateQueries({
                 queryKey: warehouseKeys.detail(variables.id),
             })
+            if (canonicalId !== variables.id) {
+                queryClient.invalidateQueries({ queryKey: warehouseKeys.detail(canonicalId) })
+            }
         },
     })
 }
