@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Modal from '../../../components/ui/Modal'
+import ConfirmDialog from '../../../components/ui/ConfirmDialog'
 import Input from '../../../components/ui/Input'
 import Button from '../../../components/ui/Button'
 import Badge from '../../../components/ui/Badge'
@@ -45,7 +46,7 @@ export default function StationHubsModal({ station, onClose }) {
     ]
 
     async function assign() {
-        if (!hubToAssign || assignment.isPending || query.isFetching) return
+        if (!hubToAssign || assignment.isPending || query.isFetching || query.isError) return
         try {
             await assignment.mutateAsync({
                 id: hubToAssign.id,
@@ -62,6 +63,19 @@ export default function StationHubsModal({ station, onClose }) {
         }
     }
 
+    if (hubToAssign) return (
+        <ConfirmDialog
+            open
+            title="Confirmer l’affectation"
+            description={`Affecter le hub ${hubToAssign.code} à ${station.nom} ?${stationId(hubToAssign) != null ? ` Il sera retiré de ${hubToAssign.station?.nom ?? `la station ${stationId(hubToAssign)}`}.` : ''}`}
+            confirmLabel="Confirmer l’affectation"
+            confirmVariant="primary"
+            loading={assignment.isPending}
+            onClose={() => setHubToAssign(null)}
+            onConfirm={query.isFetching || query.isError ? undefined : assign}
+        />
+    )
+
     return (
         <Modal open title="Gérer les hubs" subtitle={`Affectez les hubs à la station ${station.nom}.`}
             onClose={assignment.isPending ? undefined : onClose} closeOnOverlayClick={false}>
@@ -76,16 +90,6 @@ export default function StationHubsModal({ station, onClose }) {
                         action={<Button variant="secondary" onClick={() => query.refetch()}>Réessayer</Button>} />
                 ) : (
                     <Table key={search} columns={columns} data={filtered} loading={query.isPending} emptyMessage="Aucun hub trouvé" />
-                )}
-                {hubToAssign && (
-                    <div className="station-hubs-confirm" role="region" aria-label="Confirmer l’affectation">
-                        <p>Affecter le hub <strong>{hubToAssign.code}</strong> à <strong>{station.nom}</strong> ?</p>
-                        {stationId(hubToAssign) != null && <p>Il sera retiré de {hubToAssign.station?.nom ?? `la station ${stationId(hubToAssign)}`}.</p>}
-                        <div className="station-hubs-actions">
-                            <Button variant="secondary" onClick={() => setHubToAssign(null)} disabled={assignment.isPending}>Annuler</Button>
-                            <Button onClick={assign} loading={assignment.isPending} disabled={query.isFetching || query.isError}>Confirmer l’affectation</Button>
-                        </div>
-                    </div>
                 )}
                 <div className="station-hubs-actions">
                     <Button variant="secondary" onClick={onClose} disabled={assignment.isPending}>Fermer</Button>

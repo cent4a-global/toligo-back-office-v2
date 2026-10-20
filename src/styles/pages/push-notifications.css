@@ -61,6 +61,7 @@
     resize: vertical;
     line-height: 1.6;
     padding: 12px;
+    margin-top: 8px;
 }
 .push-form-footer {
     display: flex;

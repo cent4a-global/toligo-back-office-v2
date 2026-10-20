@@ -2,7 +2,10 @@ import api from '../../../lib/axios/api'
 
 export async function getClients({ signal, page = 1, perPage = 10 } = {}) {
     try {
-        const response = await api.get('/api/admin/clients', { signal, params: { page, per_page: perPage } })
+        const response = await api.get('/api/admin/clients', {
+            signal,
+            params: { page, per_page: perPage },
+        })
 
         return response.data
     } catch (error) {

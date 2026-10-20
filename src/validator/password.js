@@ -2,9 +2,11 @@ export const MIN_PASSWORD_LENGTH = 8
 
 export function validatePassword(password = '') {
     const length = Array.from(password).length
-    const categories = [/[a-z]/, /[A-Z]/, /[0-9]/, /[^a-zA-Z0-9\s]/]
-        .filter(pattern => pattern.test(password)).length
-    const predictable = /^(.)\1+$/.test(password) ||
+    const categories = [/[a-z]/, /[A-Z]/, /[0-9]/, /[^a-zA-Z0-9\s]/].filter(pattern =>
+        pattern.test(password),
+    ).length
+    const predictable =
+        /^(.)\1+$/.test(password) ||
         /^(password|motdepasse|azerty|qwerty|123456|abcdef)/i.test(password)
     const isValid = length >= MIN_PASSWORD_LENGTH
     let score = 0

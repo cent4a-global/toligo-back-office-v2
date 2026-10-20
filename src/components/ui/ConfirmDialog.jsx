@@ -12,6 +12,8 @@ const ConfirmDialog = ({
     confirmLabel = 'Confirmer',
     cancelLabel = 'Annuler',
     loading = false,
+    confirmVariant = 'danger',
+    children,
 }) => {
     const titleId = useId()
     const descriptionId = useId()
@@ -55,13 +57,14 @@ const ConfirmDialog = ({
                 <div className="confirm-dialog-content">
                     <h2 id={titleId} className="confirm-dialog-title">{title}</h2>
                     <p id={descriptionId} className="confirm-dialog-description">{description}</p>
+                    {children}
                 </div>
 
                 <div className="confirm-dialog-actions">
                     <Button variant="secondary" size="md" onClick={onClose} disabled={loading || !onClose}>
                         {cancelLabel}
                     </Button>
-                    <Button variant="danger" size="md" onClick={onConfirm} loading={loading} disabled={!onConfirm}>
+                    <Button variant={confirmVariant} size="md" onClick={onConfirm} loading={loading} disabled={!onConfirm}>
                         {confirmLabel}
                     </Button>
                 </div>

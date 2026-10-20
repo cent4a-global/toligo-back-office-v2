@@ -19,10 +19,10 @@ export default function ZonesMap({ zones, loading = false, selectedZoneId, onSel
         () =>
             [...zones]
                 .sort((a, b) => String(a.id).localeCompare(String(b.id)))
-                .map(zone => ({
+                .map((zone, index) => ({
                     zone,
                     positions: communePolygon(zone),
-                    color: zone.est_active ? '#11b85c' : '#71717a',
+                    color: `hsl(${Math.round(index * 137.508) % 360}, 65%, 40%)`,
                 }))
                 .filter(item => item.positions.length),
         [zones],
@@ -82,8 +82,17 @@ export default function ZonesMap({ zones, loading = false, selectedZoneId, onSel
                 )}
             </div>
             <ul className="zones-map-legend" aria-label="Légende des zones">
-                <li><span className="zones-map-swatch is-active" aria-hidden="true" />Zone active</li>
-                <li><span className="zones-map-swatch is-inactive" aria-hidden="true" />Zone inactive</li>
+                {mappedZones.map(({ zone, color }) => (
+                    <li key={zone.id}>
+                        <span
+                            className="zones-map-swatch"
+                            style={{ backgroundColor: color }}
+                            aria-hidden="true"
+                        />
+                        {zone.nom}
+                        {!zone.est_active && <small>Inactive</small>}
+                    </li>
+                ))}
                 <li className="zones-map-legend-hint">Cliquez sur une zone pour afficher ses détails</li>
             </ul>
             {missing > 0 && (

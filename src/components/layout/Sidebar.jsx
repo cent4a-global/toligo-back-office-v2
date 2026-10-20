@@ -35,7 +35,7 @@ const navigationSections = [
         items: [
             { label: 'Clients', to: '/clients', icon: 'group', superadminOnly: true },
             { label: 'Sous-administrateurs', to: '/sub-admins', icon: 'person', superadminOnly: true },
-            { label: 'Utilisateurs et rôles', to: '/users', icon: 'group', superadminOnly: true },
+            // { label: 'Utilisateurs et rôles', to: '/users', icon: 'group', superadminOnly: true },
             { label: 'Notifications push', to: '/push-notifications', icon: 'notifications', superadminOnly: true },
         ],
     },

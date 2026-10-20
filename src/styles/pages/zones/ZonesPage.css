@@ -65,9 +65,6 @@
     border-radius: 50%;
 }
 
-.zones-map-swatch.is-active { background: var(--color-brand); }
-.zones-map-swatch.is-inactive { background: var(--color-text-muted); }
-
 .zones-map-message {
     display: grid;
     place-items: center;

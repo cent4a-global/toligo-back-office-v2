@@ -7,7 +7,6 @@
 .sub-admin-ttlock input { accent-color: #202024; width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px; }
 .sub-admin-ttlock span { display: grid; gap: 5px; font-size: 13px; }
 .sub-admin-ttlock small { color: #71717a; line-height: 1.5; }
-.sub-admin-form-confirm { line-height: 1.7; overflow-wrap: anywhere; }
 .sub-admin-selection, .sub-admin-actions { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
 .sub-admin-selection { font-size: 13px; color: #62626c; }
 .sub-admin-actions label { display: flex; align-items: center; gap: 8px; }

@@ -16,7 +16,12 @@ function PackageFormatFormModal({ format, onClose }) {
         est_actif: format?.est_actif ?? true,
     }))
     const mutation = useSavePackageFormat()
-    const change = event => setValues(previous => ({ ...previous, [event.target.name]: event.target.type === 'checkbox' ? event.target.checked : event.target.value }))
+    const change = event =>
+        setValues(previous => ({
+            ...previous,
+            [event.target.name]:
+                event.target.type === 'checkbox' ? event.target.checked : event.target.value,
+        }))
     const submit = async event => {
         event.preventDefault()
         if (mutation.isPending) return
@@ -33,26 +38,96 @@ function PackageFormatFormModal({ format, onClose }) {
         try {
             await mutation.mutateAsync({ id: format?.id, payload })
             onClose()
-        } catch { /* The mutation cache displays the error toast. */ }
+        } catch {
+            /* The mutation cache displays the error toast. */
+        }
     }
     return (
-        <Modal subtitle="Définissez les caractéristiques de ce format de colis." open title={format ? 'Modifier le format' : 'Nouveau format'} size="lg" onClose={mutation.isPending ? undefined : onClose} closeOnOverlayClick={false}>
+        <Modal
+            subtitle="Définissez les caractéristiques de ce format de colis."
+            open
+            title={format ? 'Modifier le format' : 'Nouveau format'}
+            size="lg"
+            onClose={mutation.isPending ? undefined : onClose}
+            closeOnOverlayClick={false}>
             <form onSubmit={submit} className="package-format-form">
                 <fieldset disabled={mutation.isPending} className="package-format-form-grid">
-                    <Input label="Libellé" name="libelle" value={values.libelle} onChange={change} required />
-                    {['longueur', 'largeur', 'hauteur'].map(name => <Input key={name} label={`${name[0].toUpperCase()}${name.slice(1)} max (cm)`} name={name} type="number" min="0.01" step="any" value={values[name]} onChange={change} required />)}
-                    <Input label="Poids max (kg)" name="poids_max_kg" type="number" min="0.01" step="any" value={values.poids_max_kg} onChange={change} required />
-                    <Input label="Prix (FCFA)" name="prix" type="number" min="0" step="any" value={values.prix} onChange={change} required />
+                    <Input
+                        label="Libellé"
+                        name="libelle"
+                        value={values.libelle}
+                        onChange={change}
+                        required
+                    />
+                    {['longueur', 'largeur', 'hauteur'].map(name => (
+                        <Input
+                            key={name}
+                            label={`${name[0].toUpperCase()}${name.slice(1)} max (cm)`}
+                            name={name}
+                            type="number"
+                            min="0.01"
+                            step="any"
+                            value={values[name]}
+                            onChange={change}
+                            required
+                        />
+                    ))}
+                    <Input
+                        label="Poids max (kg)"
+                        name="poids_max_kg"
+                        type="number"
+                        min="0.01"
+                        step="any"
+                        value={values.poids_max_kg}
+                        onChange={change}
+                        required
+                    />
+                    <Input
+                        label="Prix (FCFA)"
+                        name="prix"
+                        type="number"
+                        min="0"
+                        step="any"
+                        value={values.prix}
+                        onChange={change}
+                        required
+                    />
                     <div className="form-field package-format-form-wide">
-                        <label htmlFor="format-description" className="form-label">Description</label>
-                        <textarea id="format-description" name="description" className="form-input" rows={3} value={values.description} onChange={change} />
+                        <label htmlFor="format-description" className="form-label">
+                            Repères
+                        </label>
+                        <textarea
+                            id="format-description"
+                            name="description"
+                            className="form-input"
+                            rows={3}
+                            value={values.description}
+                            onChange={change}
+                        />
                     </div>
-                    <label className="package-format-switch"><input type="checkbox" role="switch" name="est_actif" checked={values.est_actif} onChange={change} />Actif</label>
+                    <label className="package-format-switch">
+                        <input
+                            type="checkbox"
+                            role="switch"
+                            name="est_actif"
+                            checked={values.est_actif}
+                            onChange={change}
+                        />
+                        Actif
+                    </label>
                 </fieldset>
 
                 <div className="package-format-form-actions">
-                    <Button type="button" variant="secondary" onClick={onClose} disabled={mutation.isPending}>Annuler</Button>
-                    <Button type="submit" loading={mutation.isPending}>Enregistrer</Button>
+                    <Button
+                        type="button"
+                        variant="secondary"
+                        onClick={onClose}
+                        disabled={mutation.isPending}>
+                        Annuler
+                    </Button>
+                    <Button type="submit" loading={mutation.isPending}>
+                        Enregistrer
+                    </Button>
                 </div>
             </form>
         </Modal>

@@ -1,6 +1,4 @@
 .station-hubs-panel { display: flex; flex-direction: column; gap: 16px; }
 .station-row-actions { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
 .station-hubs-count { color: var(--color-text-secondary); font-size: var(--font-size-sm); }
-.station-hubs-confirm { padding: 16px; border: 1px solid var(--color-border); border-radius: var(--radius-lg); background: var(--color-bg-hover); }
-.station-hubs-confirm p { margin-bottom: 12px; line-height: 1.6; }
 .station-hubs-actions { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 8px; }

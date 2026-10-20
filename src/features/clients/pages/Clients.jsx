@@ -4,7 +4,7 @@ import Button from '../../../components/ui/Button'
 import Badge from '../../../components/ui/Badge'
 import Input from '../../../components/ui/Input'
 import Select from '../../../components/ui/Select'
-import Modal from '../../../components/ui/Modal'
+import ConfirmDialog from '../../../components/ui/ConfirmDialog'
 import Pagination from '../../../components/ui/Pagination'
 import ErrorState from '../../../components/ui/ErrorState'
 import EmptyState from '../../../components/ui/EmptyState'
@@ -65,6 +65,7 @@ function Clients() {
     }
     const submit = async event => {
         event.preventDefault()
+        if (!action || busy) return
         try {
             if (action.type === 'block') {
                 if (!motif.trim()) {
@@ -196,16 +197,16 @@ function Clients() {
                 />
             )}
             {action && (
-                <Modal
+                <ConfirmDialog
                     open
                     title={action.type === 'block' ? 'Bloquer le client' : 'Débloquer le client'}
                     onClose={busy ? undefined : close}
-                    closeOnOverlayClick={false}>
+                    description={`Confirmer ${action.type === 'block' ? 'le blocage' : 'le déblocage'} de ${action.name || 'ce client'} ?`}
+                    confirmLabel={action.type === 'block' ? 'Bloquer' : 'Débloquer'}
+                    confirmVariant={action.type === 'block' ? 'danger' : 'primary'}
+                    loading={busy}
+                    onConfirm={submit}>
                     <form className="client-action-form" onSubmit={submit}>
-                        <p>
-                            Confirmer {action.type === 'block' ? 'le blocage' : 'le déblocage'} de{' '}
-                            {action.name || 'ce client'} ?
-                        </p>
                         {action.type === 'block' && (
                             <Input
                                 name="client-block-motif"
@@ -221,19 +222,9 @@ function Clients() {
                                 {actionError}
                             </p>
                         )}
-                        <div className="client-card-footer">
-                            <Button variant="secondary" disabled={busy} onClick={close}>
-                                Annuler
-                            </Button>
-                            <Button
-                                type="submit"
-                                variant={action.type === 'block' ? 'danger' : 'primary'}
-                                loading={busy}>
-                                Confirmer
-                            </Button>
-                        </div>
+                        <button type="submit" hidden disabled={busy} />
                     </form>
-                </Modal>
+                </ConfirmDialog>
             )}
         </section>
     )
